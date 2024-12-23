@@ -31,6 +31,21 @@
     <!-- Bootstrap core JS-->
     <script type="text/javascript" src="static/js/bootstrap.bundle.min.js"></script>
 
+    <style>
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-family: monospace;
+        }
+        code {
+            color: #333;
+        }
+
+        
+    </style>
+
     <!-- For Compatability -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     
@@ -91,13 +106,13 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link me-lg-3" href="#page-top">HOME</a>
+                        <a class="nav-link me-lg-3" href="index.html" style="font-size: 30px;">首页</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link me-lg-3" href="#publications">PUBLICATIONS</a>
+                        <a class="nav-link me-lg-3" href="expriment.html" style="font-size: 30px;">实验指南</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link me-lg-3" href="#awards">AWARDS</a>
+                        <a class="nav-link me-lg-3" href="ppt.html" style="font-size: 30px;"><strong>PPT</strong></a>
                     </li>
 
                 </ul>
@@ -135,25 +150,31 @@
     </section>
     <!-- Home -->
 
-    <!-- Publications -->
-    <section class="bg-gradient-primary-to-secondary-gray mt5 md5" id="publications">
-        <div class="container px-5">
-            <header>
-                <h2 id="publications-subtitle"><i class="bi bi-file-text-fill"></i>&nbsp;PUBLICATIONS</h2>
-            </header>
-            <div class="main-body" id="publications-md"></div>
 
-        </div>
-    </section>
-    <!-- Publications  -->
 
     <!-- Awards -->
     <section class="bg-gradient-primary-to-secondary-light mt5 md5" id="awards">
         <div class="container px-5">
             <header>
-                <h2 id="awards-subtitle"><i class="bi bi-award-fill"></i>AWARDS </h2>
+                <h2 id="awards-subtitle" style="font-size: 48px;"><i class="bi bi-award-fill"></i> 大规模数据管理</h2>
             </header>
-            <div class="main-body" id="awards-md"></div>
+
+            <div style="height: 64px;"></div>
+
+            <div class="main-body" id="awards-md">
+
+                <a href="expriment.html">
+                    <h2 id="expriment"><strong>实验指南</strong></h2>
+                </a>
+
+                <div style="height: 64px;"></div>
+
+                <a href="ppt.html">
+                    <h2 id="ppt"><strong>课程PPT</strong></h2>
+                </a>
+                
+
+            </div>
 
         </div>
     </section>
