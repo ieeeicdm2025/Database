@@ -217,7 +217,28 @@
                             href="https://www.bilibili.com/video/BV17J2RYrESD/?vd_source=fec4535066dbb8e54594440a6685ef56" target="_blank">docker无法拉取，docker拉取失败，成功好用的镜像源
                             for linux<em>哔哩哔哩</em>bilibili</a></li>
                 </ul>
-                <h2 id="4docker"><strong>4、Docker的常用命令</strong></h2>
+
+                <br>
+                <h2 id="4docker"><strong>4、将当前用户添加到docker的用户组里</strong></h2>
+                <ul>
+                    <li>将当前用户添加到 Docker 组：</li>
+                </ul>
+                <pre><code>sudo usermod -aG docker $USER
+</code></pre>
+                <ul>
+                    <li>运行以下命令来使组变更立即生效：</li>
+                </ul>
+                <pre><code>newgrp docker
+</code></pre>
+                <ul>
+                    <li>验证 Docker 权限，能看到当前运行的docker就是添加成功了：</li>
+                </ul>
+                <pre><code>docker ps
+</code></pre>
+<img src="static/assets/img/k8s/k8s_docker.png" alt="k8s_docker" style="width: 100%; height: auto;"/>
+<br><br>
+
+                <h2 id="4docker"><strong>5、Docker的常用命令</strong></h2>
                 <p><strong>（1）帮助命令</strong></p>
                 <ul>
                     <li>显示docker的信息</li>
@@ -409,12 +430,12 @@ docker ps
                 <ul>
                     <li>下载 kubectl 校验和文件：</li>
                 </ul>
-                <pre><code>curl -LO "&lt;https://dl.k8s.io/release/$&gt;(curl -L -s &lt;https://dl.k8s.io/release/stable.txt&gt;)/bin/linux/amd64/kubectl.sha256"
+                <pre><code>curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
 </code></pre>
                 <ul>
                     <li>基于校验和文件，验证 kubectl 的可执行文件：</li>
                 </ul>
-                <pre><code>echo "$(cat kubectl.sha256) kubectl" | sha256sum –check
+                <pre><code>echo "$(cat kubectl.sha256) kubectl" | sha256sum --check
 </code></pre>
                 <ul>
                     <li>验证通过时，输出为：kubectl: OK</li>
@@ -441,8 +462,8 @@ docker ps
                 <ul>
                     <li>在 x86-64 Linux 上使用二进制下载安装最新的 minikube 稳定版本</li>
                 </ul>
-                <pre><code>curl -LO &lt;https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64&gt;
-sudo install minikube-linux-amd64 /usr/local/bin/minikube &amp;&amp; rm minikube-linux-amd64
+                <pre><code>curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
 </code></pre>
                 <ul>
                     <li>验证版本</li>
@@ -451,29 +472,12 @@ sudo install minikube-linux-amd64 /usr/local/bin/minikube &amp;&amp; rm minikube
 </code></pre>
 <img src="static/assets/img/k8s/mini_version.png" alt="mini_version" style="width: 100%; height: auto;"/>
 <br><br>
-                <p><strong>（3）将当前用户添加到docker的用户组里</strong></p>
-                <ul>
-                    <li>将当前用户添加到 Docker 组：</li>
-                </ul>
-                <pre><code>sudo usermod -aG docker $USER
-</code></pre>
-                <ul>
-                    <li>运行以下命令来使组变更立即生效：</li>
-                </ul>
-                <pre><code>newgrp docker
-</code></pre>
-                <ul>
-                    <li>验证 Docker 权限，能看到当前运行的docker就是添加成功了：</li>
-                </ul>
-                <pre><code>docker ps
-</code></pre>
-<img src="static/assets/img/k8s/k8s_docker.png" alt="k8s_docker" style="width: 100%; height: auto;"/>
-<br><br>
-                <p><strong>（4）启动minikube</strong></p>
+                
+                <p><strong>（3）启动minikube</strong></p>
                 <ul>
                     <li>由于国内镜像源的限制，直接使用minikube start会卡在拉取镜像的环节，因此使用下面的指令启动，让它使用本地的镜像</li>
                 </ul>
-                <pre><code>minikube start --driver=docker --base-image="registry.cn-hangzhou.aliyuncs.com/google\_containers/kicbase:v0.0.45"
+                <pre><code>minikube start --driver=docker --base-image="registry.cn-hangzhou.aliyuncs.com/google\_containers/kicbase:v0.0.46"
 </code></pre>
                 <ul>
                     <li>查看当前的集群状态</li>
@@ -494,9 +498,17 @@ sudo install minikube-linux-amd64 /usr/local/bin/minikube &amp;&amp; rm minikube
 <br><br>
 <img src="static/assets/img/k8s/mini_get2.png" alt="mini_get2" style="width: 100%; height: auto;"/>
 <br><br>
-                <p><strong>（5）minikube的dashboard</strong></p>
+                <p><strong>（4）minikube的dashboard</strong></p>
+
                 <ul>
-                    <li>同样由于国内镜像源的限制，在启动dashboard时会遇到卡在拉取镜像的问题，因此我们同样指定它使用本地镜像来启动dashboard</li>
+                    <li>minikube提供了dashboard功能，用以在web端进行操作</li>
+                </ul>
+                <pre><code>minikube dashboard</code></pre>
+                
+                <img src="static/assets/img/k8s/mini_dashboard_fail.png" alt="mini_load" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>如果同样遇到了上图中一直卡住的问题，是由于国内镜像源的限制，在启动dashboard时会卡在拉取镜像的环节，因此我们同样指定它使用本地镜像来启动dashboard</li>
                     <li>将所需的镜像加载进minikube中</li>
                 </ul>
                 <pre><code>minikube image load kubernetesui/dashboard:v2.7.0
