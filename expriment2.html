@@ -214,7 +214,83 @@ docker images</code></pre>
 kubectl get pods</code></pre>
                 <img src="static/assets/img/hadoop_spark/hadoop_run.png" alt="hadoop_run" style="width: 100%; height: auto;"/>
                 <br><br>
-                <p><strong>（3）设置端口转发以访问Hadoop的webui</strong></p>
+
+                <p><strong>（3）HDFS的使用</strong></p>
+                <ul>
+                    <li>查看自己创建hadoop集群的pod名称，进入任意一个pod，这里进入namenode，同样，这里的 namenode-764bfd689f-zkknj 需替换为自己创建时自动生成的namenode名称 </li>
+                </ul>
+                <pre><code>kubectl get pods
+kubectl exec -it namenode-764bfd689f-zkknj -- /bin/bash</code></pre>
+
+                <img src="static/assets/img/hadoop_spark/hdfs1.png" alt="hdfs1" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>列出hdfs根目录下的文件目录，此时根目录下没有东西 </li>
+                </ul>
+                <pre><code>hdfs dfs -ls /</code></pre>
+
+                <ul>
+                    <li>在根目录下创建文件夹newland</li>
+                </ul>
+                <pre><code>hdfs dfs -mkdir /newland</code></pre>
+                
+                <ul>
+                    <li>再次查看根目录下的文件目录，发现有了newland</li>
+                </ul>
+                <pre><code>hdfs dfs -ls /</code></pre>
+
+                <img src="static/assets/img/hadoop_spark/hdfs2.png" alt="hdfs2" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>在本地创建一个test.txt文件</li>
+                </ul>
+                <pre><code>echo "hello hdfs" > test.txt</code></pre>
+
+                <ul>
+                    <li>将这个test.txt文件上传到/newland下</li>
+                </ul>
+                <pre><code>hdfs dfs -put test.txt /newland</code></pre>
+
+                <ul>
+                    <li>查看newland下的文件目录，发现有了test.txt文件</li>
+                </ul>
+                <pre><code>hdfs dfs -ls /newland</code></pre>
+
+                <ul>
+                    <li>查看文件内容，即为hello hdfs</li>
+                </ul>
+                <pre><code>hdfs dfs -cat /newland/test.txt</code></pre>
+
+                <img src="static/assets/img/hadoop_spark/hdfs3.png" alt="hdfs3" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>下载hdfs上的文件test.txt到本地，并重命名为test_downland.txt</li>
+                </ul>
+                <pre><code>hdfs dfs -get /newland/test.txt /opt/spark/work-dir/test_downland.txt</code></pre>
+                
+                <ul>
+                    <li>查看本地目录，发现刚刚所下载的test_downland.txt文件</li>
+                </ul>
+                <pre><code>ls
+cat test_downland.txt</code></pre>
+
+                <img src="static/assets/img/hadoop_spark/hdfs4.png" alt="hdfs4" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>最后删除hdfs上的文件夹newland</li>
+                </ul>
+                <pre><code>hdfs dfs -rm r /newland</code></pre>
+
+                <ul>
+                    <li>再次查看根目录，发现已经没有文件目录了</li>
+                </ul>
+                <pre><code>hdfs dfs -ls /</code></pre>
+
+                <img src="static/assets/img/hadoop_spark/hdfs5.png" alt="hdfs5" style="width: 100%; height: auto;"/>
+
+                <br><br>
+
+                <p><strong>（4）设置端口转发以访问Hadoop的webui</strong></p>
                 <ul>
                     <li>设置转发以查看resourcemanager的webui：</li>
                 </ul>
@@ -234,7 +310,7 @@ kubectl get pods</code></pre>
                 <br><br>
                 <img src="static/assets/img/hadoop_spark/hadoop_webui2.png" alt="hadoop_webui2" style="width: 100%; height: auto;"/>
                 <br><br>
-                <p><strong>（4）运行Hadoop的示例程序wordcount</strong></p>
+                <p><strong>（5）运行Hadoop的示例程序wordcount</strong></p>
                 <ul>
                     <li>wordcount 示例程序是一个经典的示例，通常用于展示如何使用 Hadoop 进行分布式计算，它通过 MapReduce 模型统计输入文件中每个单词出现的次数。</li>
                     <li>Mapper：负责读取输入数据，将数据转换为键值对。</li>
@@ -266,7 +342,7 @@ kubectl get pods</code></pre>
 </code></pre>
 <img src="static/assets/img/hadoop_spark/hadoop_wc.png" alt="hadoop_wc" style="width: 100%; height: auto;"/>
 <br><br>
-                <p><strong>（5）运行k-means算法的mapreduce版本</strong></p>
+                <p><strong>（6）运行k-means算法的mapreduce版本</strong></p>
                 <ul>
                     <li>将所需的文件与jar包传入namenode，下面命令中的namenode-78587cfc8f-sl48f请替换为自己的namenode所在的pod名称</li>
                     <li>传入需要处理的数据文件data.txt、应用程序的jar包k-means-1.0-SNAPSHOT.jar、环境配置文件config.xml</li>

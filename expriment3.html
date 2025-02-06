@@ -459,7 +459,72 @@ kubectl cp data2.txt hiveserver2-556d6b44db-tggsq:/opt/hive/
 </code></pre>
 <img src="static/assets/img/sparksql_hive/hive_beeline.png" alt="hive_beeline" style="width: 100%; height: auto;"/> 
 <br><br>
-                <p><strong>（4）进行专利文献数据查询cite75_99.txt</strong></p>
+                
+
+                <p><strong>（4）hive的基本操作</strong></p>
+
+                <ul>
+                    <li>创建数据库</li>
+                </ul>
+                <pre><code>CREATE DATABASE IF NOT EXISTS example_db;
+USE example_db;</code></pre>
+                <img src="static/assets/img/sparksql_hive/show1.png" alt="show1" style="width: 100%; height: auto;"/> 
+
+
+                <ul>
+                    <li>创建表</li>
+                </ul>
+                <pre><code>CREATE TABLE students (id INT,name STRING,age INT) PARTITIONED BY (class STRING) STORED AS PARQUET;</code></pre>
+                <img src="static/assets/img/sparksql_hive/show2.png" alt="show2" style="width: 100%; height: auto;"/> 
+
+                <ul>
+                    <li>添加分区</li>
+                </ul>
+                <pre><code>ALTER TABLE students ADD PARTITION (class='A');
+ALTER TABLE students ADD PARTITION (class='B');</code></pre>
+                <img src="static/assets/img/sparksql_hive/show3.png" alt="show3" style="width: 100%; height: auto;"/> 
+
+                <ul>
+                    <li>插入数据</li>
+                </ul>
+                <pre><code>INSERT INTO TABLE students PARTITION (class='A') VALUES(1, 'Alice', 20),(2, 'Bob', 21);
+INSERT INTO TABLE students PARTITION (class='B') VALUES (3, 'Charlie', 22),(4, 'David', 23);</code></pre>
+                <img src="static/assets/img/sparksql_hive/show4.png" alt="show4" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>查看所有表</li>
+                </ul>
+                <pre><code>SHOW TABLES;</code></pre>
+                <img src="static/assets/img/sparksql_hive/show5.png" alt="show5" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>查看表结构</li>
+                </ul>
+                <pre><code>DESCRIBE students;</code></pre>
+                <img src="static/assets/img/sparksql_hive/show6.png" alt="show6" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>查询所有数据</li>
+                </ul>
+                <pre><code>SELECT * FROM students;</code></pre>
+                <img src="static/assets/img/sparksql_hive/show7.png" alt="show7" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>查询特定分区数据</li>
+                </ul>
+                <pre><code>SELECT * FROM students WHERE class='A';</code></pre>
+                <img src="static/assets/img/sparksql_hive/show8.png" alt="show8" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>聚合查询</li>
+                </ul>
+                <pre><code>SELECT class, COUNT(*) AS num_students FROM students GROUP BY class;</code></pre>
+                <img src="static/assets/img/sparksql_hive/show9.png" alt="show9" style="width: 100%; height: auto;"/>
+
+<br><br>
+
+
+                <p><strong>（5）进行专利文献数据查询cite75_99.txt</strong></p>
                 <ul>
                     <li>创建表格patent_citation</li>
                 </ul>
@@ -480,7 +545,7 @@ kubectl cp data2.txt hiveserver2-556d6b44db-tggsq:/opt/hive/
 </code></pre>
 <img src="static/assets/img/sparksql_hive/hive_load1.png" alt="hive_load1" style="width: 100%; height: auto;"/>
                 <ul>
-                    <li>查询1 被引用列表</li>
+                    <li>查询一 被引用列表</li>
                 </ul>
                 <pre><code>SELECT 
     cited, 
@@ -529,7 +594,7 @@ GROUP BY
 <br><br>
 <img src="static/assets/img/sparksql_hive/hive_query32.png" alt="hive_query32" style="width: 100%; height: auto;"/> 
 <br><br>
-                <p><strong>（5）进行专利文献数据查询apat63_99.txt</strong></p>
+                <p><strong>（6）进行专利文献数据查询apat63_99.txt</strong></p>
                 <ul>
                     <li>创建表格patent_metadata</li>
                 </ul>
