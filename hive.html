@@ -206,6 +206,8 @@ docker images
 <img src="static/assets/img/sparksql_hive/hive_image.png" alt="hive_image" style="width: 100%; height: auto;"/>
 <br><br>
                 <p><strong>（2）使用hiveserver2-deployment.yaml文件部署Hive</strong></p>
+                <pre><code>kubectl apply -f hiveserver2-deployment.yaml
+</code></pre>
                 <img src="static/assets/img/sparksql_hive/hive_run1.png" alt="hive_run1" style="width: 100%; height: auto;"/>
                 <ul>
                     <li>查看pod状态，确认已正常运行</li>
@@ -327,7 +329,7 @@ INSERT INTO TABLE students PARTITION (class='B') VALUES (3, 'Charlie', 22),(4, '
                 <ul>
                     <li>导入data1.txt文件中的数据</li>
                 </ul>
-                <pre><code>LOAD DATA INPATH '/opt/hive/data1.txt' INTO TABLE patent\_citation
+                <pre><code>LOAD DATA INPATH '/opt/hive/data1.txt' INTO TABLE patent_citation;
 </code></pre>
 <img src="static/assets/img/sparksql_hive/hive_load1.png" alt="hive_load1" style="width: 100%; height: auto;"/>
                 <ul>
@@ -339,7 +341,7 @@ INSERT INTO TABLE students PARTITION (class='B') VALUES (3, 'Charlie', 22),(4, '
 FROM 
     patent_citation
 GROUP BY 
-    cited;
+    cited limit 10;
 </code></pre>
 <img src="static/assets/img/sparksql_hive/hive_query11.png" alt="hive_query11" style="width: 100%; height: auto;"/>
 <br><br>
@@ -353,7 +355,7 @@ GROUP BY
 FROM 
     patent_citation
 GROUP BY 
-    cited;
+    cited limit 10;
 </code></pre>
 <img src="static/assets/img/sparksql_hive/hive_query21.png" alt="hive_query21" style="width: 100%; height: auto;"/>
 <br><br>
@@ -418,7 +420,7 @@ TBLPROPERTIES ('skip.header.line.count'='1');
                 <ul>
                     <li>导入data2.txt文件中的数据</li>
                 </ul>
-                <pre><code>LOAD DATA INPATH '/opt/hive/data2.txt' INTO TABLE patent\_metadata;
+                <pre><code>LOAD DATA INPATH '/opt/hive/data2.txt' INTO TABLE patent_metadata;
 </code></pre>
 <img src="static/assets/img/sparksql_hive/hive_load21.png" alt="hive_load21" style="width: 100%; height: auto;"/>
 <br><br>
@@ -434,7 +436,7 @@ FROM
     patent_metadata
 GROUP BY 
     GYEAR, 
-    COUNTRY;
+    COUNTRY limit 10;
 </code></pre>
 <img src="static/assets/img/sparksql_hive/hive_query41.png" alt="hive_query41" style="width: 100%; height: auto;"/>
 <br><br>
