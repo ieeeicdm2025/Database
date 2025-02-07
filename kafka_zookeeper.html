@@ -164,9 +164,10 @@
 
             <div class="main-body" id="awards-md">
 
-                <h1 id="flink"><strong>一、Zookeeper和Kafkak</strong></h1>
+                <h1 id="flink"><strong>Zookeeper和Kafkak</strong></h1>
                 <div style="height: 32px;"></div>
-                <h2 id="1-7"><strong>1、Zookeeper</strong></h2>
+                <h2 id="1-7"><strong>1、Zookeeper（<a
+                    href="https://zookeeper.apache.org/" target="_blank">官网</a>）</strong></h2>
                 <p>ZooKeeper 是一个开放源码的分布式协调服务，主要为了解决分布式架构下数据一致性问题，它是集群的管理者，监视着集群中各个节点的状态，根据节点提交的反馈进行下一步合理操作。最终，将简单易用的接口和性能高效、功能稳定的系统提供给用户。</p>
                 <img src="static/assets/img/kafka_zookeeper/zookeeper_achi.png" alt="zookeeper_achi" style="width: 100%; height: auto;">
                 
@@ -207,7 +208,8 @@
                     <li>ZooKeeper 使用 会话（Session） 来管理客户端连接，每个客户端连接到 ZooKeeper 时都会创建一个会话。 客户端会定期向 ZooKeeper 发送心跳，防止会话超时，如果客户端在会话超时前重新连接 ZooKeeper，可以继续使用原会话 ID。如果客户端长时间不与 ZooKeeper 交互（超时），ZooKeeper 认为该客户端已经断开连接，并删除它的临时节点。</li>
                 </ul>
                 
-                <h2 id="2flink"><strong>2、Kafkak</strong></h2>
+                <h2 id="2flink"><strong>2、Kafkak（<a
+                    href="https://kafka.apache.org/" target="_blank">官网</a>）</strong></h2>
                 <p>Kafka 是一个分布式流处理平台，广泛应用于高吞吐量的消息传递和实时数据流处理。它能够处理大量的实时数据流，并且支持分布式、高可用和高可扩展的架构。</p>
                 <img src="static/assets/img/kafka_zookeeper/kafka_achi.png" alt="kafka_achi" style="width: 100%; height: auto;">
                 

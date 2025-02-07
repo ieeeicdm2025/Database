@@ -166,7 +166,8 @@
             <div class="main-body" id="awards-md">
 
 
-                <h1 id="sparksql"><strong>一、SparkSQL</strong></h1>
+                <h1 id="sparksql"><strong>SparkSQL（<a
+                    href="https://spark.apache.org/sql/" target="_blank">官网</a>）</strong></h1>
                 <div style="height: 32px;"></div>
                 <h2 id="1-4"><strong>1、简介</strong></h2>
                 <p>Spark SQL 是 Apache Spark 提供的一个模块，用于处理结构化数据，它使得用户能够在 Spark 上执行 SQL 查询、访问数据源、以及将 Spark 与 SQL 生态系统（如
@@ -194,9 +195,22 @@
                     <li>DataSet：是 DataFrame 的强类型版本，它结合了 RDD 和 DataFrame 的优点，能够提供编译时类型检查，同时支持 SQL 查询优化。</li>
                 </ul>
                 <h2 id="3minikubesparksql"><strong>3、使用minikube部署SparkSQL</strong></h2>
-                <p><strong>（1）由于sparksql不适用于cluster模式，因此单独建立一个local模式的pod来进行实验，这个local模式的spark已经在上面建立spark集群时一并建立了</strong>
+                <p><strong>（1）由于sparksql不适用于cluster模式，因此单独建立一个local模式的pod来进行实验</strong>
                 </p>
                 <img src="static/assets/img/sparksql_hive/sparksql_local.png" alt="sparksql_local" style="width: 100%; height: auto;"/>
+                
+                <ul>
+                    <li>使用sparksql-deployment.yaml文件部署spark-local环境</li>
+                </ul>
+                <pre><code>kubectl apply -f sparksql-deployment.yaml
+</code></pre>
+                <ul>
+                    <li>查看pod状态，确认已正常运行</li>
+                </ul>
+                <pre><code>kubectl get pods
+</code></pre>
+<img src="static/assets/img/sparksql_hive/sparksql_run.png" alt="sparksql_run" style="width: 100%; height: auto;"/>
+
                 <p><strong>（2）使用SparkSQL进行查询</strong></p>
                 <ul>
                     <li>复制数据原文件到spark-local所在的pod中，下面命令中需要替换为自己的spark-local所在的pod名</li>
