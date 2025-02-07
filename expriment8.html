@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Academic Webpage" />
+    <meta name="author" content="senli1073" />
+    <title id="title"></title>
+
+    <!-- Icon -->
+    <link rel="icon" type="image/x-icon" href="static/assets/favicon.ico" />
+
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <!-- Google fonts-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,600;1,600&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,500;0,600;0,700;1,300;1,500;1,600;1,700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap"
+        rel="stylesheet" />
+
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link type="text/css" href="static/css/styles.css" rel="stylesheet" />
+    <link type="text/css" href="static/css/main.css" rel="stylesheet" />
+
+    <!-- Bootstrap core JS-->
+    <script type="text/javascript" src="static/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-family: monospace;
+        }
+
+        code {
+            color: #333;
+        }
+    </style>
+
+    <!-- For Compatability -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+    <!-- Markdown -->
+    <script type="text/javascript" src="static/js/marked.min.js"></script>
+
+    <!-- Mathematics -->
+    <script>
+        // See https://docs.mathjax.org/en/latest/index.html for more details.
+        MathJax = {
+            tex: {
+                packages: {},              // extensions to use
+                inlineMath: [              // start/end delimiter pairs for in-line math
+                    ['$', '$'],
+                    ['\\(', '\\)']
+                ],
+                displayMath: [             // start/end delimiter pairs for display math
+                    ['$$', '$$'],
+                    ['\\[', '\\]']
+                ],
+                processEscapes: false,      // use \$ to produce a literal dollar sign
+                processEnvironments: true, // process \begin{xxx}...\end{xxx} outside math mode
+                processRefs: true,         // process \ref{...} outside of math mode
+                digits: /^(?:[0-9]+(?:\{,\}[0-9]{3})*(?:\.[0-9]*)?|\.[0-9]+)/,    // pattern for recognizing numbers
+                tags: 'all',              // or 'ams' or 'all'
+                tagSide: 'right',          // side for \tag macros
+                tagIndent: '0.8em',        // amount to indent tags
+                useLabelIds: true,         // use label name rather than tag for ids
+                maxMacros: 10000,          // maximum number of macro substitutions per expression
+                maxBuffer: 5 * 1024,       // maximum size for the internal TeX string (5K)
+                // baseURL:                   // URL for use with links to tags (when there is a <base> tag in effect)
+                // (document.getElementsByTagName('base').length === 0) ? '' : String(document.location).replace(/#.*$/, ''),
+                formatError:               // function called when TeX syntax errors occur
+                    (jax, err) => jax.formatError(err)
+            }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script"
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Core JS-->
+    <script type="text/javascript" src="static/js/scripts.js"></script>
+    <script type="text/javascript" src="static/js/js-yaml.min.js"></script>
+
+</head>
+
+<body id="page-top">
+    <!-- Navigation-->
+    <nav class="header navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
+        <div class="container px-5">
+            <a id="page-top-title" class="navbar-brand fw-bold" href="#page-top"></a>
+            <!-- <a href="#page-top"><img src="static/assets/img/CUMT_LOGO.svg" style="width: 11rem;"></a> -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                MENU
+                <i class="bi-list"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link me-lg-3" href="index.html" style="font-size: 30px;">首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link me-lg-3" href="expriment.html" style="font-size: 30px;">实验指南</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link me-lg-3" href="ppt.html" style="font-size: 30px;"><strong>PPT</strong></a>
+                    </li> -->
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Top Section -->
+    <section class="top-section" style="background-image: url('static/assets/img/background.jpeg');">
+        <div class="top-section-content">
+            <div class="container px-5">
+                <h2 id="top-section-bg-text" class="text-white display-3 lh-1 font-alt"></h2>
+            </div>
+        </div>
+    </section>
+    <!-- Top Section -->
+
+    <!-- Photo -->
+    <div class="container px-5">
+        <div id="avatar">
+            <img class="shadow" src="static/assets/img/photo.png">
+        </div>
+    </div>
+    <!-- Photo -->
+
+    <!-- Home -->
+    <section class="bg-gradient-primary-to-secondary-light mt5 md5" id="home">
+        <div class="container px-5">
+            <header>
+                <h2 id="home-subtitle"> </h2>
+                <!-- <span class="bi bi-list"></span> -->
+            </header>
+            <div class="main-body" id="home-md"></div>
+        </div>
+    </section>
+    <!-- Home -->
+
+
+
+    <!-- Awards -->
+    <section class="bg-gradient-primary-to-secondary-light mt5 md5" id="awards">
+        <div class="container px-5">
+            <header>
+                <h2 id="awards-subtitle" style="font-size: 48px;"><i class="bi bi-award-fill"></i> 实验指南(八)：Elasticsearch和Kibana</h2>
+            </header>
+
+            <div style="height: 64px;"></div>
+
+            <div class="main-body" id="awards-md">
+
+                <h1 id="flink"><strong>一、Elasticsearch和Kibana</strong></h1>
+                <div style="height: 32px;"></div>
+                <h2 id="1-7"><strong>1、Elasticsearch</strong></h2>
+                <p>Apache Flink 是为分布式、高性能、随时可用以及准确的流处理应用程序打造的开源流处理框架，用于对无界和有界数据流进行有状态计算。</p>
+                <img src="static/assets/img/flink/flink_achi.png" alt="flink_achi" style="width: 100%; height: auto;">
+                <br><br>
+                <h2 id="2flink"><strong>2、Kibana</strong></h2>
+                <p><strong>（1）批处理（DataStream API）与流处理（DataSet API）</strong></p>
+                <ul>
+                    <li>流（Stream）：Flink
+                        最主要的处理对象是数据流，即连续不断到达的数据。流数据可以是无界的，意味着数据没有固定的终止点，流会持续不断地生成数据。Flink会不断地处理这些数据，直到程序停止。</li>
+                    <li>批（Batch）：Flink也支持批处理。批处理是对有限数据集的处理，可以视作有限的流。Flink 的批处理是基于流处理的优化实现的。</li>
+                </ul>
+                <p><strong>（2）Flink的结构</strong></p>
+                <ul>
+                    <li>Client：客户端，提交作业</li>
+                    <li>JobManager：负责作业的调度、状态管理和故障恢复。每个作业只有一个 JobManager</li>
+                    <li>TaskManager：负责具体任务的执行。Flink 的任务是并行的，每个 TaskManager 运行多个任务槽（task slot）</li>
+                </ul>
+                <p><strong>（3）操作符</strong></p>
+                <p>Flink 的流处理基于一系列的操作符，这些操作符作用于数据流中的元素。常见的操作符包括：</p>
+                <ul>
+                    <li>Map：对数据流中的每个元素进行转换。</li>
+                    <li>Filter：过滤掉不符合条件的元素。</li>
+                    <li>Filter：过滤掉不符合条件的元素。</li>
+                    <li>KeyBy：基于某个字段进行分组，类似于 groupBy。</li>
+                    <li>Reduce：对数据流中的元素进行归约操作，通常用于聚合计算。</li>
+                    <li>Window：将数据流分割成小的时间窗口进行聚合或处理。</li>
+                </ul>
+                <p><strong>（4）窗口</strong></p>
+                <p>窗口是流处理中用于分组和聚合事件的机制。Flink 支持多种窗口类型：</p>
+                <ul>
+                    <li>滚动窗口（Tumbling Window）：不重叠的时间段窗口，数据每到达一个新的时间段就会重新计算。</li>
+                    <li>滑动窗口（Sliding Window）：重叠的时间段窗口，数据在滑动窗口中会不断变化。</li>
+                    <li>会话窗口（Session Window）：基于事件的空闲时间来划分窗口，如果事件之间的时间间隔超过设定值，窗口会关闭。</li>
+                </ul>
+
+
+
+
+
+
+                <h2 id="3minikubeflink"><strong>3、使用minikube部署Elasticsearch与Kibana</strong></h2>
+                <p><strong>（1）向minikube中导入所需的镜像</strong></p>
+                <pre><code>minikube image load kibana:8.17.0
+minikube image load elasticsearch:8.17.0
+</code></pre>
+                <ul>
+                    <li>进入minikube查看是否导入</li>
+                </ul>
+                <pre><code>minikube ssh
+docker images
+</code></pre>
+<img src="static/assets/img/elasticsearch_kibana/elk_images.png" alt="elk_images" style="width: 100%; height: auto;">
+<br><br>
+                <p><strong>（2）使用elasticsearch-kibana.yaml文件部署Elasticsearch与Kibana</strong></p>
+                <pre><code>kubectl apply -f elasticsearch-kibana.yaml
+</code></pre>
+                <ul>
+                    <li>查看pod状态，确认已正常运行</li>
+                </ul>
+                <pre><code>kubectl get pods
+</code></pre>
+<img src="static/assets/img/elasticsearch_kibana/elk_pod.png" alt="elk_pod" style="width: 100%; height: auto;">
+                <ul>
+                    <li>使用kubectl的端口转发功能，以访问Elasticsearch与Kibana的webui，这个转发命令行界面需要一直保持这个转发状态，停止转发后就无法访问webui了</li>
+                </ul>
+                <pre><code>kubectl port-forward service/elasticsearch 9200:9200
+kubectl port-forward service/kibana 5601:5601
+</code></pre>
+<img src="static/assets/img/elasticsearch_kibana/elk_port1.png" alt="elk_port1" style="width: 100%; height: auto;">
+<img src="static/assets/img/elasticsearch_kibana/elk_port2.png" alt="elk_port2" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>通过下面的url在浏览器访问Elasticsearch，验证 Elasticsearch 的状态，返回如下这样的JSON输出即为正常运行状态</li>
+                </ul>
+                <p><a href="http://localhost:9200" target="_blank">http://localhost:9200</a></p>
+<img src="static/assets/img/elasticsearch_kibana/elk_link1.png" alt="elk_link1" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>通过下面的url在浏览器访问Kibana的webui</li>
+                </ul>
+                <p><a href="http://localhost:5601" target="_blank">http://localhost:5601</a></p>
+<img src="static/assets/img/elasticsearch_kibana/elk_link2.png" alt="elk_link2" style="width: 100%; height: auto;">
+
+
+                <br><br>
+                <p><strong>（3）测试elasticsearch与kibana</strong></p>
+                <ul>
+                    <li>进入Kibana的webui，选择自己探索（Explore on my own）</li>
+                </ul>
+<img src="static/assets/img/elasticsearch_kibana/elk_comein.png" alt="elk_comein" style="width: 100%; height: auto;">        
+                <ul>
+                    <li>再打开左侧边栏，滑到底部，在其中找到 Dev Tools ，这是我们的控制台</li>
+                </ul>
+<img src="static/assets/img/elasticsearch_kibana/elk_dev.png" alt="elk_dev" style="width: 100%; height: auto;">
+                <ul>
+                    <li>先执行一个简单的查询来验证与 Elasticsearch 的连接，返回下面的结果即说明二者的连接正常</li>
+                </ul>
+                <pre><code>GET _cluster/health
+</code></pre>
+<img src="static/assets/img/elasticsearch_kibana/elk_dev_health.png" alt="elk_dev_health" style="width: 100%; height: auto;">
+                <ul>
+                    <li>然后我们继续在 Dev Tools 控制台进行操作，创建一个索引。这个命令将创建一个名为 my_index 的索引，并定义了三种字段：name（文本类型）、age（整数类型）和 location（地理位置类型）。</li>
+                </ul>
+                <pre><code>PUT /my_index
+{
+  "mappings": {
+    "properties": {
+      "name": { "type": "text" },
+      "age": { "type": "integer" },
+      "location": { "type": "geo_point" }
+    }
+  }
+}
+</code></pre>
+<img src="static/assets/img/elasticsearch_kibana/elk_dev_index.png" alt="elk_dev_index" style="width: 100%; height: auto;">
+                <ul>
+                    <li>接下来，插入一些数据到这个索引，可以依次执行，也可以全部选中然后一次性执行</li>
+                </ul>
+                <pre><code>POST /my_index/_doc/1
+{
+  "name": "Alice",
+  "age": 30,
+  "location": { "lat": 40.7128, "lon": -74.0060 }
+}
+
+POST /my_index/_doc/2
+{
+  "name": "Bob",
+  "age": 25,
+  "location": { "lat": 34.0522, "lon": -118.2437 }
+}
+
+POST /my_index/_doc/3
+{
+  "name": "Charlie",
+  "age": 35,
+  "location": { "lat": 51.5074, "lon": -0.1278 }
+}
+</code></pre>
+<img src="static/assets/img/elasticsearch_kibana/elk_dev_insert.png" alt="elk_dev_insert" style="width: 100%; height: auto;">
+                <ul>
+                    <li>我们可以继续在Dev Tools 控制台中运行查询，以检查数据。下面的查询返回所有名字为 "Alice" 的文档。</li>
+                </ul>
+                <pre><code>GET /my_index/_search
+{
+  "query": {
+    "match": {
+      "name": "Alice"
+    }
+  }
+}
+</code></pre>
+<img src="static/assets/img/elasticsearch_kibana/elk_dev_search.png" alt="elk_dev_search" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>除了在控制台向索引添加数据外，我们还可以使用 python 来批量添加数据</li>
+                </ul>
+                <ul>
+                    <li>回到命令行中，先安装 python 与 pip</li>
+                </ul>
+                <pre><code>sudo apt update
+sudo apt install python3
+sudo apt install python3-pip
+</code></pre>
+                <ul>
+                    <li>看到版本号就是安装成功了</li>
+                </ul>
+                <pre><code>python3 --version
+pip3 --version
+</code></pre>
+<img src="static/assets/img/elasticsearch_kibana/elk_python1.png" alt="elk_python1" style="width: 100%; height: auto;">
+                <ul>
+                    <li>再安装 elasticsearch 库</li>
+                </ul>
+                <pre><code>pip install elasticsearch
+</code></pre>
+<img src="static/assets/img/elasticsearch_kibana/elk_python2.png" alt="elk_python2" style="width: 100%; height: auto;">
+                
+                <ul>
+                    <li>然后运行python脚本，这个脚本会随机生成1000条数据并将它们插入到刚刚我们所创建的索引中</li>
+                </ul>
+                <pre><code>python3 bulk_insert.py
+</code></pre>
+<img src="static/assets/img/elasticsearch_kibana/elk_python3.png" alt="elk_python3" style="width: 100%; height: auto;">
+
+
+                <ul>
+                    <li>接着我们回到 Dev Tools 控制台中，查询当前的数据条数，可以看到已经有了1003条数据</li>
+                </ul>
+                <pre><code>GET my_index/_count
+</code></pre>        
+<img src="static/assets/img/elasticsearch_kibana/elk_dev_count.png" alt="elk_dev_count" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>我们可以进一步对这些数据进行各种查询</li>
+                </ul>
+                
+                <ul>
+                    <li>查询以某个点为圆心的范围内数据</li>
+                </ul>
+                <pre><code>GET /my_index/_search
+{
+  "query": {
+    "geo_distance": {
+      "distance": "1000km",
+      "location": {
+        "lat": 40.7128,  
+        "lon": -74.0060 
+      }
+    }
+  }
+}
+</code></pre>
+<img src="static/assets/img/elasticsearch_kibana/elk_dev_query1.png" alt="elk_dev_query1" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>查找某个矩形范围内的数据</li>
+                </ul>
+                <pre><code>GET my_index/_search
+{
+  "query": {
+    "geo_bounding_box": {
+      "location": {
+        "top_left": { "lat": 70.0, "lon": -80.0 },
+        "bottom_right": { "lat": 30.0, "lon": -70.0 }
+      }
+    }
+  }
+}
+</code></pre>
+<img src="static/assets/img/elasticsearch_kibana/elk_dev_query2.png" alt="elk_dev_query2" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>查询距离某地最近的5个人</li>
+                </ul>
+                <pre><code>GET my_index/_search
+{
+  "size": 5,
+  "query": {
+    "match_all": {}
+  },
+  "sort": [
+    {
+      "_geo_distance": {
+        "location": { "lat": 40.7128, "lon": -74.0060 },
+        "order": "asc",
+        "mode": "min",
+        "distance_type": "arc"
+      }
+    }
+  ]
+}
+</code></pre>
+<img src="static/assets/img/elasticsearch_kibana/elk_dev_query3.png" alt="elk_dev_query3" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>查询距离某点 1000 km 内的所有人，并且年龄在 20-60 之间</li>
+                </ul>
+                <pre><code>GET my_index/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        { "range": { "age": { "gte": 30, "lte": 50 } } },
+        { 
+          "geo_distance": {
+            "distance": "200km",
+            "location": { "lat": 40.7128, "lon": -74.0060 }
+          }
+        }
+      ]
+    }
+  }
+}
+</code></pre>
+<img src="static/assets/img/elasticsearch_kibana/elk_dev_query4.png" alt="elk_dev_query4" style="width: 100%; height: auto;">
+
+
+                <ul>
+                    <li>注意脚本生成的数据是随机的，上述查询的结果不必一致</li>
+                </ul>
+                <ul>
+                    <li>在创建索引并插入数据后，我们可以进一步对数据进行分析及可视化。我们打开左侧边栏，点击顶部的Analytics，并创建一个数据视图（Create a data view）</li>
+                </ul>
+<img src="static/assets/img/elasticsearch_kibana/elk_analytics_create1.png" alt="elk_analytics_create1" style="width: 100%; height: auto;">
+
+
+
+<ul>
+                    <li>数据视图的 name 字段我们可以自行输入想取的名字，index pattern 字段我们输入刚刚所创建的索引名称，也可以在右边的 All sources 栏直接复制。然后点击 Save data view to Kibana 进行到下个环节</li>
+                </ul>
+<img src="static/assets/img/elasticsearch_kibana/elk_analytics_create2.png" alt="elk_analytics_create2" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>我们新建一个 dashboard 用于数据的可视化</li>
+                </ul>
+<img src="static/assets/img/elasticsearch_kibana/elk_dashboard1.png" alt="elk_dashboard1" style="width: 100%; height: auto;">
+<img src="static/assets/img/elasticsearch_kibana/elk_dashboard2.png" alt="elk_dashboard2" style="width: 100%; height: auto;">
+<img src="static/assets/img/elasticsearch_kibana/elk_dashboard3.png" alt="elk_dashboard3" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>我们可以在右侧选择我们想可视化的图表，如柱状图、折线图、饼图等</li>
+                </ul>
+<img src="static/assets/img/elasticsearch_kibana/elk_dashboard4.png" alt="elk_dashboard4" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>这里以柱状图为例，选择横坐标为我们索引中的 age ，纵坐标为 count（数量），便会自动生成下面这样的图表，底部的 suggestion 中也可以随时切换图表的样式，最后我们点击右上角的 Save and return ，而后点击新窗口右上角的 Save，以保存这个视图作为仪表盘，用以随时监控数据的变化</li>
+                </ul>
+<img src="static/assets/img/elasticsearch_kibana/elk_bar1.png" alt="elk_bar1" style="width: 100%; height: auto;">
+<img src="static/assets/img/elasticsearch_kibana/elk_bar2.png" alt="elk_bar2" style="width: 100%; height: auto;">
+<img src="static/assets/img/elasticsearch_kibana/elk_bar3.png" alt="elk_bar3" style="width: 100%; height: auto;">
+<img src="static/assets/img/elasticsearch_kibana/elk_bar4.png" alt="elk_bar4" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>随后我们再次打开左侧边栏，点击顶部的Analytics，并选择 Discover</li>
+                </ul>
+<img src="static/assets/img/elasticsearch_kibana/elk_discovery1.png" alt="elk_discovery1" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>在这里我们可以使用KQL语句进行查询，如这里查询年龄在 30 岁以上的数据，我们同样可以点击右上角的 Save 以保存这个查询视图作为仪表盘，以监测数据的变化</li>
+                </ul>
+<img src="static/assets/img/elasticsearch_kibana/elk_discovery2.png" alt="elk_discovery2" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>随后我们再次打开左侧边栏，点击顶部的Analytics，并选择 Map</li>
+                </ul>
+<img src="static/assets/img/elasticsearch_kibana/elk_map1.png" alt="elk_map1" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>在这里我们可以让我们的地理位置数据直接在地图上显示，点击右侧的 Add a layer</li>
+                </ul>
+<img src="static/assets/img/elasticsearch_kibana/elk_map2.png" alt="elk_map2" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>选择 Documents ，并选择 test，再点击右下角的 Add and continue ，这样就可以在地图上看到我们的点数据了</li>
+                </ul>
+<img src="static/assets/img/elasticsearch_kibana/elk_map3.png" alt="elk_map3" style="width: 100%; height: auto;">
+<img src="static/assets/img/elasticsearch_kibana/elk_map4.png" alt="elk_map4" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>同样地，我们可以点击右上角的 Save 来保存这个视图，以监测数据的变化情况</li>
+                </ul>
+<img src="static/assets/img/elasticsearch_kibana/elk_map5.png" alt="elk_map5" style="width: 100%; height: auto;">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+        </div>
+    </section>
+    <!-- Awards -->
+
+
+    <!-- Footer-->
+    <footer class="bg-bottom text-center py-5">
+        <div class="container px-5">
+
+        </div>
+    </footer>
+
+</body>
+
+</html>

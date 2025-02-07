@@ -279,7 +279,7 @@ cat test_downland.txt</code></pre>
                 <ul>
                     <li>最后删除hdfs上的文件夹newland</li>
                 </ul>
-                <pre><code>hdfs dfs -rm r /newland</code></pre>
+                <pre><code>hdfs dfs -rm -r /newland</code></pre>
 
                 <ul>
                     <li>再次查看根目录，发现已经没有文件目录了</li>
@@ -288,7 +288,10 @@ cat test_downland.txt</code></pre>
 
                 <img src="static/assets/img/hadoop_spark/hdfs5.png" alt="hdfs5" style="width: 100%; height: auto;"/>
 
-                <br><br>
+                <ul>
+                    <li>而后我们退出该容器，回到命令行中</li>
+                </ul>
+                <pre><code>exit</code></pre>
 
                 <p><strong>（4）设置端口转发以访问Hadoop的webui</strong></p>
                 <ul>

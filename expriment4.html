@@ -248,33 +248,33 @@ kubectl port-forward svc/hbase-master 16030:16030
                 <ul>
                     <li>创建一个表</li>
                 </ul>
-                <pre><code>create 'test\_table', 'cf'
+                <pre><code>create 'test_table', 'cf'
 </code></pre>
 <img src="static/assets/img/hbase/hbase_create.png" alt="hbase_create" style="width: 100%; height: auto;"/>
                 <ul>
                     <li>插入一些数据</li>
                 </ul>
-                <pre><code>put 'test\_table', 'row1', 'cf:name', 'John'
-put 'test\_table', 'row2', 'cf:name', 'Alice'
-put 'test\_table', 'row3', 'cf:name', 'Bob'
-put 'test\_table', 'row4', 'cf:name', 'Charlie'
-put 'test\_table', 'row5', 'cf:name', 'David'
-put 'test\_table', 'row6', 'cf:name', 'Eva'
-put 'test\_table', 'row7', 'cf:name', 'Frank'
-put 'test\_table', 'row8', 'cf:name', 'Grace'
+                <pre><code>put 'test_table', 'row1', 'cf:name', 'John'
+put 'test_table', 'row2', 'cf:name', 'Alice'
+put 'test_table', 'row3', 'cf:name', 'Bob'
+put 'test_table', 'row4', 'cf:name', 'Charlie'
+put 'test_table', 'row5', 'cf:name', 'David'
+put 'test_table', 'row6', 'cf:name', 'Eva'
+put 'test_table', 'row7', 'cf:name', 'Frank'
+put 'test_table', 'row8', 'cf:name', 'Grace'
 </code></pre>
 <img src="static/assets/img/hbase/hbase_put.png" alt="hbase_put" style="width: 100%; height: auto;"/>
                 <ul>
                     <li>浏览整张表</li>
                 </ul>
-                <pre><code>scan 'test\_table'
+                <pre><code>scan 'test_table'
 </code></pre>
 <img src="static/assets/img/hbase/hbase_scan.png" alt="hbase_scan" style="width: 100%; height: auto;"/>
                 <ul>
                     <li>HBase 的数据首先存储在 MemStore 中，当 MemStore 超过一定阈值时，会触发一个 flush 操作，将数据从 MemStore 写入磁盘并创建 HFile
                         文件。因此如果马上想要在hdfs上查看hbase存放的数据，需要在hbase的shell中手动进行flush操作</li>
                 </ul>
-                <pre><code>flush 'test\_table'
+                <pre><code>flush 'test_table'
 </code></pre>
 <img src="static/assets/img/hbase/hbase_flush.png" alt="hbase_flush" style="width: 100%; height: auto;"/>
                 <ul>
