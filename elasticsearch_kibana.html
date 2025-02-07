@@ -157,7 +157,7 @@
     <section class="bg-gradient-primary-to-secondary-light mt5 md5" id="awards">
         <div class="container px-5">
             <header>
-                <h2 id="awards-subtitle" style="font-size: 48px;"><i class="bi bi-award-fill"></i> 实验指南(八)：Elasticsearch和Kibana</h2>
+                <h2 id="awards-subtitle" style="font-size: 48px;"><i class="bi bi-award-fill"></i> 实验指南(九)：Elasticsearch和Kibana</h2>
             </header>
 
             <div style="height: 64px;"></div>
@@ -167,45 +167,41 @@
                 <h1 id="flink"><strong>一、Elasticsearch和Kibana</strong></h1>
                 <div style="height: 32px;"></div>
                 <h2 id="1-7"><strong>1、Elasticsearch</strong></h2>
-                <p>Apache Flink 是为分布式、高性能、随时可用以及准确的流处理应用程序打造的开源流处理框架，用于对无界和有界数据流进行有状态计算。</p>
-                <img src="static/assets/img/flink/flink_achi.png" alt="flink_achi" style="width: 100%; height: auto;">
-                <br><br>
+                <p>Elasticsearch（简称ES）是一个分布式、可扩展、实时的搜索与数据分析引擎。ES不仅仅只是全文搜索，还支持结构化搜索、数据分析、复杂的语言处理、地理位置和对象间关联关系等。</p>
+                <img src="static/assets/img/elasticsearch_kibana/Elasticsearch_achi.png" alt="Elasticsearch_achi" style="width: 100%; height: auto;">
+                
+                <p><strong>（1）基本概念</strong></p>
+                <ul>
+                    <li>索引（Index）：存储数据的地方。每个索引包含一个或多个类型的数据。一个索引对应一个数据库的概念。</li>
+                    <li>文档（Document）：基本的数据单位，类似数据库中的一行数据。文档是以 JSON 格式存储的。</li>
+                    <li>字段（Field）：文档中的一个键值对，类似数据库表中的列。</li>
+                    <li>倒排索引（Inverted Index）：Elasticsearch 使用倒排索引来加速查询过程。它将文档中的词汇映射到文档的列表，从而实现高效的检索。</li>
+                </ul>
+                <p><strong>（2）工作原理</strong></p>
+                <ul>
+                    <li>当将数据被添加到 Elasticsearch 时，Elasticsearch 会对这些数据进行索引。索引的过程包括词汇分词、构建倒排索引、存储和压缩等操作。</li>
+                    <li>在查询时，Elasticsearch 会基于倒排索引快速找到相关文档并返回结果。</li>
+                    <li>通过分布式机制，Elasticsearch 可以在多个节点之间分配数据和负载，实现横向扩展。</li>
+                </ul>
+
+
                 <h2 id="2flink"><strong>2、Kibana</strong></h2>
-                <p><strong>（1）批处理（DataStream API）与流处理（DataSet API）</strong></p>
+                <p>Kibana 是一个开源的分析和可视化平台，专门用于与 Elasticsearch 配合工作。它提供了一个直观的界面，帮助用户实时探索、分析和可视化 Elasticsearch 中存储的数据。</p>
+                <img src="static/assets/img/elasticsearch_kibana/kibana_achi.png" alt="kibana_achi" style="width: 100%; height: auto;">
+                
+                <p><strong>（1）Kibana与Elasticsearch的关系</strong></p>
                 <ul>
-                    <li>流（Stream）：Flink
-                        最主要的处理对象是数据流，即连续不断到达的数据。流数据可以是无界的，意味着数据没有固定的终止点，流会持续不断地生成数据。Flink会不断地处理这些数据，直到程序停止。</li>
-                    <li>批（Batch）：Flink也支持批处理。批处理是对有限数据集的处理，可以视作有限的流。Flink 的批处理是基于流处理的优化实现的。</li>
+                    <li>相互依赖：Kibana依赖于Elasticsearch来存储、索引和检索数据。没有Elasticsearch，Kibana就无法执行任何数据分析和可视化任务。相反，Elasticsearch也需要Kibana来展示其存储的数据，使其变得易于理解和分析</li>
+                    <li>数据流动：首先，数据被发送到Elasticsearch集群，这可能通过Logstash、Filebeat等数据收集工具完成。接着由Elasticsearch对数据进行索引，使其变得可搜索。而后Kibana通过构建查询语句，向Elasticsearch发送查询请求，以检索特定的数据。最后Elasticsearch返回查询结果，Kibana将这些结果转化为可视化组件，展示在仪表板上。</li>
+                    <li>功能互补：Elasticsearch擅长处理大规模数据集，支持复杂的查询语法，并提供高性能的数据检索能力；而Kibana则专注于数据的可视化和分析。它提供了丰富的可视化组件和仪表板，使用户能够轻松地理解数据，发现数据中的模式和趋势。</li>
                 </ul>
-                <p><strong>（2）Flink的结构</strong></p>
+                <p><strong>（2）应用场景</strong></p>
                 <ul>
-                    <li>Client：客户端，提交作业</li>
-                    <li>JobManager：负责作业的调度、状态管理和故障恢复。每个作业只有一个 JobManager</li>
-                    <li>TaskManager：负责具体任务的执行。Flink 的任务是并行的，每个 TaskManager 运行多个任务槽（task slot）</li>
+                    <li>日志分析：Kibana可以帮助用户实时监控日志数据，分析日志中的异常情况</li>
+                    <li>网站分析：Kibana可以分析网站访问数据，帮助用户了解用户行为，优化网站设计和用户体验</li>
+                    <li>网络安全：Kibana可以监控网络流量，分析安全事件，及时发现潜在的安全威胁</li>
                 </ul>
-                <p><strong>（3）操作符</strong></p>
-                <p>Flink 的流处理基于一系列的操作符，这些操作符作用于数据流中的元素。常见的操作符包括：</p>
-                <ul>
-                    <li>Map：对数据流中的每个元素进行转换。</li>
-                    <li>Filter：过滤掉不符合条件的元素。</li>
-                    <li>Filter：过滤掉不符合条件的元素。</li>
-                    <li>KeyBy：基于某个字段进行分组，类似于 groupBy。</li>
-                    <li>Reduce：对数据流中的元素进行归约操作，通常用于聚合计算。</li>
-                    <li>Window：将数据流分割成小的时间窗口进行聚合或处理。</li>
-                </ul>
-                <p><strong>（4）窗口</strong></p>
-                <p>窗口是流处理中用于分组和聚合事件的机制。Flink 支持多种窗口类型：</p>
-                <ul>
-                    <li>滚动窗口（Tumbling Window）：不重叠的时间段窗口，数据每到达一个新的时间段就会重新计算。</li>
-                    <li>滑动窗口（Sliding Window）：重叠的时间段窗口，数据在滑动窗口中会不断变化。</li>
-                    <li>会话窗口（Session Window）：基于事件的空闲时间来划分窗口，如果事件之间的时间间隔超过设定值，窗口会关闭。</li>
-                </ul>
-
-
-
-
-
-
+                
                 <h2 id="3minikubeflink"><strong>3、使用minikube部署Elasticsearch与Kibana</strong></h2>
                 <p><strong>（1）向minikube中导入所需的镜像</strong></p>
                 <pre><code>minikube image load kibana:8.17.0

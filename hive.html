@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Academic Webpage" />
+    <meta name="author" content="senli1073" />
+    <title id="title"></title>
+
+    <!-- Icon -->
+    <link rel="icon" type="image/x-icon" href="static/assets/favicon.ico" />
+
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <!-- Google fonts-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,600;1,600&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,500;0,600;0,700;1,300;1,500;1,600;1,700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap"
+        rel="stylesheet" />
+
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link type="text/css" href="static/css/styles.css" rel="stylesheet" />
+    <link type="text/css" href="static/css/main.css" rel="stylesheet" />
+
+    <!-- Bootstrap core JS-->
+    <script type="text/javascript" src="static/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-family: monospace;
+        }
+
+        code {
+            color: #333;
+        }
+    </style>
+
+    <!-- For Compatability -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+    <!-- Markdown -->
+    <script type="text/javascript" src="static/js/marked.min.js"></script>
+
+    <!-- Mathematics -->
+    <script>
+        // See https://docs.mathjax.org/en/latest/index.html for more details.
+        MathJax = {
+            tex: {
+                packages: {},              // extensions to use
+                inlineMath: [              // start/end delimiter pairs for in-line math
+                    ['$', '$'],
+                    ['\\(', '\\)']
+                ],
+                displayMath: [             // start/end delimiter pairs for display math
+                    ['$$', '$$'],
+                    ['\\[', '\\]']
+                ],
+                processEscapes: false,      // use \$ to produce a literal dollar sign
+                processEnvironments: true, // process \begin{xxx}...\end{xxx} outside math mode
+                processRefs: true,         // process \ref{...} outside of math mode
+                digits: /^(?:[0-9]+(?:\{,\}[0-9]{3})*(?:\.[0-9]*)?|\.[0-9]+)/,    // pattern for recognizing numbers
+                tags: 'all',              // or 'ams' or 'all'
+                tagSide: 'right',          // side for \tag macros
+                tagIndent: '0.8em',        // amount to indent tags
+                useLabelIds: true,         // use label name rather than tag for ids
+                maxMacros: 10000,          // maximum number of macro substitutions per expression
+                maxBuffer: 5 * 1024,       // maximum size for the internal TeX string (5K)
+                // baseURL:                   // URL for use with links to tags (when there is a <base> tag in effect)
+                // (document.getElementsByTagName('base').length === 0) ? '' : String(document.location).replace(/#.*$/, ''),
+                formatError:               // function called when TeX syntax errors occur
+                    (jax, err) => jax.formatError(err)
+            }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script"
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Core JS-->
+    <script type="text/javascript" src="static/js/scripts.js"></script>
+    <script type="text/javascript" src="static/js/js-yaml.min.js"></script>
+
+</head>
+
+<body id="page-top">
+    <!-- Navigation-->
+    <nav class="header navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
+        <div class="container px-5">
+            <a id="page-top-title" class="navbar-brand fw-bold" href="#page-top"></a>
+            <!-- <a href="#page-top"><img src="static/assets/img/CUMT_LOGO.svg" style="width: 11rem;"></a> -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                MENU
+                <i class="bi-list"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link me-lg-3" href="index.html" style="font-size: 30px;">首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link me-lg-3" href="expriment.html" style="font-size: 30px;">实验指南</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link me-lg-3" href="ppt.html" style="font-size: 30px;"><strong>PPT</strong></a>
+                    </li> -->
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Top Section -->
+    <section class="top-section" style="background-image: url('static/assets/img/background.jpeg');">
+        <div class="top-section-content">
+            <div class="container px-5">
+                <h2 id="top-section-bg-text" class="text-white display-3 lh-1 font-alt"></h2>
+            </div>
+        </div>
+    </section>
+    <!-- Top Section -->
+
+    <!-- Photo -->
+    <div class="container px-5">
+        <div id="avatar">
+            <img class="shadow" src="static/assets/img/photo.png">
+        </div>
+    </div>
+    <!-- Photo -->
+
+    <!-- Home -->
+    <section class="bg-gradient-primary-to-secondary-light mt5 md5" id="home">
+        <div class="container px-5">
+            <header>
+                <h2 id="home-subtitle"> </h2>
+                <!-- <span class="bi bi-list"></span> -->
+            </header>
+            <div class="main-body" id="home-md"></div>
+        </div>
+    </section>
+    <!-- Home -->
+
+
+
+    <!-- Awards -->
+    <section class="bg-gradient-primary-to-secondary-light mt5 md5" id="awards">
+        <div class="container px-5">
+            <header>
+                <h2 id="awards-subtitle" style="font-size: 48px;"><i class="bi bi-award-fill"></i> 实验指南(五)：Hive
+                </h2>
+            </header>
+
+            <div style="height: 64px;"></div>
+
+            <div class="main-body" id="awards-md">
+
+
+                
+                <h1 id="hive"><strong>一、Hive</strong></h1>
+                <div style="height: 32px;"></div>
+                <h2 id="1-5"><strong>1、简介</strong></h2>
+                <p>Hive是基于Hadoop的一个数据仓库工具，可以将结构化的数据文件映射为一张表，并提供类SQL查询功能。其本质是将HQL转化成MapReduce程序</p>
+                <img src="static/assets/img/sparksql_hive/hive_achi.png" alt="hive_achi" style="width: 100%; height: auto;"/>
+                <br><br>
+                <h2 id="2hive"><strong>2、Hive的核心概念</strong></h2>
+                <p><strong>（1）Hive客户端</strong></p>
+                <ul>
+                    <li>Hive CLI——本地</li>
+                    <li>JDBC/ODBC——远程</li>
+                </ul>
+                <p><strong>（2）Metastore</strong></p>
+                <ul>
+                    <li>是一个中心化的元数据存储，用于存储表、数据库、分区、列、数据类型等的元数据，通常使用关系型数据库（如内嵌的Derby、MySQL、PostgreSQL）来存储元数据</li>
+                </ul>
+                <p><strong>（3）HiveServer2</strong></p>
+                <ul>
+                    <li>负责解析并处理来自客户端的SQL查询，并将查询转化为MapReduce作业或Spark作业，最后通过执行引擎将查询结果返回给客户端。它提供了JDBC和ODBC支持，使得各种外部工具（如BI工具、Java应用程序等）能够通过标准的数据库连接协议与Hive交互
+                    </li>
+                    <li>beeline是Hive的命令行客户端工具，用于连接到 HiveServer2 并执行 HiveQL 查询。它支持JDBC连接，可以通过指定JDBC URL来连接到Hive服务。</li>
+                </ul>
+                <p><strong>（4）Driver</strong></p>
+                <ul>
+                    <li>负责接收HiveQL查询请求，并将这些请求转化为内部表示，以便进一步处理</li>
+                </ul>
+                <h2 id="3minikubehive"><strong>3、使用minikube部署Hive</strong></h2>
+                <p><strong>（1）向minikube中导入所需的镜像</strong></p>
+                <pre><code>minikube image load apache/hive:4.0.1
+</code></pre>
+                <ul>
+                    <li>进入minikube查看是否导入</li>
+                </ul>
+                <pre><code>minikube ssh
+docker images
+</code></pre>
+<img src="static/assets/img/sparksql_hive/hive_image.png" alt="hive_image" style="width: 100%; height: auto;"/>
+<br><br>
+                <p><strong>（2）使用hiveserver2-deployment.yaml文件部署Hive</strong></p>
+                <img src="static/assets/img/sparksql_hive/hive_run1.png" alt="hive_run1" style="width: 100%; height: auto;"/>
+                <ul>
+                    <li>查看pod状态，确认已正常运行</li>
+                </ul>
+                <pre><code>kubectl get pods
+</code></pre>
+<img src="static/assets/img/sparksql_hive/hive_run2.png" alt="hive_run2" style="width: 100%; height: auto;"/>
+                <ul>
+                    <li>使用kubectl的端口转发功能，以访问Hive的webui，这个转发命令行界面需要一直保持这个转发状态，停止转发后就无法访问webui了</li>
+                </ul>
+                <pre><code>kubectl port-forward deployment/hiveserver2 10002:10002
+</code></pre>
+<img src="static/assets/img/sparksql_hive/hive_webui1.png" alt="hive_webui1" style="width: 100%; height: auto;"/>
+                <ul>
+                    <li>通过下面的url在浏览器访问Hive的webui</li>
+                </ul>
+
+                <p><a href="http://localhost:10002/" target="_blank">http://localhost:10002/</a></p>
+                <img src="static/assets/img/sparksql_hive/hive_webui2.png" alt="hive_webui2" style="width: 100%; height: auto;"/>
+                <br><br>
+                <p><strong>（3）测试Hive的功能</strong></p>
+                <ul>
+                    <li>将数据文件复制进入hive的pod中。进入自己的data1.txt和data2.txt文件所在目录执行下面的命令，同时需要把下面命令中的pod名字替换成自己建立的pod名字</li>
+                </ul>
+                <pre><code>kubectl cp data1.txt hiveserver2-556d6b44db-tggsq:/opt/hive/
+kubectl cp data2.txt hiveserver2-556d6b44db-tggsq:/opt/hive/
+</code></pre>
+                <ul>
+                    <li>进入这个pod，同样的，需要把下面命令中的pod名字替换成自己建立的pod名字</li>
+                </ul>
+                <pre><code>kubectl exec -it hiveserver2-556d6b44db-fz4kp -- /bin/bash
+</code></pre>
+                <ul>
+                    <li>在该pod内使用beeline连接hiveserver，出现下面的hive命令行就可以了</li>
+                </ul>
+                <pre><code>beeline -u 'jdbc:hive2://localhost:10000/'
+</code></pre>
+<img src="static/assets/img/sparksql_hive/hive_beeline.png" alt="hive_beeline" style="width: 100%; height: auto;"/> 
+<br><br>
+                
+
+                <p><strong>（4）hive的基本操作</strong></p>
+
+                <ul>
+                    <li>创建数据库</li>
+                </ul>
+                <pre><code>CREATE DATABASE IF NOT EXISTS example_db;
+USE example_db;</code></pre>
+                <img src="static/assets/img/sparksql_hive/show1.png" alt="show1" style="width: 100%; height: auto;"/> 
+
+
+                <ul>
+                    <li>创建表</li>
+                </ul>
+                <pre><code>CREATE TABLE students (id INT,name STRING,age INT) PARTITIONED BY (class STRING) STORED AS PARQUET;</code></pre>
+                <img src="static/assets/img/sparksql_hive/show2.png" alt="show2" style="width: 100%; height: auto;"/> 
+
+                <ul>
+                    <li>添加分区</li>
+                </ul>
+                <pre><code>ALTER TABLE students ADD PARTITION (class='A');
+ALTER TABLE students ADD PARTITION (class='B');</code></pre>
+                <img src="static/assets/img/sparksql_hive/show3.png" alt="show3" style="width: 100%; height: auto;"/> 
+
+                <ul>
+                    <li>插入数据</li>
+                </ul>
+                <pre><code>INSERT INTO TABLE students PARTITION (class='A') VALUES(1, 'Alice', 20),(2, 'Bob', 21);
+INSERT INTO TABLE students PARTITION (class='B') VALUES (3, 'Charlie', 22),(4, 'David', 23);</code></pre>
+                <img src="static/assets/img/sparksql_hive/show4.png" alt="show4" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>查看所有表</li>
+                </ul>
+                <pre><code>SHOW TABLES;</code></pre>
+                <img src="static/assets/img/sparksql_hive/show5.png" alt="show5" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>查看表结构</li>
+                </ul>
+                <pre><code>DESCRIBE students;</code></pre>
+                <img src="static/assets/img/sparksql_hive/show6.png" alt="show6" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>查询所有数据</li>
+                </ul>
+                <pre><code>SELECT * FROM students;</code></pre>
+                <img src="static/assets/img/sparksql_hive/show7.png" alt="show7" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>查询特定分区数据</li>
+                </ul>
+                <pre><code>SELECT * FROM students WHERE class='A';</code></pre>
+                <img src="static/assets/img/sparksql_hive/show8.png" alt="show8" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>进行聚合查询</li>
+                </ul>
+                <pre><code>SELECT class, COUNT(*) AS num_students FROM students GROUP BY class;</code></pre>
+                <img src="static/assets/img/sparksql_hive/show9.png" alt="show9" style="width: 100%; height: auto;"/>
+
+<br><br>
+
+
+                <p><strong>（5）进行专利文献数据查询cite75_99.txt</strong></p>
+                <ul>
+                    <li>创建表格patent_citation</li>
+                </ul>
+                <pre><code>CREATE TABLE patent_citation (
+        citing INT,
+        cited INT
+    )
+    ROW FORMAT DELIMITED
+    FIELDS TERMINATED BY ','
+    LINES TERMINATED BY '\n'
+    STORED AS TEXTFILE
+    TBLPROPERTIES ('skip.header.line.count'='1');
+</code></pre>
+                <ul>
+                    <li>导入data1.txt文件中的数据</li>
+                </ul>
+                <pre><code>LOAD DATA INPATH '/opt/hive/data1.txt' INTO TABLE patent\_citation
+</code></pre>
+<img src="static/assets/img/sparksql_hive/hive_load1.png" alt="hive_load1" style="width: 100%; height: auto;"/>
+                <ul>
+                    <li>查询一 被引用列表</li>
+                </ul>
+                <pre><code>SELECT 
+    cited, 
+    concat_ws(',', collect_set(cast(citing AS string))) AS citing_list
+FROM 
+    patent_citation
+GROUP BY 
+    cited;
+</code></pre>
+<img src="static/assets/img/sparksql_hive/hive_query11.png" alt="hive_query11" style="width: 100%; height: auto;"/>
+<br><br>
+<img src="static/assets/img/sparksql_hive/hive_query12.png" alt="hive_query12" style="width: 100%; height: auto;"/> 
+                <ul>
+                    <li>查询二 被引用次数</li>
+                </ul>
+                <pre><code>SELECT 
+    cited, 
+    COUNT(*) AS citing_count
+FROM 
+    patent_citation
+GROUP BY 
+    cited;
+</code></pre>
+<img src="static/assets/img/sparksql_hive/hive_query21.png" alt="hive_query21" style="width: 100%; height: auto;"/>
+<br><br>
+<img src="static/assets/img/sparksql_hive/hive_query22.png" alt="hive_query22" style="width: 100%; height: auto;"/> 
+                <ul>
+                    <li>查询三 被引用次数直方图</li>
+                </ul>
+                <pre><code>SELECT 
+    ct, 
+    COUNT(*) AS group_count
+FROM (
+    SELECT 
+        cited, 
+        COUNT(*) AS ct
+    FROM 
+        patent_citation
+    GROUP BY 
+        cited
+) cite_count
+GROUP BY 
+    ct;
+</code></pre>
+<img src="static/assets/img/sparksql_hive/hive_query31.png" alt="hive_query31" style="width: 100%; height: auto;"/>
+<br><br>
+<img src="static/assets/img/sparksql_hive/hive_query32.png" alt="hive_query32" style="width: 100%; height: auto;"/> 
+<br><br>
+                <p><strong>（6）进行专利文献数据查询apat63_99.txt</strong></p>
+                <ul>
+                    <li>创建表格patent_metadata</li>
+                </ul>
+                <pre><code>CREATE TABLE patent_metadata (
+    PATENT STRING,
+    GYEAR INT,
+    GDATE INT,
+    APPYEAR INT,
+    COUNTRY STRING,
+    POSTATE STRING,
+    ASSIGNEE STRING,
+    ASSCODE INT,
+    CLAIMS INT,
+    NCLASS INT,
+    CAT INT,
+    SUBCAT INT,
+    CMADE INT,
+    CRECEIVE INT,
+    RATIOCIT DOUBLE,
+    GENERAL DOUBLE,
+    ORIGINAL DOUBLE,
+    FWDAPLAG DOUBLE,
+    BCKGTLAG DOUBLE,
+    SELFCTUB DOUBLE,
+    SELFCTLB DOUBLE,
+    SECDUPBD DOUBLE,
+    SECDLWBD DOUBLE
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+STORED AS TEXTFILE
+TBLPROPERTIES ('skip.header.line.count'='1');
+</code></pre>
+                <ul>
+                    <li>导入data2.txt文件中的数据</li>
+                </ul>
+                <pre><code>LOAD DATA INPATH '/opt/hive/data2.txt' INTO TABLE patent\_metadata;
+</code></pre>
+<img src="static/assets/img/sparksql_hive/hive_load21.png" alt="hive_load21" style="width: 100%; height: auto;"/>
+<br><br>
+<img src="static/assets/img/sparksql_hive/hive_load22.png" alt="hive_load22" style="width: 100%; height: auto;"/> 
+                <ul>
+                    <li>查询四 年份或国家专利数统计</li>
+                </ul>
+                <pre><code>SELECT 
+    GYEAR, 
+    COUNTRY, 
+    COUNT(*) AS patent_count
+FROM 
+    patent_metadata
+GROUP BY 
+    GYEAR, 
+    COUNTRY;
+</code></pre>
+<img src="static/assets/img/sparksql_hive/hive_query41.png" alt="hive_query41" style="width: 100%; height: auto;"/>
+<br><br>
+<img src="static/assets/img/sparksql_hive/hive_query42.png" alt="hive_query42" style="width: 100%; height: auto;"/> 
+
+
+            </div>
+
+        </div>
+    </section>
+    <!-- Awards -->
+
+
+    <!-- Footer-->
+    <footer class="bg-bottom text-center py-5">
+        <div class="container px-5">
+
+        </div>
+    </footer>
+
+</body>
+
+</html>
