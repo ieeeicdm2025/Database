@@ -206,7 +206,8 @@
                 <pre><code>minikube ssh 'sudo ip link set docker0 promisc on'
 </code></pre>
                 <p><strong>（2）向minikube中导入所需的镜像</strong></p>
-                <pre><code>minikube image load flink:scala\_2.12-java8
+                <pre><code>minikube image load flink:scala_2.12-java8
+minikube image load dataloader:2.0
 </code></pre>
                 <ul>
                     <li>进入minikube查看是否导入</li>
@@ -266,7 +267,7 @@ docker images
                     <li>因为默认情况下jobmanager/taskmanager进程的STDOUT已经输出到console，直接发送到容器的日志系统，是没有办法通过webui查看STDOUT输出的，但是可以通过kubectl
                         logs来查看（这里的flink-taskmanager-5c65765575-zcq7t同样需要替换为自己的taskmanager所在的pod）：</li>
                 </ul>
-                <pre><code>kubectl logs flink-taskmanager-5c65765575-zcq7t
+                <pre><code>kubectl logs -f flink-taskmanager-5c65765575-zcq7t
 </code></pre>
 <img src="static/assets/img/flink/flink_result.png" alt="flink_result" style="width: 100%; height: auto;">
 
