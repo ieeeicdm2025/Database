@@ -373,23 +373,61 @@ pip3 --version
                 <pre><code>pip install elasticsearch
 </code></pre>
 <img src="static/assets/img/elasticsearch_kibana/elk_python2.png" alt="elk_python2" style="width: 100%; height: auto;">
+
+
+                <ul>
+                    <li>如果出现下图中这样的报错，就改用下面这个命令</li>
+                </ul>
+                <pre><code>pip install elasticsearch --break-system-packages
+</code></pre>
+<img src="static/assets/img/elasticsearch_kibana/elk_problem.png" alt="elk_python2" style="width: 100%; height: auto;">
+
                 
                 <ul>
-                    <li>然后运行python脚本，这个脚本会随机生成1000条数据并将它们插入到刚刚我们所创建的索引中</li>
+                    <li>然后在命令行中运行python脚本，这个脚本会连接到elasticsearch，建立一个索引，并将文件weibo_senti_100k.csv中的微博数据插入到这个索引中</li>
+                </ul>
+                <pre><code>python3 import_weibo_to_es.py
+</code></pre>
+<img src="static/assets/img/elasticsearch_kibana/elk_weibo1.png" alt="elk_weibo1" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>然后我们回到 Dev Tools 控制台中，查询该索引下的数据条数，可以看到已经有了119988条数据</li>
+                </ul>
+                <pre><code>GET /weibo_index/_count?pretty
+</code></pre>
+<img src="static/assets/img/elasticsearch_kibana/elk_weibo2.png" alt="elk_weibo2" style="width: 100%; height: auto;">
+
+
+                <ul>
+                    <li>接着进一步使用elasticsearch的文本检索功能，搜索整个微博数据文件中带有 "爱你"字段的内容</li>
+                </ul>
+                <pre><code>GET /weibo_index/_search?pretty
+{
+  "query": {
+    "match": {
+      "review": "爱你"
+    }
+  }
+}
+</code></pre>
+<img src="static/assets/img/elasticsearch_kibana/elk_weibo3.png" alt="elk_weibo3" style="width: 100%; height: auto;">
+
+
+                <ul>
+                    <li>接着我们回到命令行，然后运行另一个python脚本，这个脚本会随机生成1000条地理数据并将它们插入到最初我们所创建的索引my_index中</li>
                 </ul>
                 <pre><code>python3 bulk_insert.py
 </code></pre>
 <img src="static/assets/img/elasticsearch_kibana/elk_python3.png" alt="elk_python3" style="width: 100%; height: auto;">
 
-
                 <ul>
-                    <li>接着我们回到 Dev Tools 控制台中，查询当前的数据条数，可以看到已经有了1003条数据</li>
+                    <li>接着我们回到 Dev Tools 控制台中，查询当前的数据条数，可以看到这个索引下已经有了1003条数据</li>
                 </ul>
                 <pre><code>GET my_index/_count
 </code></pre>        
 <img src="static/assets/img/elasticsearch_kibana/elk_dev_count.png" alt="elk_dev_count" style="width: 100%; height: auto;">
 
-                <ul>
+                <!-- <ul>
                     <li>我们可以进一步对这些数据进行各种查询</li>
                 </ul>
                 
@@ -426,7 +464,7 @@ pip3 --version
   }
 }
 </code></pre>
-<img src="static/assets/img/elasticsearch_kibana/elk_dev_query2.png" alt="elk_dev_query2" style="width: 100%; height: auto;">
+<img src="static/assets/img/elasticsearch_kibana/elk_dev_query2.png" alt="elk_dev_query2" style="width: 100%; height: auto;"> -->
 
                 <ul>
                     <li>查询距离某地最近的5个人</li>
