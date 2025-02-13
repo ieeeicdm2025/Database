@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Academic Webpage" />
+    <meta name="author" content="senli1073" />
+    <title id="title"></title>
+
+    <!-- Icon -->
+    <link rel="icon" type="image/x-icon" href="static/assets/favicon.ico" />
+
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <!-- Google fonts-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,600;1,600&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,500;0,600;0,700;1,300;1,500;1,600;1,700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap"
+        rel="stylesheet" />
+
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link type="text/css" href="static/css/styles.css" rel="stylesheet" />
+    <link type="text/css" href="static/css/main.css" rel="stylesheet" />
+
+    <!-- Bootstrap core JS-->
+    <script type="text/javascript" src="static/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-family: monospace;
+        }
+
+        code {
+            color: #333;
+        }
+    </style>
+
+    <!-- For Compatability -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+    <!-- Markdown -->
+    <script type="text/javascript" src="static/js/marked.min.js"></script>
+
+    <!-- Mathematics -->
+    <script>
+        // See https://docs.mathjax.org/en/latest/index.html for more details.
+        MathJax = {
+            tex: {
+                packages: {},              // extensions to use
+                inlineMath: [              // start/end delimiter pairs for in-line math
+                    ['$', '$'],
+                    ['\\(', '\\)']
+                ],
+                displayMath: [             // start/end delimiter pairs for display math
+                    ['$$', '$$'],
+                    ['\\[', '\\]']
+                ],
+                processEscapes: false,      // use \$ to produce a literal dollar sign
+                processEnvironments: true, // process \begin{xxx}...\end{xxx} outside math mode
+                processRefs: true,         // process \ref{...} outside of math mode
+                digits: /^(?:[0-9]+(?:\{,\}[0-9]{3})*(?:\.[0-9]*)?|\.[0-9]+)/,    // pattern for recognizing numbers
+                tags: 'all',              // or 'ams' or 'all'
+                tagSide: 'right',          // side for \tag macros
+                tagIndent: '0.8em',        // amount to indent tags
+                useLabelIds: true,         // use label name rather than tag for ids
+                maxMacros: 10000,          // maximum number of macro substitutions per expression
+                maxBuffer: 5 * 1024,       // maximum size for the internal TeX string (5K)
+                // baseURL:                   // URL for use with links to tags (when there is a <base> tag in effect)
+                // (document.getElementsByTagName('base').length === 0) ? '' : String(document.location).replace(/#.*$/, ''),
+                formatError:               // function called when TeX syntax errors occur
+                    (jax, err) => jax.formatError(err)
+            }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script"
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Core JS-->
+    <script type="text/javascript" src="static/js/scripts.js"></script>
+    <script type="text/javascript" src="static/js/js-yaml.min.js"></script>
+
+</head>
+
+<body id="page-top">
+    <!-- Navigation-->
+    <nav class="header navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
+        <div class="container px-5">
+            <a id="page-top-title" class="navbar-brand fw-bold" href="#page-top"></a>
+            <!-- <a href="#page-top"><img src="static/assets/img/CUMT_LOGO.svg" style="width: 11rem;"></a> -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                MENU
+                <i class="bi-list"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link me-lg-3" href="index.html" style="font-size: 30px;">首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link me-lg-3" href="expriment.html" style="font-size: 30px;">实验指南</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link me-lg-3" href="ppt.html" style="font-size: 30px;"><strong>PPT</strong></a>
+                    </li> -->
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Top Section -->
+    <section class="top-section" style="background-image: url('static/assets/img/background.jpeg');">
+        <div class="top-section-content">
+            <div class="container px-5">
+                <h2 id="top-section-bg-text" class="text-white display-3 lh-1 font-alt"></h2>
+            </div>
+        </div>
+    </section>
+    <!-- Top Section -->
+
+    <!-- Photo -->
+    <div class="container px-5">
+        <div id="avatar">
+            <img class="shadow" src="static/assets/img/photo.png">
+        </div>
+    </div>
+    <!-- Photo -->
+
+    <!-- Home -->
+    <section class="bg-gradient-primary-to-secondary-light mt5 md5" id="home">
+        <div class="container px-5">
+            <header>
+                <h2 id="home-subtitle"> </h2>
+                <!-- <span class="bi bi-list"></span> -->
+            </header>
+            <div class="main-body" id="home-md"></div>
+        </div>
+    </section>
+    <!-- Home -->
+
+
+
+    <!-- Awards -->
+    <section class="bg-gradient-primary-to-secondary-light mt5 md5" id="awards">
+        <div class="container px-5">
+            <header>
+                <h2 id="awards-subtitle" style="font-size: 48px;"><i class="bi bi-award-fill"></i> 实验指南(十)：Hue和Flume
+                </h2>
+            </header>
+
+            <div style="height: 64px;"></div>
+
+            <div class="main-body" id="awards-md">
+                <h1 id="wsl"><strong>一、Hue（<a href="https://gethue.com/" target="_blank">官网</a>）</strong></h1>
+
+                <h2 id="1"><strong>1、简介</strong></h2>
+                <p>Hue 提供一个基于浏览器的用户界面，用户可以通过它与 Hadoop 系统进行交互，执行查询、管理数据和配置系统等任务。它使得大数据的使用者，尤其是非技术用户，可以通过图形化的方式完成各种操作，降低了学习和使用的门槛。</p>
+                <img src="static/assets/img/hue_flume/hue_achi.png" alt="hue_achi" style="width: 100%; height: auto;">
+
+                <h2 id="1"><strong>2、hue 集成多种 Hadoop 生态系统工具</strong></h2>
+                <ul>
+                    <li><b>HDFS</b>：文件管理界面，支持文件浏览、上传、下载、删除等操作。</li>
+                </ul>
+                
+                <ul>
+                    <li><b>Hive</b>：SQL 查询界面，允许用户通过 SQL 查询语言对数据进行操作和分析。</li>
+                </ul>
+
+                <ul>
+                    <li><b>Impala</b>：与 Hive 类似，提供 SQL 查询功能，但它是一个更加高效的实时查询引擎。</li>
+                </ul>
+
+                <ul>
+                    <li><b>HBase</b>：图形化的 HBase 界面，支持表的查看、编辑等操作。</li>
+                </ul>
+
+                <ul>
+                    <li><b>HBase</b>>：一个支持全文搜索的服务，Hue 提供对 Solr 搜索引擎的图形化管理界面。</li>
+                </ul>
+
+
+                <h2 id="1"><strong>3、使用minikube部署hue</strong></h2>
+                <p><strong>（1）向minikube中导入所需的镜像</strong></p>
+                <pre><code>minikube image load hive:latest
+minikube image load mysql:oraclelinux9
+minikube image load hue:latest
+</code></pre>
+                <ul>
+                    <li>进入minikube查看是否导入</li>
+                </ul>
+                <pre><code>minikube ssh
+docker images
+</code></pre>
+<img src="static/assets/img/hue_flume/load.png" alt="load" style="width: 100%; height: auto;">
+
+                <p><strong>（2）部署mysql、hive与hue</strong></p>
+                <ul>
+                    <li>我们先简单搭建一个hive的环境，由于其自带的derby数据库不支持并发访问，因此使用mysql作为数据库</li>
+                </ul>
+                <ul>
+                    <li>如果之前的hive环境没有删除的话，先清空之前部署的hive环境，找到之前的部署文件 hive-deployment.yaml 所在的位置，删除这个部署</li>
+                </ul>
+                <pre><code>kubectl delete -f hive-deployment.yaml
+</code></pre>
+                <ul>
+                    <li>创建hue的配置信息，这里要用到文件 hue.ini 来生成配置信息，因此需要进入文件 hue.ini 所在的目录再运行下面的命令</li>
+                </ul>
+                <pre><code>kubectl create configmap hue-config --from-file=hue.ini
+</code></pre>
+
+                <ul>
+                    <li>使用 hue-deployment.yaml 文件部署hue</li>
+                </ul>
+                <pre><code>kubectl apply -f hue-deployment.yaml
+</code></pre>
+
+                <ul>
+                    <li>查看pod状态，确认已正常运行</li>
+                </ul>
+                <pre><code>kubectl get pods
+</code></pre>
+<img src="static/assets/img/hue_flume/apply.png" alt="apply" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>使用kubectl的端口转发功能，以访问 hue 的webui，这个转发命令行界面需要一直保持这个转发状态，停止转发后就无法访问webui了</li>
+                </ul>
+                <pre><code>kubectl port-forward service/hue 8888:8888
+</code></pre>
+<img src="static/assets/img/hue_flume/port.png" alt="port" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>使用kubectl的端口转发功能，以访问 hue 的webui，这个转发命令行界面需要一直保持这个转发状态，停止转发后就无法访问webui了</li>
+                </ul>
+                <a href="http://localhost:8888/" target="_blank">http://localhost:8888/</a>
+<img src="static/assets/img/hue_flume/webui.png" alt="webui" style="width: 100%; height: auto;">
+
+                <p><strong>（3）测试 hue 的功能</strong></p>
+
+                <ul>
+                    <li>登录以后，我们可以在左侧看到当前hive的数据库只有一个默认的数据库，我们在中间的方框处对 hive 进行查询</li>
+                </ul>
+<img src="static/assets/img/hue_flume/login.png" alt="login" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>首先我们创建数据库example_db</li>
+                </ul>
+                <pre><code>CREATE DATABASE IF NOT EXISTS example_db;
+</code></pre>
+<img src="static/assets/img/hue_flume/create_database.png" alt="create" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>这里我们可能会遇到下面红色框里的警告，可以忽视这个警告，等待一会可以看到下方的 Query History 中刚刚所执行的创建语句变为了绿钩，这表明我们的语句是成功执行了的，我们再点击左侧的刷新按钮，可以看到数据库中出现了我们所创建的 example_db（这个警告下面的过程中也可能会出现，像这里一样忽视就好）</li>
+                </ul>
+<img src="static/assets/img/hue_flume/warn1.png" alt="warn" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>接着我们指定使用刚刚创建的数据库example_db</li>
+                </ul>
+                <pre><code>USE example_db;
+</code></pre>
+<img src="static/assets/img/hue_flume/use.png" alt="use" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>然后创建表students，而后点击左边我们之前创建的 example_db 数据库</li>
+                </ul>
+                <pre><code>CREATE TABLE students (id INT,name STRING,age INT) PARTITIONED BY (class STRING) STORED AS PARQUET;
+</code></pre>
+<img src="static/assets/img/hue_flume/create_table.png" alt="create_table" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>进入后我们可以看到我们刚刚所创建的表students</li>
+                </ul>
+<img src="static/assets/img/hue_flume/show.png" alt="show" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>接着我们依次添加分区</li>
+                </ul>
+                <pre><code>ALTER TABLE students ADD PARTITION (class='A');
+ALTER TABLE students ADD PARTITION (class='B');
+</code></pre>
+<img src="static/assets/img/hue_flume/partition1.png" alt="partition1" style="width: 100%; height: auto;">
+<br><br>
+<img src="static/assets/img/hue_flume/partition2.png" alt="partition2" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>然后我们依次向表中添加数据，这里的第一条指令执行时就出现了之前说的可能会遇到的警告，同样也是可以忽略，下方的绿钩出现就说明该条语句已经执行成功了，第二条指令的执行为 success</li>
+                </ul>
+                <pre><code>INSERT INTO TABLE students PARTITION (class='A') VALUES(1, 'Alice', 20),(2, 'Bob', 21);
+INSERT INTO TABLE students PARTITION (class='B') VALUES (3, 'Charlie', 22),(4, 'David', 23);
+</code></pre>
+<img src="static/assets/img/hue_flume/insert1.png" alt="insert1" style="width: 100%; height: auto;">
+<br><br>
+<img src="static/assets/img/hue_flume/insert2.png" alt="insert2" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>然后我们可以查看当前数据库中所存在的表，这里我们只创建了students</li>
+                </ul>
+                <pre><code>SHOW TABLES;
+</code></pre>
+<img src="static/assets/img/hue_flume/show_tables.png" alt="show_tables" style="width: 100%; height: auto;">
+
+
+                <ul>
+                    <li>这里如果我们遇到了之前那样的警告而无法显示查询的结果时，重新执行几遍就可以了（查询语句重复执行没关系，而插入、建表这些语句重复执行就会导致数据的重复创建，所以之前只需要等待语句执行完毕的绿钩就可以了）</li>
+                </ul>
+<img src="static/assets/img/hue_flume/warn2.png" alt="warn2" style="width: 100%; height: auto;">
+
+
+                <ul>
+                    <li>我们也可以查看表 students 的结构</li>
+                </ul>
+                <pre><code>DESCRIBE students;
+</code></pre>
+<img src="static/assets/img/hue_flume/describe.png" alt="describe" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>接着我们查看表students的数据，可以看到我们之前所插入的数据</li>
+                </ul>
+                <pre><code>SELECT * FROM students;
+</code></pre>
+<img src="static/assets/img/hue_flume/select1.png" alt="select1" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>我们还可以查询特定分区数据</li>
+                </ul>
+                <pre><code>SELECT * FROM students WHERE class='A';
+</code></pre>
+<img src="static/assets/img/hue_flume/select2.png" alt="select2" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>进行聚合查询</li>
+                </ul>
+                <pre><code>SELECT class, COUNT(*) AS num_students FROM students GROUP BY class;
+</code></pre>
+<img src="static/assets/img/hue_flume/select3.png" alt="select3" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>对于查询结果，hue还可以对其进行可视化，并可以下载结果</li>
+                </ul>
+<img src="static/assets/img/hue_flume/visual.png" alt="visual" style="width: 100%; height: auto;">
+<br><br>
+
+
+
+
+                <div style="height: 32px;"></div>
+                <h1 id="docker"><strong>二、Flume（<a href="https://flume.apache.org/" target="_blank">官网</a>）</strong></h1>
+                <div style="height: 32px;"></div>
+                <h2 id="1"><strong>1、简介</strong></h2>
+                
+                <p>Flume是一个分布式的、可靠的、可用的服务，用于高效地收集、聚合和移动大量的日志数据。</p>
+                <img src="static/assets/img/hue_flume/flume_achi.png" alt="flume_achi" style="width: 100%; height: auto;">
+
+                <h2 id="1"><strong>2、Flume的核心概念</strong></h2>
+
+                <p><strong>（1）一个flume agent（事务）可以分成三部分</strong></p>
+                <ul>
+                    <li>源（Source）：用于从外部系统（如日志文件、网络流、数据库等）获取数据，并通过将获取到的数据封装成 Event 发送到 Flume 的后续组件。</li>
+                    <li>通道（Channel）：用于临时存储从 Source 接收到的事件，直到它们被 Flume 的 Sink 组件处理。</li>
+                    <li>接收器（Sink）：用于将事件从 Channel 发送到外部系统（例如 HDFS、Kafka、数据库等）的组件。Sink 会从 Channel 中读取事件，并根据配置将其写入到目标系统中。</li>
+                </ul>
+
+                <p><strong>（2）flume 的工作流程</strong></p>
+                <ul>
+                    <li>Source 从外部系统获取数据并将其转化为 Event。</li>
+                    <li>Channel 存储这些 Event，确保数据可靠传输。</li>
+                    <li>Sink 从 Channel 中读取 Event，并将其发送到外部存储或分析系统。</li>
+                </ul>
+
+                <h2 id="1"><strong>3、使用minikube部署flume</strong></h2>
+                <p><strong>（1）向minikube中导入所需的镜像</strong></p>
+                <pre><code>minikube image load flume:latest
+</code></pre>
+                <ul>
+                    <li>进入minikube查看是否导入</li>
+                </ul>
+                <pre><code>minikube ssh
+docker images
+</code></pre>
+<img src="static/assets/img/hue_flume/flume_load.png" alt="load" style="width: 100%; height: auto;">
+
+                <p><strong>（2）由于这里展示的flume是集成到Hadoop中的，因此需要先使用hadoop-cluster.yaml文件部署Hadoop，部署后查看pod状态验证其是否正常运行</strong></p>
+                <pre><code>kubectl apply -f hadoop-cluster.yaml
+kubectl get pods
+</code></pre>
+<img src="static/assets/img/hue_flume/flume_hadoop.png" alt="hadoop" style="width: 100%; height: auto;">
+
+
+                <ul>
+                    <li>由于flume的日志是写在hdfs上的，因此，我们到hdfs上预先为其建立一个文件夹以存放flume日志</li>
+                </ul>
+                <ul>
+                    <li>我们先布置hdfs的端口转发，以在浏览器中访问到hdfs</li>
+                </ul>
+                <pre><code>kubectl port-forward svc/namenode 9870:9870
+</code></pre>
+<img src="static/assets/img/hue_flume/flume_port.png" alt="hadoop_port" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>在浏览器中输入如下地址</li>
+                </ul>
+                <a href="http://localhost:9870/" target="_blank">http://localhost:9870/</a>
+<img src="static/assets/img/hue_flume/flume_webui1.png" alt="hadoop_webui1" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>点击这里可以进入文件管理界面</li>
+                </ul>
+<img src="static/assets/img/hue_flume/flume_webui2.png" alt="hadoop_webui2" style="width: 100%; height: auto;">
+
+
+                <ul>
+                    <li>接着我们回到命令行，进入namenode所在的pod，同样地，这里的namenode-764bfd689f-85pd7需替换为自己的pod名</li>
+                </ul>
+                <pre><code>kubectl exec -it namenode-764bfd689f-85pd7 -- bash
+</code></pre>
+
+                <ul>
+                    <li>而后在hdfs上创建文件夹并更改其权限</li>
+                </ul>
+                <pre><code>hdfs dfs -mkdir -p /flume/data
+hdfs dfs -chmod 777 /flume
+</code></pre>
+
+<img src="static/assets/img/hue_flume/flume_create.png" alt="flume_create" style="width: 100%; height: auto;">
+
+                <p><strong>（3）使用flume-deployment.yaml文件部署flume，并查看pod状态验证其是否正常运行</strong></p>
+                <pre><code>kubectl apply -f flume-deployment.yaml
+kubectl get pods
+</code></pre>
+
+<img src="static/assets/img/hue_flume/flume_apply.png" alt="flume_apply" style="width: 100%; height: auto;">
+
+
+                <ul>
+                    <li>创建完毕后我们可以进入flume所在的pod，以验证其是否能与hdfs连接，图中可以看到我们刚刚为flume建立的文件夹/flume/data</li>
+                </ul>
+                <pre><code>hdfs dfs -ls /
+</code></pre>
+
+<img src="static/assets/img/hue_flume/flume_test.png" alt="flume_test" style="width: 100%; height: auto;">
+
+                <p><strong>（4）测试flume的功能</strong></p>
+                <ul>
+                    <li>在flume的部署文件中，我们已经将/var/log/app/设置为了它的监听目录，因此我们在flume的pod中，写入一个文件到它所监听的这个目录下</li>
+                </ul>
+                <pre><code>for i in {1..5}; do
+   echo "Text Test $i $(date '+%Y-%m-%d %H:%M:%S')" >> /var/log/app/text_test.log
+done
+</code></pre>
+
+<img src="static/assets/img/hue_flume/flume_write.png" alt="flume_write" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>而后我们来到hdfs上存放flume数据的对应目录下，可以看到它已经自动生成了以日期命名的子文件夹</li>
+                </ul>
+
+<img src="static/assets/img/hue_flume/flume_date.png" alt="flume_date" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>我们进入这个文件夹，可以看到flume写入hdfs的.tmp临时文件</li>
+                </ul>
+
+<img src="static/assets/img/hue_flume/flume_tmp.png" alt="flume_tmp" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>这里我们需要静待一会，等待它写入完毕，此时.tmp后缀会消失</li>
+                </ul>
+
+<img src="static/assets/img/hue_flume/flume_events.png" alt="flume_events" style="width: 100%; height: auto;">
+
+
+                <ul>
+                    <li>而后我们回到命令行中的flume所在的pod中，从hdfs上下载flume写入的日志文件，这里的/2025-02-10/events-.1739222202785需要替换为实际的文件地址</li>
+                </ul>
+                <pre><code>hdfs dfs -get /flume/data/2025-02-10/events-.1739222202785 ./
+ls
+</code></pre>
+<img src="static/assets/img/hue_flume/flume_get.png" alt="flume_get" style="width: 100%; height: auto;">
+
+
+                <ul>
+                    <li>接下来我们可以对比之前我们手动写入flume所监听的文件夹的文件与flume监听后写入hdfs的文件，是完全一致的，下面的events-.1739222202785也需要替换为自己实际的文件名</li>
+                </ul>
+                <pre><code>cat /var/log/app/text_test.log
+cat events-.1739222202785
+</code></pre>
+<img src="static/assets/img/hue_flume/flume_cat1.png" alt="flume_cat1" style="width: 100%; height: auto;">
+<br><br>
+<img src="static/assets/img/hue_flume/flume_cat2.png" alt="flume_cat2" style="width: 100%; height: auto;">
+
+
+
+            </div>
+
+        </div>
+    </section>
+    <!-- Awards -->
+
+
+    <!-- Footer-->
+    <footer class="bg-bottom text-center py-5">
+        <div class="container px-5">
+
+        </div>
+    </footer>
+
+</body>
+
+</html>

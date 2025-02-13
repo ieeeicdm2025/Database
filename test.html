@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Academic Webpage" />
+    <meta name="author" content="senli1073" />
+    <title id="title"></title>
+
+    <!-- Icon -->
+    <link rel="icon" type="image/x-icon" href="static/assets/favicon.ico" />
+
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <!-- Google fonts-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,600;1,600&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,500;0,600;0,700;1,300;1,500;1,600;1,700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap"
+        rel="stylesheet" />
+
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link type="text/css" href="static/css/styles.css" rel="stylesheet" />
+    <link type="text/css" href="static/css/main.css" rel="stylesheet" />
+
+    <!-- Bootstrap core JS-->
+    <script type="text/javascript" src="static/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-family: monospace;
+        }
+
+        code {
+            color: #333;
+        }
+    </style>
+
+    <!-- For Compatability -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+    <!-- Markdown -->
+    <script type="text/javascript" src="static/js/marked.min.js"></script>
+
+    <!-- Mathematics -->
+    <script>
+        // See https://docs.mathjax.org/en/latest/index.html for more details.
+        MathJax = {
+            tex: {
+                packages: {},              // extensions to use
+                inlineMath: [              // start/end delimiter pairs for in-line math
+                    ['$', '$'],
+                    ['\\(', '\\)']
+                ],
+                displayMath: [             // start/end delimiter pairs for display math
+                    ['$$', '$$'],
+                    ['\\[', '\\]']
+                ],
+                processEscapes: false,      // use \$ to produce a literal dollar sign
+                processEnvironments: true, // process \begin{xxx}...\end{xxx} outside math mode
+                processRefs: true,         // process \ref{...} outside of math mode
+                digits: /^(?:[0-9]+(?:\{,\}[0-9]{3})*(?:\.[0-9]*)?|\.[0-9]+)/,    // pattern for recognizing numbers
+                tags: 'all',              // or 'ams' or 'all'
+                tagSide: 'right',          // side for \tag macros
+                tagIndent: '0.8em',        // amount to indent tags
+                useLabelIds: true,         // use label name rather than tag for ids
+                maxMacros: 10000,          // maximum number of macro substitutions per expression
+                maxBuffer: 5 * 1024,       // maximum size for the internal TeX string (5K)
+                // baseURL:                   // URL for use with links to tags (when there is a <base> tag in effect)
+                // (document.getElementsByTagName('base').length === 0) ? '' : String(document.location).replace(/#.*$/, ''),
+                formatError:               // function called when TeX syntax errors occur
+                    (jax, err) => jax.formatError(err)
+            }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script"
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Core JS-->
+    <script type="text/javascript" src="static/js/scripts.js"></script>
+    <script type="text/javascript" src="static/js/js-yaml.min.js"></script>
+
+</head>
+
+<body id="page-top">
+    <!-- Navigation-->
+    <nav class="header navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
+        <div class="container px-5">
+            <a id="page-top-title" class="navbar-brand fw-bold" href="#page-top"></a>
+            <!-- <a href="#page-top"><img src="static/assets/img/CUMT_LOGO.svg" style="width: 11rem;"></a> -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                MENU
+                <i class="bi-list"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link me-lg-3" href="index.html" style="font-size: 30px;">首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link me-lg-3" href="expriment.html" style="font-size: 30px;">实验指南</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link me-lg-3" href="ppt.html" style="font-size: 30px;"><strong>PPT</strong></a>
+                    </li> -->
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Top Section -->
+    <section class="top-section" style="background-image: url('static/assets/img/background.jpeg');">
+        <div class="top-section-content">
+            <div class="container px-5">
+                <h2 id="top-section-bg-text" class="text-white display-3 lh-1 font-alt"></h2>
+            </div>
+        </div>
+    </section>
+    <!-- Top Section -->
+
+    <!-- Photo -->
+    <div class="container px-5">
+        <div id="avatar">
+            <img class="shadow" src="static/assets/img/photo.png">
+        </div>
+    </div>
+    <!-- Photo -->
+
+    <!-- Home -->
+    <section class="bg-gradient-primary-to-secondary-light mt5 md5" id="home">
+        <div class="container px-5">
+            <header>
+                <h2 id="home-subtitle"> </h2>
+                <!-- <span class="bi bi-list"></span> -->
+            </header>
+            <div class="main-body" id="home-md"></div>
+        </div>
+    </section>
+    <!-- Home -->
+
+
+
+    <!-- Awards -->
+    <section class="bg-gradient-primary-to-secondary-light mt5 md5" id="awards">
+        <div class="container px-5">
+            <header>
+                <h2 id="awards-subtitle" style="font-size: 48px;"><i class="bi bi-award-fill"></i> 实验指南(十)：Hue和Flume</h2>
+            </header>
+
+            <div style="height: 64px;"></div>
+
+            <div class="main-body" id="awards-md">
+
+                <h1 id="flink"><strong>Hue和Flume</strong></h1>
+                <div style="height: 32px;"></div>
+                <h2 id="1-7"><strong>1、Hue（<a
+                    href="https://gethue.com/" target="_blank">官网</a>）</strong></h2>
+                
+                <p><strong>（1）Hue简介</strong></p>
+                
+                <p>Hue 提供一个基于浏览器的用户界面，用户可以通过它与 Hadoop 系统进行交互，执行查询、管理数据和配置系统等任务。它使得大数据的使用者，尤其是非技术用户，可以通过图形化的方式完成各种操作，降低了学习和使用的门槛。</p>
+                <img src="static/assets/img/hue_flume/hue_achi.png" alt="hue_achi" style="width: 100%; height: auto;">
+
+                <p><strong>（2）hue集成多种 Hadoop 生态系统工具</strong></p>
+                <ul>
+                    <li>HDFS：文件管理界面，支持文件浏览、上传、下载、删除等操作。</li>
+                </ul>
+                
+                <ul>
+                    <li>Hive：SQL 查询界面，允许用户通过 SQL 查询语言对数据进行操作和分析。</li>
+                </ul>
+
+                <ul>
+                    <li>Impala：与 Hive 类似，提供 SQL 查询功能，但它是一个更加高效的实时查询引擎。</li>
+                </ul>
+
+                <ul>
+                    <li>HBase：图形化的 HBase 界面，支持表的查看、编辑等操作。</li>
+                </ul>
+
+                <ul>
+                    <li>Solr：一个支持全文搜索的服务，Hue 提供对 Solr 搜索引擎的图形化管理界面。</li>
+                </ul>
+
+                
+                <h2 id="2flink"><strong>2、Flume（<a
+                    href="https://flume.apache.org/" target="_blank">官网</a>）</strong></h2>
+                
+                <p><strong>（1）Flume简介</strong></p>
+                
+                    <p>Flume是一个分布式的、可靠的、可用的服务，用于高效地收集、聚合和移动大量的日志数据。</p>
+                <img src="static/assets/img/hue_flume/flume_achi.png" alt="flume_achi" style="width: 100%; height: auto;">
+                
+
+                <p><strong>（2）Flume的核心概念</strong></p>
+
+                <ul>
+                    <li>一个flume agent（事务）可以分成三部分</li>
+                    <li style="padding-left: 20px; list-style-position: inside;">源（Source）：用于从外部系统（如日志文件、网络流、数据库等）获取数据，并通过将获取到的数据封装成 Event 发送到 Flume 的后续组件。</li>
+                    <li style="padding-left: 20px; list-style-position: inside;">通道（Channel）：用于临时存储从 Source 接收到的事件，直到它们被 Flume 的 Sink 组件处理。</li>
+                    <li style="padding-left: 20px; list-style-position: inside;">接收器（Sink）：用于将事件从 Channel 发送到外部系统（例如 HDFS、Kafka、数据库等）的组件。Sink 会从 Channel 中读取事件，并根据配置将其写入到目标系统中。</li>
+                </ul>
+
+                <ul>
+                    <li>flume 的工作流程</li>
+                    <li style="padding-left: 20px; list-style-position: inside;">Source 从外部系统获取数据并将其转化为 Event。</li>
+                    <li style="padding-left: 20px; list-style-position: inside;">Channel 存储这些 Event，确保数据可靠传输。</li>
+                    <li style="padding-left: 20px; list-style-position: inside;">Sink 从 Channel 中读取 Event，并将其发送到外部存储或分析系统。</li>
+                </ul>
+
+
+                <h2 id="3minikubeflink"><strong>3、使用minikube部署Zookeeper与Kafka</strong></h2>
+                <p><strong>（1）向minikube中导入所需的镜像</strong></p>
+                <pre><code>minikube image load bitnami/kafka:latest
+minikube image load zookeeper:latest
+</code></pre>
+                <ul>
+                    <li>进入minikube查看是否导入</li>
+                </ul>
+                <pre><code>minikube ssh
+docker images
+</code></pre>
+<img src="static/assets/img/kafka_zookeeper/kafka_images.png" alt="kafka_image" style="width: 100%; height: auto;">
+<br><br>
+                <p><strong>（2）使用kafka-deployment.yaml文件部署Kafka与Zookeeper</strong></p>
+                <pre><code>kubectl apply -f kafka-deployment.yaml
+</code></pre>
+                <ul>
+                    <li>查看pod状态，确认已正常运行</li>
+                </ul>
+                <pre><code>kubectl get pods
+</code></pre>
+<img src="static/assets/img/kafka_zookeeper/kafka_pods.png" alt="kafka_pods" style="width: 100%; height: auto;">
+                <br><br>
+                <p><strong>（3）测试Kafka与Zookeeper的功能</strong></p>
+                <ul>
+                    <li>打开三个命令行窗口，并进入wsl中（三个窗口都输入一遍，都进入wsl以备用）</li>
+                </ul>
+                <pre><code>wsl
+</code></pre>
+                <ul>
+                    <li>第一个窗口中，进入Kafka所在的pod，同样的，下面的kafka-9b4f47bd5-wdmkb需替换为自己创建的pod名称</li>
+                </ul>
+                <pre><code>kubectl exec -it kafka-9b4f47bd5-wdmkb -- bash
+</code></pre>
+                <ul>
+                    <li>创建一个新的Kafka主题——test-topic</li>
+                </ul>
+                <pre><code>kafka-topics.sh --create --topic test-topic --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+</code></pre>
+                <ul>
+                    <li>确认主题是否创建成功</li>
+                </ul>
+                <pre><code>kafka-topics.sh --list --bootstrap-server localhost:9092
+</code></pre>
+<img src="static/assets/img/kafka_zookeeper/kafka_theme.png" alt="kafka_theme" style="width: 100%; height: auto;">
+                <ul>
+                    <li>在这个窗口使用 Kafka 作为生产者发送消息</li>
+                </ul>
+                <pre><code>kafka-console-producer.sh --topic test-topic --bootstrap-server localhost:9092
+</code></pre>
+                <ul>
+                    <li>输入待发送的消息，再回车即为发送</li>
+                </ul>
+                <pre><code>Hello Kafka
+Hello Zookeeper
+</code></pre>
+<img src="static/assets/img/kafka_zookeeper/kafka_producer.png" alt="kafka_producer" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>不要关闭第一个窗口，同时打开第二个命令行窗口，进入Kafka所在的pod，同样的，下面的kafka-9b4f47bd5-wdmkb需替换为自己创建的pod名称</li>
+                </ul>
+                <pre><code>kubectl exec -it kafka-9b4f47bd5-wdmkb -- bash
+</code></pre>
+                <ul>
+                    <li>在这个窗口使用 Kafka 作为消费者接收消息</li>
+                </ul>
+                <pre><code>kafka-console-consumer.sh --topic test-topic --bootstrap-server localhost:9092 --from-beginning
+</code></pre>
+<img src="static/assets/img/kafka_zookeeper/kafka_consumer.png" alt="kafka_consumer" style="width: 100%; height: auto;">
+
+
+
+                <ul>
+                    <li>此时可以打开第一个窗口继续输入消息并回车发送，同时在第二个窗口中也能持续接收到相应的内容，并可以使用 ctrl+c 退出发送/接收的命令行</li>
+                </ul>
+                <ul>
+                    <li>再打开第三个命令行窗口，进入Zookeeper所在的pod，同样的，下面的zookeeper-85fc45c-sqpsp需替换为自己创建的pod名称</li>
+                </ul>
+                <pre><code>kubectl exec -it zookeeper-85fc45c-sqpsp -- bash
+</code></pre>
+                <ul>
+                    <li>连接到Zookeeper</li>
+                </ul>
+                <pre><code>zkCli.sh -server localhost:2181
+</code></pre>
+<img src="static/assets/img/kafka_zookeeper/zookeeper1.png" alt="kafka_zookeeper1" style="width: 100%; height: auto;">
+
+
+                <ul>
+                    <li>往下滑动，能看到 Welcome to Zookeeper 字样</li>
+                </ul>
+<img src="static/assets/img/kafka_zookeeper/zookeeper2.png" alt="kafka_zookeeper2" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>由于Kafka 会在 Zookeeper 中创建一系列路径来存储主题和分区的信息，因此我们在这里列出所有的主题。这里可以看到我们最初所创建的 test-topic 主题以及用于存储消费偏移量的内部主题__consumer_offsets</li>
+                </ul>
+                <pre><code>ls /brokers/topics</code></pre>
+<img src="static/assets/img/kafka_zookeeper/zookeeper3.png" alt="kafka_zookeeper3" style="width: 100%; height: auto;">
+
+            </div>
+
+        </div>
+    </section>
+    <!-- Awards -->
+
+
+    <!-- Footer-->
+    <footer class="bg-bottom text-center py-5">
+        <div class="container px-5">
+
+        </div>
+    </footer>
+
+</body>
+
+</html>
