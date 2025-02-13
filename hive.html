@@ -255,36 +255,31 @@ kubectl port-forward svc/resourcemanager 8088:8088
                 <ul>
                     <li>创建文件夹并更改权限</li>
                 </ul>
-                <pre><code>hdfs dfs -mkdir -p /user/hive/warehouse
+                <pre><code>hdfs dfs -mkdir -p /input
+hdfs dfs -mkdir -p /user/hive/warehouse
+hdfs dfs -chmod -R 777 /input
 hdfs dfs -chmod -R 777 /user/hive
 </code></pre>
                 <img src="static/assets/img/hive/hive_pre1.png" alt="hive_pre1" style="width: 100%; height: auto;"/>
                 
                 <ul>
-                    <li>退出该pod，然后复制实验所需的data1.txt和data2.txt文件到该pod中</li>
+                    <li>退出该pod，然后复制实验所需的data1.txt和data2.txt文件到hive所在的pod中，这里的hiveserver2-789bc74b68-6pb9p需替换为实际的hive所在的pod</li>
                 </ul>
                 <pre><code>exit
-kubectl cp data1.txt nodemanager-0:/opt/spark/work-dir
-kubectl cp data2.txt nodemanager-0:/opt/spark/work-dir
+kubectl cp data1.txt hiveserver2-789bc74b68-6pb9p:/opt/hive
+kubectl cp data2.txt hiveserver2-789bc74b68-6pb9p:/opt/hive
 </code></pre>
                 <img src="static/assets/img/hive/hive_pre2.png" alt="hive_pre2" style="width: 100%; height: auto;"/>
 
                 <ul>
-                    <li>接着再次进入该pod，将data1.txt和data2.txt文件上传到hdfs的对应路径上</li>
+                    <li>接着我们进入hive所在的pod，将data1.txt和data2.txt文件上传到hdfs的对应路径上，同样地，这里的hiveserver2-789bc74b68-6pb9p需替换为实际的hive所在的pod</li>
                 </ul>
-                <pre><code>kubectl exec -it nodemanager-0 -- bash
-hdfs dfs -put data1.txt /user/hive/warehouse
-hdfs dfs -put data2.txt /user/hive/warehouse
+                <pre><code>kubectl exec -it hiveserver2-789bc74b68-6pb9p -- bash
+hdfs dfs -put data1.txt /input
+hdfs dfs -put data2.txt /input
 </code></pre>
 <img src="static/assets/img/hive/hive_pre3.png" alt="hive_pre3" style="width: 100%; height: auto;"/>
-<br><br>
-<img src="static/assets/img/hive/hive_pre4.png" alt="hive_pre4" style="width: 100%; height: auto;"/>
 
-                <ul>
-                    <li>接下来我们进入 hive 所在的pod，同样的，需要把下面命令中的pod名字替换成自己建立的pod名字</li>
-                </ul>
-                <pre><code>kubectl exec -it hiveserver2-789bc74b68-9tpfk -- bash
-</code></pre>
                 <ul>
                     <li>在该pod内使用beeline连接hiveserver，出现下面的hive命令行就可以了</li>
                 </ul>
@@ -382,7 +377,7 @@ INSERT INTO TABLE students PARTITION (class='B') VALUES (3, 'Charlie', 22),(4, '
                 <ul>
                     <li>导入data1.txt文件中的数据</li>
                 </ul>
-                <pre><code>LOAD DATA INPATH '/user/hive/warehouse/data1.txt' INTO TABLE patent_citation;
+                <pre><code>LOAD DATA INPATH '/input/data1.txt' INTO TABLE patent_citation;
 </code></pre>
 <img src="static/assets/img/hive/load1.png" alt="load1" style="width: 100%; height: auto;"/>
                 <ul>
@@ -474,7 +469,7 @@ TBLPROPERTIES ('skip.header.line.count'='1');
                 <ul>
                     <li>导入data2.txt文件中的数据</li>
                 </ul>
-                <pre><code>LOAD DATA INPATH '/user/hive/warehouse/data2.txt' INTO TABLE patent_metadata;
+                <pre><code>LOAD DATA INPATH '/input/data2.txt' INTO TABLE patent_metadata;
 </code></pre>
 
 <img src="static/assets/img/hive/load2.png" alt="load2" style="width: 100%; height: auto;"/> 
