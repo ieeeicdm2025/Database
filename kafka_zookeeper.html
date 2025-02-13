@@ -342,6 +342,40 @@ Hello Zookeeper
                 <pre><code>ls /brokers/topics</code></pre>
 <img src="static/assets/img/kafka_zookeeper/zookeeper3.png" alt="kafka_zookeeper3" style="width: 100%; height: auto;">
 
+                <br><br>
+                <h2 id="3minikubeflink"><strong>4、kafka-tools的使用（Offset Explorer）</strong></h2>
+
+                <ul>
+                    <li>先在命令行配置端口转发</li>
+                </ul>
+                <pre><code>kubectl port-forward svc/kafka 9092:9092</code></pre>
+<img src="static/assets/img/kafka_zookeeper/kafka_port.png" alt="kafka_port" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>打开Offset Explorer.exe执行程序，安装kafka-tools，注意设置下安装位置，其它的都点 next 就好</li>
+                </ul>
+<img src="static/assets/img/kafka_zookeeper/kafka_install.png" alt="kafka_install" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>按照图示方式配置kafka与zookeeper</li>
+                </ul>
+<img src="static/assets/img/kafka_zookeeper/kafka_connect.png" alt="kafka_connect" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>刷新topic</li>
+                </ul>
+<img src="static/assets/img/kafka_zookeeper/kafka_refresh.png" alt="kafka_refresh" style="width: 100%; height: auto;">
+
+
+                <ul>
+                    <li>可以看到我们刚刚所创建的topic</li>
+                </ul>
+<img src="static/assets/img/kafka_zookeeper/kafka_result.png" alt="kafka_result" style="width: 100%; height: auto;">
+
+
+
+
+
             </div>
 
         </div>
