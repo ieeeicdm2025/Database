@@ -195,39 +195,54 @@
                     <li>DataSet：是 DataFrame 的强类型版本，它结合了 RDD 和 DataFrame 的优点，能够提供编译时类型检查，同时支持 SQL 查询优化。</li>
                 </ul>
                 <h2 id="3minikubesparksql"><strong>3、使用minikube部署SparkSQL</strong></h2>
-                <p><strong>（1）由于sparksql不适用于cluster模式，因此单独建立一个local模式的pod来进行实验</strong>
+                <p><strong>（1）配置 <a
+                    href="hadoop.html" target="_blank">Hadoop</a> 和 <a
+                    href="spark.html" target="_blank">Spark</a> 的环境</strong>
                 </p>
-                <img src="static/assets/img/sparksql_hive/sparksql_local.png" alt="sparksql_local" style="width: 100%; height: auto;"/>
                 
-                <ul>
-                    <li>使用sparksql-deployment.yaml文件部署spark-local环境</li>
-                </ul>
-                <pre><code>kubectl apply -f sparksql-deployment.yaml
-</code></pre>
                 <ul>
                     <li>查看pod状态，确认已正常运行</li>
                 </ul>
                 <pre><code>kubectl get pods
 </code></pre>
-<img src="static/assets/img/sparksql_hive/sparksql_run.png" alt="sparksql_run" style="width: 100%; height: auto;"/>
+<img src="static/assets/img/sparksql/hadoop_spark.png" alt="hadoop_spark" style="width: 100%; height: auto;"/>
 
                 <p><strong>（2）使用SparkSQL进行查询</strong></p>
                 <ul>
-                    <li>复制数据原文件到spark-local所在的pod中，下面命令中需要替换为自己的spark-local所在的pod名</li>
+                    <li>在命令行中进入数据文件 data1.txt、data2.txt 所在的文件目录下，复制这两个文件到 nodemanager 所在的pod中</li>
                 </ul>
-                <pre><code>kubectl cp data1.txt spark-local-5549987b6c-pk5vx:/opt/spark/work-dir
-kubectl cp data2.txt spark-local-5549987b6c-pk5vx:/opt/spark/work-dir
+                <pre><code>kubectl cp data1.txt nodemanager-0:/opt/spark/work-dir
+kubectl cp data2.txt nodemanager-0:/opt/spark/work-dir
 </code></pre>
+<img src="static/assets/img/sparksql/copy.png" alt="copy" style="width: 100%; height: auto;"/>
                 <ul>
                     <li>进入spark-local所在的pod</li>
                 </ul>
-                <pre><code>kubectl exec -it spark-local-5549987b6c-pk5vx -- bash
+                <pre><code>kubectl exec -it nodemanager-0 -- bash
 </code></pre>
+
+                <ul>
+                    <li>在hdfs上创建/input文件夹以存放查询需要导入的文件</li>
+                </ul>
+                <pre><code>hdfs dfs -mkdir /input
+</code></pre>
+
+                <ul>
+                    <li>将所需文件上传至HDFS</li>
+                </ul>
+                <pre><code>hdfs dfs -put data1.txt /input
+hdfs dfs -put data2.txt /input
+</code></pre>
+<img src="static/assets/img/sparksql/upload.png" alt="upload" style="width: 100%; height: auto;"/>
+
+
                 <ul>
                     <li>启动sparksql</li>
                 </ul>
                 <pre><code>spark-sql
 </code></pre>
+<img src="static/assets/img/sparksql/comein.png" alt="comein" style="width: 100%; height: auto;"/>
+
                 <p><strong>（3）进行专利文献数据查询cite75_99.txt</strong></p>
                 <ul>
                     <li>建立表格并导入文件数据</li>
@@ -237,9 +252,9 @@ kubectl cp data2.txt spark-local-5549987b6c-pk5vx:/opt/spark/work-dir
     CITED STRING
 )
 USING csv
-OPTIONS (path '/opt/spark/work-dir/data1.txt', header 'true', delimiter ',');
+OPTIONS (path '/input/data1.txt', header 'true', delimiter ',');
 </code></pre>
-<img src="static/assets/img/sparksql_hive/sparksql1.png" alt="sparksql1" style="width: 100%; height: auto;"/>
+<img src="static/assets/img/sparksql/create1.png" alt="create1" style="width: 100%; height: auto;"/>
 
                 <ul>
                     <li>查询一 被引用列表</li>
@@ -247,7 +262,7 @@ OPTIONS (path '/opt/spark/work-dir/data1.txt', header 'true', delimiter ',');
                 <pre><code>CREATE TABLE citation_results
 USING csv
 OPTIONS (
-    path '/opt/spark/work-dir/output/citation_results',
+    path '/output/citation_results',
     header 'true'
 ) AS
 SELECT 
@@ -258,14 +273,14 @@ FROM
 GROUP BY 
     CITED;
 </code></pre>
-<img src="static/assets/img/sparksql_hive/sparksql2.png" alt="sparksql2" style="width: 100%; height: auto;"/>
+<img src="static/assets/img/sparksql/query1.png" alt="query1" style="width: 100%; height: auto;"/>
                 <ul>
                     <li>查询二 被引用次数</li>
                 </ul>
                 <pre><code>CREATE TABLE citation_count_results
 USING csv
 OPTIONS (
-    path '/opt/spark/work-dir/output/citation_count_results',
+    path '/output/citation_count_results',
     header 'true'
 ) AS
 SELECT
@@ -276,7 +291,7 @@ FROM
 GROUP BY
     cited;
 </code></pre>
-<img src="static/assets/img/sparksql_hive/sparksql3.png" alt="sparksql3" style="width: 100%; height: auto;"/>
+<img src="static/assets/img/sparksql/query2.png" alt="query2" style="width: 100%; height: auto;"/>
                 <ul>
                     <li>查询三 被引用次数直方图</li>
                     <li>先创建临时视图</li>
@@ -290,13 +305,14 @@ FROM
 GROUP BY 
     cited;
 </code></pre>
+<img src="static/assets/img/sparksql/query3_1.png" alt="query3_1" style="width: 100%; height: auto;"/>
                 <ul>
                     <li>再进行查询</li>
                 </ul>
                 <pre><code>CREATE TABLE cite_count_results
 USING csv
 OPTIONS (
-    path '/opt/spark/work-dir/output/cite_count_results',
+    path '/output/cite_count_results',
     header 'true'
 ) AS
 SELECT 
@@ -307,7 +323,7 @@ FROM
 GROUP BY 
     ct;
 </code></pre>
-<img src="static/assets/img/sparksql_hive/sparksql4.png" alt="sparksql4" style="width: 100%; height: auto;"/>
+<img src="static/assets/img/sparksql/query3_2.png" alt="query3_2" style="width: 100%; height: auto;"/>
 <br><br>
                 <p><strong>（4）进行专利文献数据查询apat63_99.txt</strong></p>
                 <ul>
@@ -340,20 +356,20 @@ GROUP BY
 )
 USING csv
 OPTIONS (
-    path '/opt/spark/work-dir/data2.txt',
+    path '/input/data2.txt',
     header 'true',        
     delimiter ',',        
     inferSchema 'true'    
 );
 </code></pre>
-<img src="static/assets/img/sparksql_hive/sparksql5.png" alt="sparksql5" style="width: 100%; height: auto;"/>
+<img src="static/assets/img/sparksql/create2.png" alt="create2" style="width: 100%; height: auto;"/>
                 <ul>
                     <li>查询四 年份或国家专利数统计</li>
                 </ul>
                 <pre><code>CREATE TABLE patent_count_by_year_country
 USING csv
 OPTIONS (
-    path '/opt/spark/work-dir/output/patent_count_by_year_country',
+    path '/output/patent_count_by_year_country',
     header 'true'
 ) AS
 SELECT 
@@ -366,35 +382,35 @@ GROUP BY
     GYEAR, 
     COUNTRY;
 </code></pre>
-<img src="static/assets/img/sparksql_hive/sparksql6.png" alt="sparksql6" style="width: 100%; height: auto;"/>
+<img src="static/assets/img/sparksql/query4.png" alt="query4" style="width: 100%; height: auto;"/>
 <br><br>
-                <p><strong>（5）所有的查询结果都以文件的形式存放在对应目录下</strong></p>
+                <p><strong>（5）查看结果</strong></p>
+                
                 <ul>
-                    <li>先退出sql命令行</li>
+                    <li>所有的查询结果都以文件的形式存放在对应目录下</li>
                 </ul>
-                <pre><code>exit;
+                
+                <ul>
+                    <li>我们可以在HDFS上看到我们查询得到的结果，在浏览器访问下面的链接（这里如果访问不到，则是在部署Hadoop环境时没有在命令行转发端口）</li>
+                </ul>
+<p><a href="http://localhost:9870/" target="_blank">http://localhost:9870/</a></p>
+
+                <ul>
+                    <li>再打开对应目录，我们能看到刚刚查询所得到的结果都被放在对应的文件夹中，打开某一文件夹，可以看到这里的part-00000-55438a7f-e434-4970-913b4d960374a4d7-c000.csv即为我们查询得到的结果文件，-SUCCESS则是任务成功的标志文件</li>
+                </ul>
+<img src="static/assets/img/sparksql/show1.png" alt="show1" style="width: 100%; height: auto;"/>
+<br><br>
+<img src="static/assets/img/sparksql/show2.png" alt="show2" style="width: 100%; height: auto;"/>
+                <ul>
+                    <li>接着我们回到命令行，先使用ctrl+c退出spark-sql，回到nodemanager-0所在的pod中，我们可以查看查询结果，这里的part-00000-55438a7f-e434-4970-913b-4d960374a4d7-c000.csv需要替换为实际生成的文件</li>
+                </ul>
+
+                <pre><code>hdfs dfs -cat /output/citation_count_results/part-00000-55438a7f-e434-4970-913b-4d960374a4d7-c000.csv
 </code></pre>
-                <ul>
-                    <li>再打开输出目录</li>
-                </ul>
-                <pre><code>cd output
-</code></pre>
-                <ul>
-                    <li>再进入对应目录查看输出文件列表</li>
-                </ul>
-                <img src="static/assets/img/sparksql_hive/sparksql_file1.png" alt="sparksql_file1" style="width: 100%; height: auto;"/>
-                <ul>
-                    <li>进入任意一个目录中</li>
-                </ul>
-                <pre><code>cd citation\_results
-</code></pre>
-                <ul>
-                    <li>可以查看到文件的具体内容（下面的part-00000-96701e9c-2270-4f47-ac3e-2901da3ca863-c000.csv需替换为自己想要查看的文件名）</li>
-                </ul>
-                <pre><code>cat part-00000-96701e9c-2270-4f47-ac3e-2901da3ca863-c000.csv
-</code></pre>
-<img src="static/assets/img/sparksql_hive/sparksql_file2.png" alt="sparksql_file2" style="width: 100%; height: auto;"/>
-                <div style="height: 32px;"></div>
+
+<img src="static/assets/img/sparksql/show3.png" alt="show3" style="width: 100%; height: auto;"/>
+                
+                
 
 
             </div>
