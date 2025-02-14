@@ -206,6 +206,11 @@
                 <ul>
                     <li>该命令手动将docker0接口设置为promiscuous mode（混杂模式），确保Flink组件能够通过Kubernetes服务正确引用彼此</li>
                 </ul>
+
+                <ul>
+                    <li>官方文档中给出了对于该配置的明确提醒：<a href="https://nightlies.apache.org/flink/flink-docs-master/docs/deployment/resource-providers/standalone/kubernetes/" target="_blank">https://nightlies.apache.org/flink/flink-docs-master/docs/deployment/resource-providers/standalone/kubernetes/</a></li>
+                </ul>
+
                 <pre><code>minikube ssh 'sudo ip link set docker0 promisc on'
 </code></pre>
                 <p><strong>（2）向minikube中导入所需的镜像</strong></p>
