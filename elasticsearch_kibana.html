@@ -249,7 +249,32 @@ docker images
 </code></pre>
 <img src="static/assets/img/elasticsearch_kibana/elk_images.png" alt="elk_images" style="width: 100%; height: auto;">
 <br><br>
-                <p><strong>（2）使用elasticsearch-kibana.yaml文件部署Elasticsearch与Kibana</strong></p>
+
+
+                <p><strong>（2）修改minikube的内核参数</strong></p>
+                <ul>
+                    <li>进入minikube</li>
+                </ul>
+                <pre><code>minikube ssh
+</code></pre>
+
+
+                <ul>
+                    <li>修改内核参数</li>
+                </ul>
+                <pre><code>sudo sysctl -w vm.max_map_count=262144
+</code></pre>
+
+
+                <ul>
+                    <li>退出minikube，再进行下面的步骤</li>
+                </ul>
+                <pre><code>exit
+</code></pre>
+<img src="static/assets/img/elasticsearch_kibana/elk_core.png" alt="elk_pod" style="width: 100%; height: auto;">
+
+
+                <p><strong>（3）使用elasticsearch-kibana.yaml文件部署Elasticsearch与Kibana</strong></p>
                 <pre><code>kubectl apply -f elasticsearch-kibana.yaml
 </code></pre>
                 <ul>
@@ -274,14 +299,14 @@ kubectl port-forward service/kibana 5601:5601
 <img src="static/assets/img/elasticsearch_kibana/elk_link1.png" alt="elk_link1" style="width: 100%; height: auto;">
 
                 <ul>
-                    <li>通过下面的url在浏览器访问Kibana的webui</li>
+                    <li>通过下面的url在浏览器访问Kibana的webui，这里的kibana的webui界面可能需要等候一段时间，待其初始化完成后才能访问</li>
                 </ul>
                 <p><a href="http://localhost:5601" target="_blank">http://localhost:5601</a></p>
 <img src="static/assets/img/elasticsearch_kibana/elk_link2.png" alt="elk_link2" style="width: 100%; height: auto;">
 
 
                 <br><br>
-                <p><strong>（3）测试elasticsearch与kibana</strong></p>
+                <p><strong>（4）测试elasticsearch与kibana</strong></p>
                 <ul>
                     <li>进入Kibana的webui，选择自己探索（Explore on my own）</li>
                 </ul>
