@@ -203,6 +203,9 @@
                 </ul>
                 <h2 id="3minikubeflink"><strong>3、使用minikube部署Flink</strong></h2>
                 <p><strong>（1）使用minikube部署Flink时，需要先使flink可以引用自身</strong></p>
+                <ul>
+                    <li>该命令手动将docker0接口设置为promiscuous mode（混杂模式），确保Flink组件能够通过Kubernetes服务正确引用彼此</li>
+                </ul>
                 <pre><code>minikube ssh 'sudo ip link set docker0 promisc on'
 </code></pre>
                 <p><strong>（2）向minikube中导入所需的镜像</strong></p>

@@ -196,7 +196,8 @@
                 </ul>
                 <h2 id="3minikubehive"><strong>3、使用minikube部署Hive</strong></h2>
                 <p><strong>（1）向minikube中导入所需的镜像</strong></p>
-                <pre><code>minikube image load apache/hive:4.0.1
+                <pre><code>minikube image load apache/hive:latest
+minikube image load mysql:oraclelinux9
 </code></pre>
                 <ul>
                     <li>进入minikube查看是否导入</li>
@@ -204,9 +205,18 @@
                 <pre><code>minikube ssh
 docker images
 </code></pre>
-<img src="static/assets/img/sparksql_hive/hive_image.png" alt="hive_image" style="width: 100%; height: auto;"/>
+<img src="static/assets/img/hive/hive_image.png" alt="hive_image" style="width: 100%; height: auto;"/>
 <br><br>
-                <p><strong>（2）使用hive-deployment.yaml文件部署Hive</strong></p>
+                <p><strong>（2）部署hive</strong></p>
+                <ul>
+                    <li>先使用mysql-deployment.yaml文件部署mysql</li>
+                </ul>
+                <pre><code>kubectl apply -f mysql-deployment.yaml
+</code></pre>
+
+                <ul>
+                    <li>由于mysql需要初始化，因此我们需要等候一会，再使用hive-deployment.yaml文件部署Hive</li>
+                </ul>
                 <pre><code>kubectl apply -f hive-deployment.yaml
 </code></pre>
                 
@@ -242,7 +252,71 @@ kubectl port-forward svc/resourcemanager 8088:8088
 <img src="static/assets/img/hive/hadoop_webui1.png" alt="hadoop_webui1" style="width: 100%; height: auto;"/>                
 
                 <br><br>
-                <p><strong>（3）测试Hive的功能</strong></p>
+
+                <p><strong>（3）简单测试mysql的功能</strong></p>
+                <ul>
+                    <li>进入mysql所在的pod，同样地，这里的mysql-78db5c7f4b-l5668需替换为实际的mysql所在的pod</li>
+                </ul>
+                <pre><code>kubectl exec -it mysql-78db5c7f4b-l5668 -- bash
+</code></pre>
+
+                <ul>
+                    <li>使用root作为登录账户，密码为：rootpassword，这里的密码是在mysql的部署文件中配置的</li>
+                </ul>
+                <pre><code>root
+rootpassword
+</code></pre>
+<img src="static/assets/img/hive/hive_deployment.png" alt="hive_webui1" style="width: 100%; height: auto;"/>
+
+
+                <ul>
+                    <li>查看当前所有的数据库</li>
+                </ul>
+                <pre><code>SHOW DATABASES;
+</code></pre>
+<img src="static/assets/img/hive/mysql_login.png" alt="hive_webui1" style="width: 100%; height: auto;"/>
+                <ul>
+                    <li>创建一个新的数据库test_db，并使用它</li>
+                </ul>
+                <pre><code>CREATE DATABASE test_db;
+USE test_db;
+</code></pre>
+
+                <ul>
+                    <li>创建一个users表</li>
+                </ul>
+                <pre><code>CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL
+);
+</code></pre>
+
+
+                <ul>
+                    <li>向表中插入数据</li>
+                </ul>
+                <pre><code>INSERT INTO users (name, email) VALUES ('Alice', 'alice@example.com');
+INSERT INTO users (name, email) VALUES ('Bob', 'bob@example.com');
+</code></pre>
+
+
+                <ul>
+                    <li>查看刚刚带有数据的表users</li>
+                </ul>
+                <pre><code>SELECT * FROM users;
+</code></pre>
+
+                <ul>
+                    <li>第一个exit退出该mysql命令行，第二个exit退出该pod</li>
+                </ul>
+                <pre><code>exit
+exit
+</code></pre>
+<img src="static/assets/img/hive/mysql_do.png" alt="mysql_do" style="width: 100%; height: auto;"/>
+
+
+                <p><strong>（4）测试Hive的功能</strong></p>
 
                 <ul>
                     <li>先进入hadoop集群的节点中，在hdfs上创建好文件夹以存放hive的数据并更改权限</li>
@@ -288,7 +362,7 @@ hdfs dfs -put data2.txt /input
 <img src="static/assets/img/hive/hive_comein.png" alt="hive_comein" style="width: 100%; height: auto;"/> 
 <br><br>
 
-                <p><strong>（4）hive的基本操作</strong></p>
+                <p><strong>（5）hive的基本操作</strong></p>
 
                 <ul>
                     <li>创建数据库</li>
@@ -359,7 +433,7 @@ INSERT INTO TABLE students PARTITION (class='B') VALUES (3, 'Charlie', 22),(4, '
 <br><br>
 
 
-                <p><strong>（5）进行专利文献数据查询cite75_99.txt</strong></p>
+                <p><strong>（6）进行专利文献数据查询cite75_99.txt</strong></p>
                 <ul>
                     <li>创建表格patent_citation</li>
                 </ul>
@@ -430,7 +504,7 @@ GROUP BY
 <br><br>
 <img src="static/assets/img/hive/query32.png" alt="query32" style="width: 100%; height: auto;"/> 
 <br><br>
-                <p><strong>（6）进行专利文献数据查询apat63_99.txt</strong></p>
+                <p><strong>（7）进行专利文献数据查询apat63_99.txt</strong></p>
                 <ul>
                     <li>创建表格patent_metadata</li>
                 </ul>

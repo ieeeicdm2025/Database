@@ -262,6 +262,22 @@ docker images
                 <ul>
                     <li>修改内核参数</li>
                 </ul>
+
+                <ul>
+                    <li>vm.max_map_count是Linux内核的一个参数，用于限制一个进程可以拥有的内存映射区域，它定义了单个进程可以拥有的最大内存映射区域数量</li>
+                </ul>
+                <ul>
+                    <li>若不进行设置，Elasticsearch会在启动时抛出如下错误：max virtual memory areas vm.max_map_count [65530] is too low</li>
+                </ul>
+
+                <ul>
+                    <li>Elasticsearch是一个基于Lucene的分布式搜索引擎，而Lucene使用内存映射文件（Memory-Mapped Files）来高效地管理索引数据</li>
+                </ul>
+
+                <ul>
+                    <li>官方文档中给出了对于该变量的明确要求：<a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.17/bootstrap-checks-max-map-count.html" target="_blank">https://www.elastic.co/guide/en/elasticsearch/reference/8.17/bootstrap-checks-max-map-count.html</a></li>
+                </ul>
+
                 <pre><code>sudo sysctl -w vm.max_map_count=262144
 </code></pre>
 
@@ -411,7 +427,7 @@ pip3 --version
                 <ul>
                     <li>然后在命令行中运行python脚本，这个脚本会连接到elasticsearch，建立一个索引，并将文件weibo_senti_100k.csv中的微博数据插入到这个索引中</li>
                 </ul>
-                <pre><code>python3 import_weibo_to_es.py
+                <pre><code>python3 weibo_insert.py
 </code></pre>
 <img src="static/assets/img/elasticsearch_kibana/elk_weibo1.png" alt="elk_weibo1" style="width: 100%; height: auto;">
 
@@ -424,13 +440,13 @@ pip3 --version
 
 
                 <ul>
-                    <li>接着进一步使用elasticsearch的文本检索功能，搜索整个微博数据文件中带有 "爱你"字段的内容</li>
+                    <li>接着进一步使用elasticsearch的文本检索功能，搜索整个微博数据文件中带有"爱国"字段的内容</li>
                 </ul>
                 <pre><code>GET /weibo_index/_search?pretty
 {
   "query": {
     "match": {
-      "review": "爱你"
+      "review": "爱国"
     }
   }
 }
@@ -441,7 +457,7 @@ pip3 --version
                 <ul>
                     <li>接着我们回到命令行，然后运行另一个python脚本，这个脚本会随机生成1000条地理数据并将它们插入到最初我们所创建的索引my_index中</li>
                 </ul>
-                <pre><code>python3 bulk_insert.py
+                <pre><code>python3 geos_insert.py
 </code></pre>
 <img src="static/assets/img/elasticsearch_kibana/elk_python3.png" alt="elk_python3" style="width: 100%; height: auto;">
 

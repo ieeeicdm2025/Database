@@ -185,14 +185,43 @@
                 <p><strong>（3）Dockerfile</strong></p>
                 <p>Dockerfile 是一个文本文件，其中包含了构建 Docker 镜像的所有指令。它描述了如何从一个基础镜像开始，通过一系列步骤（例如安装软件、复制文件、设置环境变量等）构建出新的镜像。</p>
                 <h2 id="3docker"><strong>3、配置Docker环境</strong></h2>
-                <p>在刚刚搭建的linux平台中，配置Docker，教程参见下面（任选一个就行）</p>
+
+                
+                <p>（1）设置Docker的存储库</p>
+                <pre><code># Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+</code></pre>
+
+                <p>（2）安装Docker软件包</p>
+                <pre><code>sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+</code></pre>
+
+                <p>（3）可以通过运行映像来验证安装是否成功</p>
+                <pre><code>sudo docker run hello-world
+</code></pre>
+
+
+                <p><strong>具体的教程可以参见下面（任选一个就行）</strong></p>
                 <p><a
                         href="https://docs.docker.com/engine/install/ubuntu/" target="_blank">https://docs.docker.com/engine/install/ubuntu/</a>
                 </p>
                 <p><a
                         href="https://cloud.tencent.com/document/product/213/46000#1H-kXbk9zoqvzYMVPVsBO" target="_blank">https://cloud.tencent.com/document/product/213/46000#1H-kXbk9zoqvzYMVPVsBO</a>
                 </p>
-                <p><strong>需要注意的一点是，由于国内镜像源很多已经失效，所以在安装完docker后建议更改为当前还可使用的镜像源，方便拉取镜像，更改镜像源的方法如下：</strong></p>
+
+                <p>（4）配置镜像源文件</p>
+                <p><strong>由于国内镜像源很多已经失效，所以在安装完docker后建议更改为当前还可使用的镜像源，方便拉取镜像，更改镜像源的方法如下：</strong></p>
                 <ul>
                     <li>编辑镜像源文件</li>
                 </ul>
@@ -201,6 +230,11 @@
                 <ul>
                     <li>按键盘上的 i 键，之后把下面的代码贴进去</li>
                 </ul>
+
+                <ul>
+                    <li>下面添加内容的含义是指定多个镜像源，目的是加速Docker镜像的拉取过程，后续如果发现可用的镜像源可以直接添加到下面的镜像源列表中</li>
+                </ul>
+
                 <p>{ "registry-mirrors" : [ "https://docker.m.daocloud.io", "https://noohub.ru", "https://huecker.io",
                     "https://dockerhub.timeweb.cloud", "https://docker.rainbond.cc" ] }</p>
                 <ul>
@@ -220,10 +254,10 @@
                             for linux<em>哔哩哔哩</em>bilibili</a></li>
                 </ul>
 
-                <br>
-                <h2 id="4docker"><strong>4、将当前用户添加到docker的用户组里</strong></h2>
+                
+                <!-- <h2 id="4docker"><strong>4、将当前用户添加到docker的用户组里</strong></h2> -->
                 <ul>
-                    <li>将当前用户添加到 Docker 组：</li>
+                    <li>为了不让后续所有对docker的操作都加上sudo，我们将当前用户添加到docker组：</li>
                 </ul>
                 <pre><code>sudo usermod -aG docker $USER
 </code></pre>
@@ -240,7 +274,7 @@
 <img src="static/assets/img/k8s/k8s_docker.png" alt="k8s_docker" style="width: 100%; height: auto;"/>
 <br><br>
 
-                <h2 id="4docker"><strong>5、Docker的常用命令</strong></h2>
+                <h2 id="4docker"><strong>4、Docker的常用命令</strong></h2>
                 <p><strong>（1）帮助命令</strong></p>
                 <ul>
                     <li>显示docker的信息</li>
@@ -478,7 +512,15 @@ sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-a
                 
                 <p><strong>（3）启动minikube</strong></p>
                 <ul>
-                    <li>由于国内镜像源的限制，直接使用minikube start会卡在拉取镜像的环节，因此使用下面的指令启动，让它使用本地的镜像</li>
+                    <li>启动minikube</li>
+                </ul>
+                <pre><code>minikube start</code></pre>
+
+                <ul>
+                    <li>若上述命令卡住了，就使用下面的命令启动</li>
+                </ul>
+                <ul>
+                    <li>这是由于国内镜像源的限制，直接使用minikube start会卡在拉取镜像的环节，这里使用下面的指令启动，让它使用本地的镜像</li>
                 </ul>
                 <pre><code>minikube start --driver=docker --base-image="registry.cn-hangzhou.aliyuncs.com/google\_containers/kicbase:v0.0.46"
 </code></pre>
@@ -502,6 +544,10 @@ sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-a
 <img src="static/assets/img/k8s/mini_get2.png" alt="mini_get2" style="width: 100%; height: auto;"/>
 <br><br>
                 <p><strong>（4）minikube的dashboard</strong></p>
+
+                <ul>
+                    <li>minikube的dashboard为可选配置项，后续步骤用到的不多</li>
+                </ul>
 
                 <ul>
                     <li>minikube提供了dashboard功能，用以在web端进行操作</li>

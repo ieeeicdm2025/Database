@@ -206,17 +206,15 @@ docker images
 </code></pre>
 <img src="static/assets/img/hue_flume/load.png" alt="load" style="width: 100%; height: auto;">
 
-                <p><strong>（2）部署mysql、hive与hue</strong></p>
+                <p><strong>（2）部署hue</strong></p>
                 <ul>
-                    <li>我们先简单搭建一个hive的环境，由于其自带的derby数据库不支持并发访问，因此使用mysql作为数据库</li>
+                    <li>这里的hue我们连接到hive进行演示，因此我们需要先按hive的教程部署好hive的环境，再进行接下来的步骤，需要注意的是，hive是集成到Hadoop中的，因此也需要部署好Hadoop的环境</li>
                 </ul>
-                <ul>
-                    <li>如果之前的hive环境没有删除的话，先清空之前部署的hive环境，找到之前的部署文件 hive-deployment.yaml 所在的位置，删除这个部署</li>
-                </ul>
-                <pre><code>kubectl delete -f hive-deployment.yaml
-</code></pre>
                 <ul>
                     <li>创建hue的配置信息，这里要用到文件 hue.ini 来生成配置信息，因此需要进入文件 hue.ini 所在的目录再运行下面的命令</li>
+                </ul>
+                <ul>
+                    <li>hue.ini是Hue的主要配置文件，包含了诸如数据库连接、界面设置、和各种系统的认证配置等的配置信息，文件里有完整的官方给出的配置注解，方便对各种系统配置连接</li>
                 </ul>
                 <pre><code>kubectl create configmap hue-config --from-file=hue.ini
 </code></pre>
@@ -248,6 +246,9 @@ docker images
 <img src="static/assets/img/hue_flume/webui.png" alt="webui" style="width: 100%; height: auto;">
 
                 <p><strong>（3）测试 hue 的功能</strong></p>
+                <ul>
+                    <li>接下来的操作为在hive章节已进行过的操作演示，将在hive章节的命令行查询转化为了在hue的web页面中执行，可只选择性地进行一些操作来了解hue的功能即可</li>
+                </ul>
 
                 <ul>
                     <li>登录以后，我们可以在左侧看到当前hive的数据库只有一个默认的数据库，我们在中间的方框处对 hive 进行查询</li>
@@ -319,12 +320,12 @@ INSERT INTO TABLE students PARTITION (class='B') VALUES (3, 'Charlie', 22),(4, '
 <img src="static/assets/img/hue_flume/warn2.png" alt="warn2" style="width: 100%; height: auto;">
 
 
-                <ul>
+                <!-- <ul>
                     <li>我们也可以查看表 students 的结构</li>
                 </ul>
                 <pre><code>DESCRIBE students;
 </code></pre>
-<img src="static/assets/img/hue_flume/describe.png" alt="describe" style="width: 100%; height: auto;">
+<img src="static/assets/img/hue_flume/describe.png" alt="describe" style="width: 100%; height: auto;"> -->
 
                 <ul>
                     <li>接着我们查看表students的数据，可以看到我们之前所插入的数据</li>
@@ -333,7 +334,7 @@ INSERT INTO TABLE students PARTITION (class='B') VALUES (3, 'Charlie', 22),(4, '
 </code></pre>
 <img src="static/assets/img/hue_flume/select1.png" alt="select1" style="width: 100%; height: auto;">
 
-                <ul>
+                <!-- <ul>
                     <li>我们还可以查询特定分区数据</li>
                 </ul>
                 <pre><code>SELECT * FROM students WHERE class='A';
@@ -345,162 +346,13 @@ INSERT INTO TABLE students PARTITION (class='B') VALUES (3, 'Charlie', 22),(4, '
                 </ul>
                 <pre><code>SELECT class, COUNT(*) AS num_students FROM students GROUP BY class;
 </code></pre>
-<img src="static/assets/img/hue_flume/select3.png" alt="select3" style="width: 100%; height: auto;">
+<img src="static/assets/img/hue_flume/select3.png" alt="select3" style="width: 100%; height: auto;"> -->
 
                 <ul>
                     <li>对于查询结果，hue还可以对其进行可视化，并可以下载结果</li>
                 </ul>
 <img src="static/assets/img/hue_flume/visual.png" alt="visual" style="width: 100%; height: auto;">
 <br><br>
-
-
-
-
-                <div style="height: 32px;"></div>
-                <h1 id="docker"><strong>二、Flume（<a href="https://flume.apache.org/" target="_blank">官网</a>）</strong></h1>
-                <div style="height: 32px;"></div>
-                <h2 id="1"><strong>1、简介</strong></h2>
-                
-                <p>Flume是一个分布式的、可靠的、可用的服务，用于高效地收集、聚合和移动大量的日志数据。</p>
-                <img src="static/assets/img/hue_flume/flume_achi.png" alt="flume_achi" style="width: 100%; height: auto;">
-
-                <h2 id="1"><strong>2、Flume的核心概念</strong></h2>
-
-                <p><strong>（1）一个flume agent（事务）可以分成三部分</strong></p>
-                <ul>
-                    <li>源（Source）：用于从外部系统（如日志文件、网络流、数据库等）获取数据，并通过将获取到的数据封装成 Event 发送到 Flume 的后续组件。</li>
-                    <li>通道（Channel）：用于临时存储从 Source 接收到的事件，直到它们被 Flume 的 Sink 组件处理。</li>
-                    <li>接收器（Sink）：用于将事件从 Channel 发送到外部系统（例如 HDFS、Kafka、数据库等）的组件。Sink 会从 Channel 中读取事件，并根据配置将其写入到目标系统中。</li>
-                </ul>
-
-                <p><strong>（2）flume 的工作流程</strong></p>
-                <ul>
-                    <li>Source 从外部系统获取数据并将其转化为 Event。</li>
-                    <li>Channel 存储这些 Event，确保数据可靠传输。</li>
-                    <li>Sink 从 Channel 中读取 Event，并将其发送到外部存储或分析系统。</li>
-                </ul>
-
-                <h2 id="1"><strong>3、使用minikube部署flume</strong></h2>
-                <p><strong>（1）向minikube中导入所需的镜像</strong></p>
-                <pre><code>minikube image load flume:latest
-</code></pre>
-                <ul>
-                    <li>进入minikube查看是否导入</li>
-                </ul>
-                <pre><code>minikube ssh
-docker images
-</code></pre>
-<img src="static/assets/img/hue_flume/flume_load.png" alt="load" style="width: 100%; height: auto;">
-
-                <p><strong>（2）由于这里展示的flume是集成到Hadoop中的，因此需要先使用hadoop-cluster.yaml文件部署Hadoop，部署后查看pod状态验证其是否正常运行</strong></p>
-                <pre><code>kubectl apply -f hadoop-cluster.yaml
-kubectl get pods
-</code></pre>
-<img src="static/assets/img/hue_flume/flume_hadoop.png" alt="hadoop" style="width: 100%; height: auto;">
-
-
-                <ul>
-                    <li>由于flume的日志是写在hdfs上的，因此，我们到hdfs上预先为其建立一个文件夹以存放flume日志</li>
-                </ul>
-                <ul>
-                    <li>我们先布置hdfs的端口转发，以在浏览器中访问到hdfs</li>
-                </ul>
-                <pre><code>kubectl port-forward svc/namenode 9870:9870
-</code></pre>
-<img src="static/assets/img/hue_flume/flume_port.png" alt="hadoop_port" style="width: 100%; height: auto;">
-
-                <ul>
-                    <li>在浏览器中输入如下地址</li>
-                </ul>
-                <a href="http://localhost:9870/" target="_blank">http://localhost:9870/</a>
-<img src="static/assets/img/hue_flume/flume_webui1.png" alt="hadoop_webui1" style="width: 100%; height: auto;">
-
-                <ul>
-                    <li>点击这里可以进入文件管理界面</li>
-                </ul>
-<img src="static/assets/img/hue_flume/flume_webui2.png" alt="hadoop_webui2" style="width: 100%; height: auto;">
-
-
-                <ul>
-                    <li>接着我们回到命令行，进入namenode所在的pod，同样地，这里的namenode-764bfd689f-85pd7需替换为自己的pod名</li>
-                </ul>
-                <pre><code>kubectl exec -it namenode-764bfd689f-85pd7 -- bash
-</code></pre>
-
-                <ul>
-                    <li>而后在hdfs上创建文件夹并更改其权限</li>
-                </ul>
-                <pre><code>hdfs dfs -mkdir -p /flume/data
-hdfs dfs -chmod 777 /flume
-</code></pre>
-
-<img src="static/assets/img/hue_flume/flume_create.png" alt="flume_create" style="width: 100%; height: auto;">
-
-                <p><strong>（3）使用flume-deployment.yaml文件部署flume，并查看pod状态验证其是否正常运行</strong></p>
-                <pre><code>kubectl apply -f flume-deployment.yaml
-kubectl get pods
-</code></pre>
-
-<img src="static/assets/img/hue_flume/flume_apply.png" alt="flume_apply" style="width: 100%; height: auto;">
-
-
-                <ul>
-                    <li>创建完毕后我们可以进入flume所在的pod，以验证其是否能与hdfs连接，图中可以看到我们刚刚为flume建立的文件夹/flume/data</li>
-                </ul>
-                <pre><code>hdfs dfs -ls /
-</code></pre>
-
-<img src="static/assets/img/hue_flume/flume_test.png" alt="flume_test" style="width: 100%; height: auto;">
-
-                <p><strong>（4）测试flume的功能</strong></p>
-                <ul>
-                    <li>在flume的部署文件中，我们已经将/var/log/app/设置为了它的监听目录，因此我们在flume的pod中，写入一个文件到它所监听的这个目录下</li>
-                </ul>
-                <pre><code>for i in {1..5}; do
-   echo "Text Test $i $(date '+%Y-%m-%d %H:%M:%S')" >> /var/log/app/text_test.log
-done
-</code></pre>
-
-<img src="static/assets/img/hue_flume/flume_write.png" alt="flume_write" style="width: 100%; height: auto;">
-
-                <ul>
-                    <li>而后我们来到hdfs上存放flume数据的对应目录下，可以看到它已经自动生成了以日期命名的子文件夹</li>
-                </ul>
-
-<img src="static/assets/img/hue_flume/flume_date.png" alt="flume_date" style="width: 100%; height: auto;">
-
-                <ul>
-                    <li>我们进入这个文件夹，可以看到flume写入hdfs的.tmp临时文件</li>
-                </ul>
-
-<img src="static/assets/img/hue_flume/flume_tmp.png" alt="flume_tmp" style="width: 100%; height: auto;">
-
-                <ul>
-                    <li>这里我们需要静待一会，等待它写入完毕，此时.tmp后缀会消失</li>
-                </ul>
-
-<img src="static/assets/img/hue_flume/flume_events.png" alt="flume_events" style="width: 100%; height: auto;">
-
-
-                <ul>
-                    <li>而后我们回到命令行中的flume所在的pod中，从hdfs上下载flume写入的日志文件，这里的/2025-02-10/events-.1739222202785需要替换为实际的文件地址</li>
-                </ul>
-                <pre><code>hdfs dfs -get /flume/data/2025-02-10/events-.1739222202785 ./
-ls
-</code></pre>
-<img src="static/assets/img/hue_flume/flume_get.png" alt="flume_get" style="width: 100%; height: auto;">
-
-
-                <ul>
-                    <li>接下来我们可以对比之前我们手动写入flume所监听的文件夹的文件与flume监听后写入hdfs的文件，是完全一致的，下面的events-.1739222202785也需要替换为自己实际的文件名</li>
-                </ul>
-                <pre><code>cat /var/log/app/text_test.log
-cat events-.1739222202785
-</code></pre>
-<img src="static/assets/img/hue_flume/flume_cat1.png" alt="flume_cat1" style="width: 100%; height: auto;">
-<br><br>
-<img src="static/assets/img/hue_flume/flume_cat2.png" alt="flume_cat2" style="width: 100%; height: auto;">
-
 
 
             </div>
