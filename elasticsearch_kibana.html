@@ -432,7 +432,7 @@ pip3 --version
 <img src="static/assets/img/elasticsearch_kibana/elk_weibo1.png" alt="elk_weibo1" style="width: 100%; height: auto;">
 
                 <ul>
-                    <li>然后我们回到 Dev Tools 控制台中，查询该索引下的数据条数，可以看到已经有了119988条数据</li>
+                    <li>然后我们回到 Dev Tools 控制台中，查询该索引下的数据条数，可以看到已经有了100000条数据</li>
                 </ul>
                 <pre><code>GET /weibo_index/_count?pretty
 </code></pre>
@@ -440,13 +440,13 @@ pip3 --version
 
 
                 <ul>
-                    <li>接着进一步使用elasticsearch的文本检索功能，搜索整个微博数据文件中带有"爱国"字段的内容</li>
+                    <li>接着进一步使用elasticsearch的文本检索功能，搜索整个微博数据文件中带有"快乐"字段的内容</li>
                 </ul>
                 <pre><code>GET /weibo_index/_search?pretty
 {
   "query": {
     "match": {
-      "review": "爱国"
+      "username": "快乐"
     }
   }
 }
