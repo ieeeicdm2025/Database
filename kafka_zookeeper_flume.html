@@ -478,6 +478,41 @@ kubectl get pods
 <img src="static/assets/img/hue_flume/flume_test.png" alt="flume_test" style="width: 100%; height: auto;">
 
                 <p><strong>（4）测试flume的功能</strong></p>
+
+                <ul>
+                    <li>下图是flume的部署文件中有关flume连接配置的部分</li>
+                </ul>
+
+
+                <ul>
+                    <li>可以看到在这里我们定义了两个内存通道（mem-channel-1和mem-channel-2）用于存储数据，相应地也定义了两个接收端：kafka-sink和hdfs-sink，数据将被传输到这两个目标</li>
+                </ul>
+
+
+                <ul>
+                    <li>在log-source的相关配置处，我们进一步定义了source的类型为TAILDIR，即从指定目录中持续读取日志文件并获取新的数据，以及我们所要监听的目录，即/var/log/app/下的所有.log文件</li>
+                </ul>
+
+
+                <ul>
+                    <li>在Channel的相关配置处，我们定义了两个通道都使用内存通道，且每个通道最多存储10000个事件</li>
+                </ul>
+
+
+                <ul>
+                    <li>在kafka-sink的配置处，我们指定了Kafka的地址：kafka:9092，并定义将数据写入的Kafka主题为logs-topic</li>
+                </ul>
+
+                <ul>
+                    <li>在hdfs-sink的配置处，我们指定了数据写入的HDFS路径：hdfs://namenode:9000/flume/data/%Y-%m-%d/，它根据当前日期创建目录，并定义每个文件的前缀为events-</li>
+                </ul>
+
+
+<img src="static/assets/img/hue_flume/flume_deployment.png" alt="flume_test" style="width: 100%; height: auto;">
+
+
+
+
                 <ul>
                     <li>我们先打开一个新的命令行窗口，并进入kafka所在的pod，同样地，这里的kafka-9b4f47bd5-6z7l7需替换为实际的pod名称</li>
                 </ul>
@@ -500,14 +535,10 @@ kubectl get pods
 <img src="static/assets/img/hue_flume/flume_kafka_wait.png" alt="flume_kafka_wait" style="width: 100%; height: auto;">
 
                 <ul>
-                    <li>由于在flume的部署文件中，我们已经将/var/log/app/设置为了它的监听目录</li>
+                    <li>由于在flume的部署文件中，我们已经将/var/log/app/设置为了它的监听目录，因此我们回到刚刚部署完flume的命令行，进入flume所在的pod中，写入一个文件到它所监听的这个目录下，同样地，这里的flume-agent-ccc7854f5-97hbm需替换为实际的pod名</li>
                 </ul>
-<img src="static/assets/img/hue_flume/flume_deployment.png" alt="flume_write" style="width: 100%; height: auto;">
-
-                <ul>
-                    <li>因此然后我们回到刚刚部署完flume的命令行，在flume所在的pod中写入一个文件到它所监听的这个目录下</li>
-                </ul>
-                <pre><code>for i in {1..5}; do
+                <pre><code>kubectl exec -it flume-agent-ccc7854f5-97hbm -- bash
+for i in {1..5}; do
    echo "Text Test $i $(date '+%Y-%m-%d %H:%M:%S')" >> /var/log/app/text_test.log
 done
 </code></pre>
