@@ -221,7 +221,7 @@ kubectl get pods</code></pre>
                     <li>查看自己创建hadoop集群的pod名称，进入任意一个pod，这里进入namenode，同样，这里的 namenode-764bfd689f-zkknj 需替换为自己创建时自动生成的namenode名称 </li>
                 </ul>
                 <pre><code>kubectl get pods
-kubectl exec -it namenode-764bfd689f-zkknj -- /bin/bash</code></pre>
+kubectl exec -it namenode-764bfd689f-zkknj -- bash</code></pre>
 
                 <img src="static/assets/img/hadoop_spark/hdfs1.png" alt="hdfs1" style="width: 100%; height: auto;"/>
 
@@ -358,7 +358,7 @@ kubectl cp config.xml namenode-78587cfc8f-sl48f:/opt/hadoop/
                 <ul>
                     <li>进入namenode的命令行bash，同样的，下面命令中的namenode-78587cfc8f-sl48f请替换为自己的namenode所在的pod名称</li>
                 </ul>
-                <pre><code>kubectl exec -it namenode-78587cfc8f-sl48f -- /bin/bash
+                <pre><code>kubectl exec -it namenode-78587cfc8f-sl48f -- bash
 </code></pre>
                 <ul>
                     <li>进入传入文件所在的文件夹（<strong>这一步不要忘记，不然找不到文件</strong>）</li>
