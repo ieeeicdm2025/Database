@@ -43,6 +43,23 @@
         code {
             color: #333;
         }
+
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 8px 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+
+
     </style>
 
     <!-- For Compatability -->
@@ -709,6 +726,692 @@ kubectl get pods -n kubernetes-dashboard
                 <pre><code>kubectl top nodes
 kubectl top pods
 </code></pre>
+
+
+                <h2 id="5kubectl"><strong>6、真实的k8s集群搭建</strong></h2>
+                <p><strong>（1）部署方式</strong></p>
+                <ul>
+                    <li>kubeadm：是一个 K8s 部署工具，提供 kubeadm init 和 kubeadm join，用于快速部署 Kubernetes 集群。</li>
+                </ul>
+                <ul>
+                    <li>二进制包：从 github 下载发行版的二进制包，手动部署每个组件，组成 Kubernetes 集群。</li>
+                </ul>
+                <ul>
+                    <li>这两种方式是目前生产部署 Kubernetes 集群的主要方式，这里我们采用第一种</li>
+                </ul>
+
+                <p><strong>（2）环境准备</strong></p>
+                <ul>
+                    <li>安装vmware：<a
+                        href="https://support.broadcom.com/group/ecx/productfiles?subFamily=VMware Workstation Pro&displayGroup=VMware Workstation Pro 17.0 for Windows&release=17.6.2&os=&servicePk=526672&language=EN" target="_blank">https://support.broadcom.com/group/ecx/productfiles?subFamily=VMware Workstation Pro&displayGroup=VMware Workstation Pro 17.0 for Windows&release=17.6.2&os=&servicePk=526672&language=EN</a></li>
+                </ul>
+                <img src="static/assets/img/k8s/true_vmware1.png" alt="true_vmware1" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>进入时需要输入账号，这里自行注册一个就可以</li>
+                </ul>
+
+                <img src="static/assets/img/k8s/true_vmware2.png" alt="true_vmware2" style="width: 100%; height: auto;"/>
+                <br><br>
+                <img src="static/assets/img/k8s/true_vmware3.png" alt="true_vmware3" style="width: 100%; height: auto;"/>
+
+
+                <ul>
+                    <li>下载centos的iso包，用于装配操作系统：<a
+                        href="https://vault.centos.org/7.7.1908/isos/x86_64/" target="_blank">https://vault.centos.org/7.7.1908/isos/x86_64/</a></li>
+                </ul>
+                <img src="static/assets/img/k8s/true_centos.png" alt="true_centos" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>下载MobaXterm，用于统一对虚拟机进行操作：<a
+                        href="https://mobaxterm.mobatek.net/download-home-edition.html" target="_blank">https://mobaxterm.mobatek.net/download-home-edition.html</a></li>
+                </ul>
+                <img src="static/assets/img/k8s/true_mobaxterm.png" alt="true_mobaxterm" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>下载kube-flannel.yml：<a
+                        href="https://github.com/flannel-io/flannel/blob/master/Documentation/kube-flannel.yml" target="_blank">https://github.com/flannel-io/flannel/blob/master/Documentation/kube-flannel.yml</a></li>
+                </ul>
+
+                <ul>
+                    <li>kube-flannel.yml 文件是用于安装 Flannel CNI 插件的核心配置文件。Flannel 是 Kubernetes 集群中实现容器间网络通信的关键组件，它的作用是为 Pod 提供跨节点的网络互通能力。</li>
+                </ul>
+
+                <img src="static/assets/img/k8s/true_flannel.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>所有文件均已备好，也可以直接使用</li>
+                </ul>
+                
+                
+                <p><strong>（3）配置虚拟机</strong></p>
+                <ul>
+                    <li>我们需要准备三台虚拟机，一台作为master节点，两台作为node节点</li>
+                </ul>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>角色</th>
+                            <th>IP地址</th>
+                            <th>组件</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>master</td>
+                            <td>192.168.10.100</td>
+                            <td>docker，kubectl，kubeadm，kubelet</td>
+                        </tr>
+                        <tr>
+                            <td>node1</td>
+                            <td>192.168.10.101</td>
+                            <td>docker，kubectl，kubeadm，kubelet</td>
+                        </tr>
+                        <tr>
+                            <td>node2</td>
+                            <td>192.168.10.102</td>
+                            <td>docker，kubectl，kubeadm，kubelet</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+                <ul>
+                    <li>安装vmware后，先创建虚拟机master</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_virtual1.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+
+                <ul>
+                    <li>前四步使用默认配置，直接点击下一步即可</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_virtual2.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <br><br>
+                <img src="static/assets/img/k8s/true_virtual3.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <br><br>
+                <img src="static/assets/img/k8s/true_virtual4.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <br><br>
+                <img src="static/assets/img/k8s/true_virtual5.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                
+                <ul>
+                    <li>定义当前虚拟机的名称为master，并设置存放它的位置</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_virtual6.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>每个处理器的内核数量设置为2个</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_virtual7.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>虚拟机的内存设置为2G</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_virtual8.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>接下来的四步也使用默认配置，直接选择下一步即可</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_virtual9.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <br><br>
+                <img src="static/assets/img/k8s/true_virtual10.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <br><br>
+                <img src="static/assets/img/k8s/true_virtual11.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <br><br>
+                <img src="static/assets/img/k8s/true_virtual12.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>指定磁盘容量为20G</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_virtual13.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>接着点击下一步，再点击完成，即可完成master虚拟机的创建</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_virtual14.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <br><br>
+                <img src="static/assets/img/k8s/true_virtual15.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>然后我们编辑master虚拟机的设置，找到CD/DVD(IDE)选项，选择我们之前在准备工作中下载好的centos映像文件</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_virtual16.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>而后我们启动master，进入后回车</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_virtual17.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>将滚动条拖动到最下面，选择中文</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_virtual18.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>选择软件为基础设施服务器，然后返回</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_virtual19.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <br><br>
+                <img src="static/assets/img/k8s/true_virtual20.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>安装位置这里有个黄色感叹号，我们点进去再出来就可以消除了</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_virtual21.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <br><br>
+                <img src="static/assets/img/k8s/true_virtual22.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>接下来是设置网络与主机名，进入后我们点击配置</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_virtual23.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <br><br>
+                <img src="static/assets/img/k8s/true_virtual40.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <br><br>
+                <img src="static/assets/img/k8s/true_virtual24.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>先点击常规栏，勾选“可用时自动链接这个网络”</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_virtual25.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>而后切换到IPv4设置一栏，将方法设置为手动，再点击Add添加地址</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_virtual26.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>这里所添加的部分需要在自己的vmware中找到默认的虚拟子网ip，点击vmware左上角的编辑，在下拉条中选择“虚拟网络编辑器”</li>
+                </ul>
+                
+                <img src="static/assets/img/k8s/true_virtual27.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                
+                <ul>
+                    <li>选择VMnet8，下面的子网ip即为我们需要记住的部分，我们需要保留这个子网ip的前三位</li>
+                </ul>
+                <ul>
+                    <li>也即对所有节点（当前为master节点）的ip配置中保留下面图中的192.168.10，那么我们的三台虚拟机的ip的最后一位便可以统一使用100、101和102</li>
+                </ul>
+
+                <ul>
+                    <li>具体说来就是：192.168.10.100、192.168.10.101、192.168.10.102，这里需要根据自身的查看情况确定每个子网ip前三位的值</li>
+                </ul>
+                
+                <ul>
+                    <li>VMnet8的NAT服务会将虚拟机的私有IP转换为宿主机的公网IP，使虚拟机可以访问外网，同时保护虚拟机不直接暴露在公网中</li>
+                </ul>
+                
+                <img src="static/assets/img/k8s/true_virtual28.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                
+                <ul>
+                    <li>于是我们回到刚刚虚拟机的IPv4设置部分，由于这里是master节点，因此我们使用192.168.10.100，对于另外两台node节点所在的虚拟机，我们在配置时就需要将它设为192.168.10.101和192.168.10.102</li>
+                </ul>
+                <ul>
+                    <li>后面的子网掩码我们使用刚刚在虚拟网络编辑器中看到的255.255.255.0</li>
+                </ul>
+                <ul>
+                    <li>网关则同样需要保持前三位和虚拟网络编辑器中的子网ip一致，这里是192.168.10，最后一位可以统一取2</li>
+                </ul>
+                <ul>
+                    <li>子网掩码决定了子网的大小，网关则负责将虚拟机的私有IP转换为宿主机的公网IP，实现虚拟机访问外网。在VMware的NAT模式（如VMnet8）中，网关通常是VMware虚拟网络中的NAT设备地址（例如192.168.1.2）</li>
+                </ul>
+                <ul>
+                    <li>而DNS服务器我们统一使用阿里的：223.5.5.5</li>
+                </ul>
+                <ul>
+                    <li>DNS服务器的作用是将域名（如www.baidu.com）解析为IP地址（如 180.101.49.12），以便设备能够通过域名访问互联网资源</li>
+                </ul>
+                <ul>
+                    <li>全部设置完毕后我们点击保存</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_virtual29.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>而后我们修改主机名为master，再点击应用，应用完毕后就可以点击左上角的“完成”以退出网络设置了</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_virtual30.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>接着我们就可以开始安装了</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_virtual31.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <ul>
+                    <li>安装过程中我们需要设置root密码，需要记住这里所设置的密码，后面需要用它进行连接，这里也可以和我一样直接把密码也设置为root方便记忆</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_virtual32.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <br><br>
+                <img src="static/assets/img/k8s/true_virtual33.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>一直等待安装，而后点击右下角的“重启”</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_virtual34.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>等待重启过程，而后使用root同时作为用户名与密码（root是我所设置的密码，你刚刚设置的root密码是什么这里就输入什么）进行登录，出现下面的界面就是登录成功了</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_virtual35.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>到这里我们的第一台master虚拟机就已经配置完成了，接下来我们按照上面的方法，配置两个node节点所在的虚拟机</li>
+                </ul>
+
+                <ul>
+                    <li>node节点所在虚拟机的所有的过程均与上面的步骤一样，唯一不同的两点如下</li>
+                </ul>
+                <ul>
+                    <li>一是在创建虚拟机时需要将虚拟机的名称与位置设置为node1和node2</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_virtual36.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <br><br>
+                <img src="static/assets/img/k8s/true_virtual37.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>二是在进行网络配置时，将node1与node2的ip地址设置为192.168.10.101与192.168.10.102，并修改主机名字为node1和node2，子网掩码、网关以及DNS服务器均与master节点所在虚拟机中的配置一样</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_virtual38.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <br><br>
+                <img src="static/assets/img/k8s/true_virtual39.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+
+
+
+                <p><strong>（3）使用MobaXterm连接三台虚拟机</strong></p>
+                <ul>
+                    <li>MobaXterm是一款功能强大的远程计算工具，核心功能有远程连接、终端模拟、文件传输等，主要服务于Windows用户来管理Linux/Unix服务器</li>
+                </ul>
+                <ul>
+                    <li>将下载的MobaXterm压缩包解压，然后打开其中的.exe文件，就可以直接运行了</li>
+                </ul>
+                <ul>
+                    <li>这里需要注意，三台虚拟机都要处于启动状态，这样才可以连接上</li>
+                </ul>
+                <ul>
+                    <li>进入界面后，我们点击左上角的“Session”，再点击这里的“SSH”，</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_moba1.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <br><br>
+                <img src="static/assets/img/k8s/true_moba2.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>这里的Remote host我们需要找到之前为三台虚拟机所各自配置的ip地址，在我这里是：192.168.10.100、192.168.10.101、192.168.10.102（这里的ip地址是之前根据自己的情况所配置的，请参考之前的配置过程，配置的是什么这里就用什么），一个Session对应一个ip地址，我们为三个虚拟机配置三个Session就可以了</li>
+                </ul>
+                <ul>
+                    <li>而后我们勾选后面的Specify username，这里我们统一使用root登录</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_moba3.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>然后我们点击下方的ok，会要求我们输入密码，这里就是我们之前为root用户设置的密码，我这里设置的密码也是root，看到下面的界面即已经成功连接了</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_moba4.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>我们需要像上面那样继续建立Session，一共需要建立三个Session，以连接到我们所配置的三个虚拟机</li>
+                </ul>
+
+                <ul>
+                    <li>我们点击工具栏中的Multiexec，这样我们就可以同时对三个虚拟机进行操作了</li>
+                </ul>
+                <img src="static/assets/img/k8s/true_moba5.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>在一个窗口运行清屏命令clear来试试同时操作的功能</li>
+                </ul>
+                <pre><code>clear
+</code></pre>
+
+                <img src="static/assets/img/k8s/true_moba6.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                
+
+                <p><strong>（4）三个节点的统一基础环境配置</strong></p>
+                <ul>
+                    <li>为了方便集群节点间的直接调用，我们先配置一下主机名解析</li>
+                </ul>
+                <ul>
+                    <li>输入下面的指令以编辑/etc/hosts文件</li>
+                </ul>
+                <ul>
+                    <li>需要注意的是，当我们复制内容粘贴到刚刚的同时执行窗口时，如果只粘贴到一个窗口中，是不会在三个窗口都同步操作的，可以在复制命令后点击右上角的Multi-paste，这样就可以直接将剪贴板中的内容同时粘贴到三个终端窗口中了，后续粘贴内容的时候也是如此操作</li>
+                </ul>
+                <pre><code>nano /etc/hosts
+</code></pre>
+
+                <ul>
+                    <li>在文件中粘贴下面的内容，下面内容中的ip地址同样需要根据自己之前的配置更改</li>
+                </ul>
+                <ul>
+                    <li>输入完毕后使用ctrl+x，然后按y，接着再回车即可退出文件编辑</li>
+                </ul>
+
+                <pre><code>192.168.10.100 master
+192.168.10.101 node1
+192.168.10.102 node2
+</code></pre>
+<img src="static/assets/img/k8s/true_together1.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>配置后可以退出多终端执行模式，ping一下看看是否生效</li>
+                </ul>
+
+                <pre><code>ping master
+ping node1
+ping node2
+</code></pre>
+<img src="static/assets/img/k8s/true_together2.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                
+                <ul>
+                    <li>操作完后我们继续进入多终端执行模式</li>
+                </ul>
+                <ul>
+                    <li>kubernetes要求集群中的节点时间必须精确一致，因此这里使用chronyd服务从网络同步时间，启动并设置开机自启，最后date验证时间是否一致</li>
+                </ul>
+
+                <pre><code>systemctl start chronyd
+systemctl enable chronyd
+date
+</code></pre>
+<img src="static/assets/img/k8s/true_together3.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+
+                <ul>
+                    <li>kubernetes和docker在运行的中会产生大量的iptables规则，为了不让系统规则跟它们混淆，直接关闭系统的规则</li>
+                </ul>
+
+                <pre><code># 1 关闭firewalld服务
+systemctl stop firewalld
+systemctl disable firewalld
+
+# 2 关闭iptables服务（本系统中没有，如果有也需执行）
+systemctl stop iptables
+systemctl disable iptables
+</code></pre>
+<img src="static/assets/img/k8s/true_together4.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+
+
+                <ul>
+                    <li>selinux是linux系统下的一个安全服务，如果不关闭它，在安装集群中也会产生各种各样的问题</li>
+                </ul>
+
+                <pre><code># 编辑文件
+nano /etc/selinux/config
+
+# 更改SELINUX的值为disabled，这个需要重启后才生效，后面会统一重启
+SELINUX=disabled
+
+# 输入完毕后ctrl+x，然后按y，接着再回车即可退出文件编辑
+</code></pre>
+<img src="static/assets/img/k8s/true_together5.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>swap分区指的是虚拟内存分区，它的作用是物理内存使用完，之后将磁盘空间虚拟成内存来使用，启用swap设备会对系统的性能产生非常负面的影响，因此kubernetes要求每个节点都要禁用swap设备</li>
+                </ul>
+                <ul>
+                    <li>这里的修改也需要重启后才生效，后面会统一重启</li>
+                </ul>
+
+                <pre><code># 编辑文件
+nano /etc/fstab
+
+# 注释掉 /dev/mapper/centos-swap swap 所在行
+
+# 输入完毕后ctrl+x，然后按y，接着再回车即可退出文件编辑
+</code></pre>
+<img src="static/assets/img/k8s/true_together6.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+
+                <ul>
+                    <li>修改linux的内核参数，添加网桥过滤和地址转发功能</li>
+                </ul>
+
+                <pre><code># 编辑/etc/sysctl.d/kubernetes.conf文件，
+nano /etc/sysctl.d/kubernetes.conf
+
+# 添加如下配置：
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+net.ipv4.ip_forward = 1
+
+# 添加完毕后ctrl+x，然后按y，接着再回车即可退出文件编辑
+
+# 重新加载配置
+sysctl -p
+
+# 加载网桥过滤模块
+modprobe br_netfilter
+
+# 查看网桥过滤模块是否加载成功，看到我们刚刚在配置中做的内容就是加载成功了
+lsmod | grep br_netfilter
+</code></pre>
+<img src="static/assets/img/k8s/true_together7.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+<br><br>
+<img src="static/assets/img/k8s/true_together8.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>ipvs是Kubernetes中Service的一种代理模型，我们需要手动载入ipvs模块</li>
+                </ul>
+
+                <pre><code># 配置阿里云仓库
+sudo curl -o /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo
+
+# 清理并重建 yum 缓存
+sudo yum clean all
+sudo yum makecache
+
+# 安装ipset和ipvsadm
+yum install ipset ipvsadm -y
+
+# 添加需要加载的模块写入脚本文件
+cat <<EOF> /etc/sysconfig/modules/ipvs.modules
+#!/bin/bash
+modprobe -- ip_vs
+modprobe -- ip_vs_rr
+modprobe -- ip_vs_wrr
+modprobe -- ip_vs_sh
+modprobe -- nf_conntrack_ipv4
+EOF
+
+# 为脚本添加执行权限
+chmod +x /etc/sysconfig/modules/ipvs.modules
+
+# 执行脚本文件
+/bin/bash /etc/sysconfig/modules/ipvs.modules
+
+# 5.查看对应的模块是否加载成功
+lsmod | grep -e ip_vs -e nf_conntrack_ipv4
+</code></pre>
+<img src="static/assets/img/k8s/true_together9.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+<br><br>
+<img src="static/assets/img/k8s/true_together10.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+
+                <ul>
+                    <li>重启系统，以加载刚刚所修改的配置</li>
+                </ul>
+
+                <pre><code>reboot
+</code></pre>
+
+                <ul>
+                    <li> 这里需等待一会使配置生效，然后使用MobaXterm重新连接这三台虚拟机，即重新打开三个Session，可以看到修改的配置均已生效</li>
+                </ul>
+
+                <pre><code># 查看SELINUX是否已经关闭，下面查看其值已经为disabled了
+getenforce
+
+# 查看swap分区是否关闭，下面的swap均为0即已关闭
+free -m
+</code></pre>
+<img src="static/assets/img/k8s/true_together11.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+
+                <ul>
+                    <li>k8s可以通过docker管理和运行容器，这里我们安装docker</li>
+                </ul>
+
+                <pre><code># 1、切换镜像源
+wget https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo -O /etc/yum.repos.d/docker-ce.repo
+
+# 2、安装特定版本的docker-ce
+
+yum install --setopt=obsoletes=0 docker-ce-18.06.3.ce-3.el7 -y
+
+# 3、Docker 在默认情况下使用Vgroup Driver为cgroupfs，而Kubernetes推荐使用systemd来替代cgroupfs
+mkdir /etc/docker
+
+cat <<EOF> /etc/docker/daemon.json
+{
+    "exec-opts": ["native.cgroupdriver=systemd"],
+    "registry-mirrors": ["https://kn0t2bca.mirror.aliyuncs.com"]
+}
+EOF
+
+# 4、启动dokcer并设置开机自启
+systemctl restart docker
+systemctl enable docker
+</code></pre>
+<img src="static/assets/img/k8s/true_together13.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+<br><br>
+<img src="static/assets/img/k8s/true_together14.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+
+                <ul>
+                    <li>安装k8s</li>
+                </ul>
+
+                <pre><code># 1、由于kubernetes的镜像在国外，速度比较慢，这里切换成国内的镜像源
+# 2、编辑/etc/yum.repos.d/kubernetes.repo
+nano /etc/yum.repos.d/kubernetes.repo
+# 添加下面的配置
+[kubernetes]
+name=Kubernetes
+baseurl=http://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgchech=0
+repo_gpgcheck=0
+gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
+            http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+# 输入完毕后ctrl+x，然后按y，接着再回车即可退出文件编辑
+
+# 3、安装kubeadm、kubelet和kubectl
+yum install --setopt=obsoletes=0 kubeadm-1.17.4-0 kubelet-1.17.4-0 kubectl-1.17.4-0 -y
+
+# 4、配置kubelet的cgroup
+#编辑/etc/sysconfig/kubelet
+nano /etc/sysconfig/kubelet
+
+# 删去原先的KUBELET_EXTRA_ARGS=
+# 添加下面的配置
+KUBELET_CGROUP_ARGS="--cgroup-driver=systemd"
+KUBE_PROXY_MODE="ipvs"
+
+# 输入完毕后ctrl+x，然后按y，接着再回车即可退出文件编辑
+
+# 5、设置kubelet开机自启
+systemctl enable kubelet
+</code></pre>
+<img src="static/assets/img/k8s/true_together15.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+<br><br>
+<img src="static/assets/img/k8s/true_together16.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+<br><br>
+<img src="static/assets/img/k8s/true_together17.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+
+                <ul>
+                    <li>准备集群所需镜像</li>
+                </ul>
+
+                <pre><code># 在安装kubernetes集群之前，必须要提前准备好集群需要的镜像，所需镜像可以通过下面命令查看
+kubeadm config images list
+
+# 这些镜像kubernetes的仓库中，由于网络原因无法连接，下面使用阿里云仓库作为替代
+images=(
+    kube-apiserver:v1.17.4
+    kube-controller-manager:v1.17.4
+    kube-scheduler:v1.17.4
+    kube-proxy:v1.17.4
+    pause:3.1
+    etcd:3.4.3-0
+    coredns:1.6.5
+)
+
+for imageName in ${images[@]};do
+    docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/$imageName
+    docker tag registry.cn-hangzhou.aliyuncs.com/google_containers/$imageName k8s.gcr.io/$imageName
+    docker rmi registry.cn-hangzhou.aliyuncs.com/google_containers/$imageName 
+done
+
+# 查看镜像的下载情况
+docker images
+</code></pre>
+<img src="static/assets/img/k8s/true_together18.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+
+
+                <ul>
+                    <li>接下来我们退出多终端执行模式，只需要在master节点的Session中执行即可</li>
+                </ul>
+                <pre><code># 创建集群，下面的192.168.10.100需要改为你master的实际地址
+kubeadm init \
+    --apiserver-advertise-address=192.168.10.100 \
+    --kubernetes-version=v1.17.4 \
+    --service-cidr=10.96.0.0/12 \
+    --pod-network-cidr=10.244.0.0/16
+  
+# 创建必要文件
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+</code></pre>
+<img src="static/assets/img/k8s/true_together19.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+
+                <ul>
+                    <li>上图中启动可以看到已经成功初始化了，我们找到上图中方框中的指令，将它复制到两个node节点的Session中执行</li>
+                </ul>
+
+<img src="static/assets/img/k8s/true_together20.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+
+                <ul>
+                    <li>然后我们回到master的Session中，查看当前节点，可以看到三个节点都处于集群中了，但还都处于notready状态，这是因为网络问题</li>
+                </ul>
+
+                <pre><code>kubectl get nodes
+</code></pre>
+<img src="static/assets/img/k8s/true_together21.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+
+                <ul>
+                    <li>我们依然只在master节点所在的Session中进行操作，安装网络插件</li>
+                </ul>
+
+                <pre><code># 下载并部署calico.yaml文件
+curl https://docs.projectcalico.org/v3.14/manifests/calico.yaml -O
+kubectl apply -f calico.yaml
+
+# 将我们最开始的环境准备时所下载的kube-flannel.yml文件拖拽到master的Session窗口（若无法下载则使用实验所提供的），即可以上传这个文件到当前目录，而后部署它
+kubectl apply -f kube-flannel.yml
+# 这里的kube-flannel.yml由于网络问题无法像calico.yaml文件一样使用curl下载，只能手动上传
+</code></pre>
+<img src="static/assets/img/k8s/true_together22.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+<br><br>
+<img src="static/assets/img/k8s/true_together23.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+
+                <ul>
+                    <li>此时我们需要等待一段时间（可能比较久），再次查看当前节点的状态，均已经为ready了</li>
+                </ul>
+
+                <pre><code>kubectl get nodes
+</code></pre>
+<img src="static/assets/img/k8s/true_together24.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+                <ul>
+                    <li>这样我们就完成了一个真实生产环境中的k8s集群搭建，为了简化流程，在后续实验中，我们将使用minikube这一本地单节点部署工具来代替真实环境中的k8s集群</li>
+                </ul>
 
 
             </div>
