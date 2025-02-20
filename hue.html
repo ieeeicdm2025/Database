@@ -187,10 +187,6 @@
                     <li><b>HBase</b>：图形化的 HBase 界面，支持表的查看、编辑等操作。</li>
                 </ul>
 
-                <ul>
-                    <li><b>HBase</b>>：一个支持全文搜索的服务，Hue 提供对 Solr 搜索引擎的图形化管理界面。</li>
-                </ul>
-
 
                 <h2 id="1"><strong>3、使用minikube部署hue</strong></h2>
                 <p><strong>（1）向minikube中导入所需的镜像</strong></p>
@@ -206,8 +202,20 @@ docker images
 
                 <p><strong>（2）部署hue</strong></p>
                 <ul>
-                    <li>这里的hue我们连接到hive进行演示，因此我们需要先按hive的教程部署好hive的环境，再进行接下来的步骤，需要注意的是，hive是集成到Hadoop中的，因此也需要部署好Hadoop的环境</li>
+                    <li>这里的hue我们连接到hadoop与hive进行演示，因此我们需要先按hadoop与hive的教程部署好这两者的环境，再进行接下来的步骤</li>
                 </ul>
+                <pre><code>kubectl exec -it namenode-764bfd689f-798hc -- bash
+hdfs dfs -mkdir -p /user/admin
+hdfs dfs -chown admin:supergroup /user/admin
+hdfs dfs -chmod 755 /user/admin
+</code></pre>
+<img src="static/assets/img/hue_flume/precreate.png" alt="apply" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>这里我们先进入hadoop的namenode，为hue创建用户目录并设置权限</li>
+                </ul>
+
+
                 <ul>
                     <li>创建hue的配置信息，这里要用到文件 hue.ini 来生成配置信息，因此需要进入文件 hue.ini 所在的目录再运行下面的命令</li>
                 </ul>
@@ -243,7 +251,7 @@ docker images
                 <a href="http://localhost:8888/" target="_blank">http://localhost:8888/</a>
 <img src="static/assets/img/hue_flume/webui.png" alt="webui" style="width: 100%; height: auto;">
 
-                <p><strong>（3）测试 hue 的功能</strong></p>
+                <p><strong>（3）测试 hue 与 hive 的集成</strong></p>
                 <ul>
                     <li>接下来的操作为在hive章节已进行过的操作演示，将在hive章节的命令行查询转化为了在hue的web页面中执行，可只选择性地进行一些操作来了解hue的功能即可</li>
                 </ul>
@@ -351,6 +359,45 @@ INSERT INTO TABLE students PARTITION (class='B') VALUES (3, 'Charlie', 22),(4, '
                 </ul>
 <img src="static/assets/img/hue_flume/visual.png" alt="visual" style="width: 100%; height: auto;">
 <br><br>
+
+                <p><strong>（3）测试 hue 与 hadoop 的集成</strong></p>
+                <ul>
+                    <li>我们点击hue的web界面左侧的Files，即可以查看hdfs上所存放的文件</li>
+                </ul>
+                
+<img src="static/assets/img/hue_flume/hdfs1.png" alt="select1" style="width: 100%; height: auto;">
+
+
+                <ul>
+                    <li>我们可以直接在这里创建与编辑文件</li>
+                </ul>
+<img src="static/assets/img/hue_flume/hdfs3.png" alt="select1" style="width: 100%; height: auto;">
+<br><br>
+<img src="static/assets/img/hue_flume/hdfs4.png" alt="select1" style="width: 100%; height: auto;">
+<br><br>
+<img src="static/assets/img/hue_flume/hdfs5.png" alt="select1" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>而后我们可以进一步进入目录/user/hive/warehouse/example_db.db/students/class=A下，查看刚刚hive所创建的表格文件000000_0</li>
+                </ul>
+                
+<img src="static/assets/img/hue_flume/hdfs2.png" alt="select1" style="width: 100%; height: auto;">
+
+
+                <ul>
+                    <li>接着我们点击hue的web界面左侧的Jobs，可以查看yarn上所执行的job列表</li>
+                </ul>
+                <ul>
+                    <li>可以看到这里的job列表中已经存在了刚刚我们在hue与hive的集成中所执行的两个插入任务</li>
+                </ul>
+                
+<img src="static/assets/img/hue_flume/yarn.png" alt="select1" style="width: 100%; height: auto;">
+
+
+
+
+
+
 
 
             </div>
