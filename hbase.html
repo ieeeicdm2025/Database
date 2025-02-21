@@ -199,7 +199,23 @@
                 </ul>
                 <img src="static/assets/img/hbase/hbase_hfile_achi.png" alt="hbase_hfile_achi" style="width: 100%; height: auto;"/>
                 <h2 id="3minikubehbase"><strong>3、使用minikube部署Hbase</strong></h2>
-                <p><strong>（1）向minikube中导入所需的镜像</strong></p>
+                <p><strong>（1）制作并向minikube中导入所需的镜像</strong></p>
+
+                <ul>
+                    <li>我们可以使用dockerfile来制作所需镜像</li>
+                </ul>
+                <pre><code>docker build -f dockerfile_hbase -t hbase:latest .
+</code></pre>
+                <ul>
+                    <li>如果出现拉取错误的问题，也可以选择直接导入实验所提供的打包好的镜像</li>
+                </ul>
+                <pre><code>docker load -i hbase.tar
+</code></pre>
+                
+                <ul>
+                    <li>然后向minikube中导入所需的镜像</li>
+                </ul>
+
                 <pre><code>minikube image load hbase:latest
 </code></pre>
                 <ul>
@@ -296,7 +312,7 @@ put 'test_table', 'row8', 'cf:name', 'Grace'
                 <ul>
                     <li>再回到命令行，退出hbase的shell，回到pod的bash中，下载这个hfile文件，下面命令中的两处数字串需要替换为自己实际的目录中的数字串</li>
                 </ul>
-                <pre><code>hdfs dfs -get /hbase/data/default/test\_table/fb32269518c2633c442d3e9ea2cc035d/cf/88df3db91aaa414496d5d36bc08c65fd
+                <pre><code>hdfs dfs -get /hbase/data/default/test_table/fb32269518c2633c442d3e9ea2cc035d/cf/88df3db91aaa414496d5d36bc08c65fd
 </code></pre>
 <img src="static/assets/img/hbase/hbase_hfile1.png" alt="hbase_hfile1" style="width: 100%; height: auto;"/>
                 <ul>

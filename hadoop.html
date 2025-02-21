@@ -201,7 +201,22 @@
                 <img src="static/assets/img/hadoop_spark/hadoop_achi2.png" alt="hadoop_achi2" style="width: 100%; height: auto;"/>
                 <br><br>
                 <h2 id="3minikubehadoop"><strong>3、使用minikube部署Hadoop</strong></h2>
-                <p><strong>（1）向minikube中导入所需的镜像</strong></p>
+                <p><strong>（1）制作并向minikube中导入所需的镜像</strong></p>
+
+                <ul>
+                    <li>我们可以使用dockerfile来制作所需镜像</li>
+                </ul>
+                <pre><code>docker build -f dockerfile_hadoop -t spark-hadoop-numpy:latest .
+</code></pre>
+                <ul>
+                    <li>如果出现拉取错误的问题，也可以选择直接导入实验所提供的打包好的镜像</li>
+                </ul>
+                <pre><code>docker load -i spark-hadoop-numpy.tar
+</code></pre>
+                
+                <ul>
+                    <li>然后向minikube中导入所需的镜像</li>
+                </ul>
                 <pre><code>minikube image load spark-hadoop-numpy:latest</code></pre>
                 <ul>
                     <li>进入minikube查看是否导入</li>

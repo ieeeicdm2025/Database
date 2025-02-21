@@ -195,7 +195,31 @@
                     <li>负责接收HiveQL查询请求，并将这些请求转化为内部表示，以便进一步处理</li>
                 </ul>
                 <h2 id="3minikubehive"><strong>3、使用minikube部署Hive</strong></h2>
-                <p><strong>（1）向minikube中导入所需的镜像</strong></p>
+                <p><strong>（1）制作并向minikube中导入所需的镜像</strong></p>
+
+                <ul>
+                    <li>我们可以使用dockerfile来制作所需镜像</li>
+                </ul>
+                <pre><code>docker build -f dockerfile_hive -t hive:latest .
+</code></pre>
+
+                <ul>
+                    <li>并拉取所需的另一个镜像</li>
+                </ul>
+                <pre><code>docker pull mysql:oraclelinux9
+</code></pre>
+
+                <ul>
+                    <li>如果出现拉取错误的问题，也可以选择直接导入实验所提供的打包好的镜像</li>
+                </ul>
+                <pre><code>docker load -i hive.tar
+docker load -i mysql.tar
+</code></pre>
+                
+                <ul>
+                    <li>然后向minikube中导入所需的镜像</li>
+                </ul>
+                
                 <pre><code>minikube image load apache/hive:latest
 minikube image load mysql:oraclelinux9
 </code></pre>
