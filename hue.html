@@ -225,6 +225,9 @@ docker images
                 <ul>
                     <li>这里的hue我们连接到hadoop与hive进行演示，因此我们需要先按hadoop与hive的教程部署好这两者的环境，再进行接下来的步骤</li>
                 </ul>
+                <ul>
+                    <li>这里我们先进入hadoop的namenode，为hue创建用户目录并设置权限</li>
+                </ul>
                 <pre><code>kubectl exec -it namenode-764bfd689f-798hc -- bash
 hdfs dfs -mkdir -p /user/admin
 hdfs dfs -chown admin:supergroup /user/admin
@@ -232,9 +235,7 @@ hdfs dfs -chmod 755 /user/admin
 </code></pre>
 <img src="static/assets/img/hue_flume/precreate.png" alt="apply" style="width: 100%; height: auto;">
 
-                <ul>
-                    <li>这里我们先进入hadoop的namenode，为hue创建用户目录并设置权限</li>
-                </ul>
+                
 
 
                 <ul>
