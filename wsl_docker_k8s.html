@@ -839,7 +839,7 @@ kubectl top pods
 
 
                 <ul>
-                    <li>前四步使用默认配置，直接点击下一步即可</li>
+                    <li>前四步使用如下配置，然后 点击下一步即可</li>
                 </ul>
                 <img src="static/assets/img/k8s/true_virtual2.png" alt="true_flannel" style="width: 100%; height: auto;"/>
                 <br><br>
@@ -865,7 +865,7 @@ kubectl top pods
                 <img src="static/assets/img/k8s/true_virtual8.png" alt="true_flannel" style="width: 100%; height: auto;"/>
 
                 <ul>
-                    <li>接下来的四步也使用默认配置，直接选择下一步即可</li>
+                    <li>接下来的四步使用如下配置，然后选择下一步即可</li>
                 </ul>
                 <img src="static/assets/img/k8s/true_virtual9.png" alt="true_flannel" style="width: 100%; height: auto;"/>
                 <br><br>
@@ -893,7 +893,7 @@ kubectl top pods
                 <img src="static/assets/img/k8s/true_virtual16.png" alt="true_flannel" style="width: 100%; height: auto;"/>
 
                 <ul>
-                    <li>而后我们启动master，进入后回车</li>
+                    <li>而后我们启动master，进入后回车，等待其初始化完成</li>
                 </ul>
                 <img src="static/assets/img/k8s/true_virtual17.png" alt="true_flannel" style="width: 100%; height: auto;"/>
 
@@ -921,8 +921,8 @@ kubectl top pods
                 </ul>
                 <img src="static/assets/img/k8s/true_virtual23.png" alt="true_flannel" style="width: 100%; height: auto;"/>
                 <br><br>
-                <img src="static/assets/img/k8s/true_virtual40.png" alt="true_flannel" style="width: 100%; height: auto;"/>
-                <br><br>
+                <!-- <img src="static/assets/img/k8s/true_virtual40.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <br><br> -->
                 <img src="static/assets/img/k8s/true_virtual24.png" alt="true_flannel" style="width: 100%; height: auto;"/>
 
                 <ul>
@@ -1108,18 +1108,15 @@ kubectl top pods
 <img src="static/assets/img/k8s/true_together1.png" alt="true_flannel" style="width: 100%; height: auto;"/>
 
                 <ul>
-                    <li>配置后可以退出多终端执行模式，ping一下看看是否生效</li>
+                    <li>配置后可以ping一下看看是否生效，可以看到是能ping通的</li>
                 </ul>
 
                 <pre><code>ping master
 ping node1
 ping node2
 </code></pre>
-<img src="static/assets/img/k8s/true_together2.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+<img src="static/assets/img/k8s/true_together25.png" alt="true_flannel" style="width: 100%; height: auto;"/>
                 
-                <ul>
-                    <li>操作完后我们继续进入多终端执行模式</li>
-                </ul>
                 <ul>
                     <li>kubernetes要求集群中的节点时间必须精确一致，因此这里使用chronyd服务从网络同步时间，启动并设置开机自启，最后date验证时间是否一致</li>
                 </ul>
@@ -1220,7 +1217,7 @@ sudo yum makecache
 yum install ipset ipvsadm -y
 
 # 添加需要加载的模块写入脚本文件
-cat <<EOF> /etc/sysconfig/modules/ipvs.modules
+cat &lt;&lt;EOF&gt; /etc/sysconfig/modules/ipvs.modules
 #!/bin/bash
 modprobe -- ip_vs
 modprobe -- ip_vs_rr
@@ -1277,7 +1274,7 @@ yum install --setopt=obsoletes=0 docker-ce-18.06.3.ce-3.el7 -y
 # 3、Docker 在默认情况下使用Vgroup Driver为cgroupfs，而Kubernetes推荐使用systemd来替代cgroupfs
 mkdir /etc/docker
 
-cat <<EOF> /etc/docker/daemon.json
+cat &lt;&lt;EOF&gt; /etc/docker/daemon.json
 {
     "exec-opts": ["native.cgroupdriver=systemd"],
     "registry-mirrors": ["https://kn0t2bca.mirror.aliyuncs.com"]
@@ -1315,7 +1312,7 @@ gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
 yum install --setopt=obsoletes=0 kubeadm-1.17.4-0 kubelet-1.17.4-0 kubectl-1.17.4-0 -y
 
 # 4、配置kubelet的cgroup
-#编辑/etc/sysconfig/kubelet
+# 编辑/etc/sysconfig/kubelet
 nano /etc/sysconfig/kubelet
 
 # 删去原先的KUBELET_EXTRA_ARGS=
