@@ -236,19 +236,38 @@ hdfs dfs -chmod 755 /user/admin
 <img src="static/assets/img/hue_flume/precreate.png" alt="apply" style="width: 100%; height: auto;">
 
                 
-
-
-                <ul>
-                    <li>创建hue的配置信息，这里要用到文件 hue.ini 来生成配置信息，因此需要进入文件 hue.ini 所在的目录再运行下面的命令</li>
-                </ul>
                 <ul>
                     <li>hue.ini是Hue的主要配置文件，包含了诸如数据库连接、界面设置、和各种系统的认证配置等的配置信息，文件里有完整的官方给出的配置注解，方便对各种系统配置连接</li>
                 </ul>
+
+                <ul>
+                    <li>在hue.ini文件中，我们主要配置了它和hive、hdfs以及yarn的连接</li>
+                </ul>
+
+                <ul>
+                    <li>在对hive的配置中，[beeswax]是一个用于hive配置的分组，我们配置了hive的服务名为hiveserver2，在集群中可以解析为它所在主机的实际地址，并配置了端口号为10000</li>
+                </ul>
+                <img src="static/assets/img/hue_flume/hue_ini1.png" alt="hue_ini1" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>在对hdfs的配置中，我们配置了hue连接到hadoop默认的文件系统URI地址：hdfs://namenode:9000，并配置了WebHDFS的URL为：http://namenode:9870/webhdfs/v1，它用于通过HTTP协议与HDFS进行交互</li>
+                </ul>
+                <img src="static/assets/img/hue_flume/hue_ini2.png" alt="hue_ini2" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>在对yarn的配置中，我们指定了主机名为ResourceManager，端口号为8032，并指定了ResourceManager的API地址为：http://resourcemanager:8088，它用于通过HTTP接口与ResourceManager进行交互，</li>
+                </ul>
+                <img src="static/assets/img/hue_flume/hue_ini3.png" alt="hue_ini2" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>这里我们先用 hue.ini 文件创建hue的配置信息，进入文件 hue.ini 所在的目录再运行下面的命令</li>
+                </ul>
+                
                 <pre><code>kubectl create configmap hue-config --from-file=hue.ini
 </code></pre>
 
                 <ul>
-                    <li>使用 hue-deployment.yaml 文件部署hue</li>
+                    <li>然后再使用 hue-deployment.yaml 文件部署hue</li>
                 </ul>
                 <pre><code>kubectl apply -f hue-deployment.yaml
 </code></pre>
@@ -268,7 +287,7 @@ hdfs dfs -chmod 755 /user/admin
 <img src="static/assets/img/hue_flume/port.png" alt="port" style="width: 100%; height: auto;">
 
                 <ul>
-                    <li>使用kubectl的端口转发功能，以访问 hue 的webui，这个转发命令行界面需要一直保持这个转发状态，停止转发后就无法访问webui了</li>
+                    <li>在浏览器访问下面的链接以进入hue的web界面，这里我们使用admin作为用户名，密码同样也使用admin来登录hue</li>
                 </ul>
                 <a href="http://localhost:8888/" target="_blank">http://localhost:8888/</a>
 <img src="static/assets/img/hue_flume/webui.png" alt="webui" style="width: 100%; height: auto;">
