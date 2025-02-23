@@ -1216,7 +1216,7 @@ sudo yum makecache
 # 安装ipset和ipvsadm
 yum install ipset ipvsadm -y
 
-# 添加需要加载的模块写入脚本文件
+# 添加需要加载的模块写入脚本文件，将下面整段复制并执行就可以了
 cat &lt;&lt;EOF&gt; /etc/sysconfig/modules/ipvs.modules
 #!/bin/bash
 modprobe -- ip_vs
@@ -1272,8 +1272,9 @@ wget https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo -O /etc/yu
 yum install --setopt=obsoletes=0 docker-ce-18.06.3.ce-3.el7 -y
 
 # 3、Docker 在默认情况下使用Vgroup Driver为cgroupfs，而Kubernetes推荐使用systemd来替代cgroupfs
+# 先创建文件夹
 mkdir /etc/docker
-
+# 再修改文件，将下面整段复制并执行就可以了
 cat &lt;&lt;EOF&gt; /etc/docker/daemon.json
 {
     "exec-opts": ["native.cgroupdriver=systemd"],
