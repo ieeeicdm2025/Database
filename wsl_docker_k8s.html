@@ -786,14 +786,14 @@ kubectl top pods
 
                 <ul>
                     <li>下载kube-flannel.yml：<a
-                        href="https://github.com/flannel-io/flannel/blob/master/Documentation/kube-flannel.yml" target="_blank">https://github.com/flannel-io/flannel/blob/master/Documentation/kube-flannel.yml</a></li>
+                        href="https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml" target="_blank">https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml</a></li>
                 </ul>
 
                 <ul>
                     <li>kube-flannel.yml 文件是用于安装 Flannel CNI 插件的核心配置文件。Flannel 是 Kubernetes 集群中实现容器间网络通信的关键组件，它的作用是为 Pod 提供跨节点的网络互通能力。</li>
                 </ul>
 
-                <img src="static/assets/img/k8s/true_flannel.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <!-- <img src="static/assets/img/k8s/true_flannel.png" alt="true_flannel" style="width: 100%; height: auto;"/> -->
 
                 <ul>
                     <li>所有文件均已备好，也可以直接使用</li>
@@ -1406,10 +1406,12 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 curl https://docs.projectcalico.org/v3.14/manifests/calico.yaml -O
 kubectl apply -f calico.yaml
 
-# 将我们最开始的环境准备时所下载的kube-flannel.yml文件拖拽到master的Session窗口（若无法下载则使用实验所提供的），即可以上传这个文件到当前目录，而后部署它
+# 将我们最开始的环境准备时所下载的kube-flannel.yml文件上传到master的Session窗口（若无法下载则使用实验所提供的），即在MobaXterm的左栏右击鼠标，并选择“Upload to current folder”，可以上传这个文件到当前目录，而后部署它
 kubectl apply -f kube-flannel.yml
 # 这里的kube-flannel.yml由于网络问题无法像calico.yaml文件一样使用curl下载，只能手动上传
 </code></pre>
+<img src="static/assets/img/k8s/true_together26.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+<br><br>
 <img src="static/assets/img/k8s/true_together22.png" alt="true_flannel" style="width: 100%; height: auto;"/>
 <br><br>
 <img src="static/assets/img/k8s/true_together23.png" alt="true_flannel" style="width: 100%; height: auto;"/>
@@ -1422,6 +1424,30 @@ kubectl apply -f kube-flannel.yml
                 <pre><code>kubectl get nodes
 </code></pre>
 <img src="static/assets/img/k8s/true_together24.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+
+                <ul>
+                    <li>若经上述操作后还是处于notready状态，则可以使用实验所提供的kube-flannel.yml文件重新部署</li>
+                </ul>
+
+                <pre><code># 先删除之前的部署
+kubectl delete -f kube-flannel.yml
+
+# 再按之前的操作重新上传kube-flannel.yml文件
+
+# 接着重新加载并启动kubelet
+systemctl daemon-reload
+systemctl restart kubelet
+
+# 最后重新部署kube-flannel.yml文件
+kubectl apply -f kube-flannel.yml
+
+# 查看node的状态
+kubectl get nodes
+</code></pre>
+<img src="static/assets/img/k8s/true_together27.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+
+
 
                 <ul>
                     <li>这样我们就完成了一个真实生产环境中的k8s集群搭建，为了简化流程，在后续实验中，我们将使用minikube这一本地单节点部署工具来代替真实环境中的k8s集群</li>
