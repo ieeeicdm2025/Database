@@ -1340,7 +1340,7 @@ systemctl enable kubelet
                 <pre><code># 在安装kubernetes集群之前，必须要提前准备好集群需要的镜像，所需镜像可以通过下面命令查看
 kubeadm config images list
 
-# 这些镜像kubernetes的仓库中，由于网络原因无法连接，下面使用阿里云仓库作为替代
+# 这些镜像kubernetes的仓库中，由于网络原因无法连接，下面使用阿里云仓库作为替代，下面的两段代码一起复制并运行即可
 images=(
     kube-apiserver:v1.17.4
     kube-controller-manager:v1.17.4
