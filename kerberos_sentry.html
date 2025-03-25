@@ -1343,14 +1343,12 @@ kadmin.local -q "list_principals"
                 <p><strong>（2）测试sentry</strong></p>
 
                 <ul>
-                    <li>我们回到连接hadoop101的命令行，创建角色并设置密码</li>
+                    <li>我们回到连接hadoop101的命令行，使用xcall.sh在所有虚拟机创建角色并设置密码</li>
                 </ul>     
-                <pre><code>useradd reader
-useradd writer
-passwd reader
-passwd writer
+                <pre><code>xcall.sh "useradd reader && echo 000000 | passwd --stdin reader"
+xcall.sh "useradd writer && echo 000000 | passwd --stdin writer"
 </code></pre>        
-<img src="static/assets/img/kerberos_sentry/sentry_user.png" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_user_xcall.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>而后我们回到CDH的主界面，点击hue</li>
