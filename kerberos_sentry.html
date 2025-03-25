@@ -364,18 +364,14 @@ xsync
                 </ul>
                 <img src="static/assets/img/kerberos_sentry/shell.png" alt="flume_achi" style="width: 100%; height: auto;">
 
-
                 <ul>
-                    <li>而后我们使用ntp同步三台虚拟机的时间</li>
-                </ul>
-                <ul>
-                    <li>先更换源以便下载，这里使用xcall.sh，给三台虚拟机换源</li>
+                    <li>我们先更换源以便后续的各种下载操作，这里使用xcall.sh，给三台虚拟机换源</li>
                 </ul>                   
                 <pre><code>xcall.sh mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 xcall.sh curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
 </code></pre>
                 <ul>
-                    <li>接着同步时间</li>
+                    <li>接着使用ntp同步三台虚拟机的时间</li>
                 </ul>
                 <pre><code>xcall.sh yum install -y ntp
 xcall.sh ntpdate -u ntp.sjtu.edu.cn
@@ -818,13 +814,13 @@ com.cloudera.cmf.db.setupType=EXTERNAL
                 <img src="static/assets/img/kerberos_sentry/cdh_inspect3.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
-                    <li>回到虚拟机命令行，所有虚拟机均需要运行下面三条指令</li>
+                    <li>回到连接hadoop101的命令行，使用xcall.sh在所有虚拟机上修改所需配置</li>
                 </ul>            
-                <pre><code>sysctl vm.swappiness=10
-echo never > /sys/kernel/mm/transparent_hugepage/defrag  
-echo never > /sys/kernel/mm/transparent_hugepage/enabled
+                <pre><code>xcall.sh sysctl vm.swappiness=10
+xcall.sh "echo never > /sys/kernel/mm/transparent_hugepage/defrag"
+xcall.sh "echo never > /sys/kernel/mm/transparent_hugepage/enabled" 
 </code></pre>    
-                <img src="static/assets/img/kerberos_sentry/cdh_inspect4.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/cdh_inspect6.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
                     <li>而后返回cdh的web页面，点击“重新运行”，便可以看到主机性能的检查也通过了，接着我们点击继续</li>
@@ -990,14 +986,14 @@ echo never > /sys/kernel/mm/transparent_hugepage/enabled
 <img src="static/assets/img/kerberos_sentry/kerberos_server.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
-                    <li>安装kerberos的client，下面的指令均需要在hadoop102和hadoop103上执行</li>
+                    <li>安装kerberos的client，使用xcall.sh在所有虚拟机上安装</li>
                 </ul> 
-                <pre><code>yum install -y krb5-workstation krb5-libs
+                <pre><code>xcall.sh yum install -y krb5-workstation krb5-libs
 </code></pre>                   
-<img src="static/assets/img/kerberos_sentry/kerberos_work.png" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/kerberos_work_xcall.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
-                    <li>而后回到hadoop101编辑kdc.conf文件，完整内容如下</li>
+                    <li>而后在hadoop101的命令行编辑kdc.conf文件</li>
                 </ul>  
                 <pre><code>nano /var/kerberos/krb5kdc/kdc.conf
 </code></pre>            
@@ -1011,12 +1007,12 @@ max_renewable_life = 7d
 # 去掉aes256-cts:normal，这个需要额外的jar包
 </code></pre>  
                 <ul>
-                    <li>而后回到hadoop101编辑kdc.conf文件，完整内容如下</li>
+                    <li>kdc.conf文件的完整内容如下</li>
                 </ul>  
 <img src="static/assets/img/kerberos_sentry/kerberos_kdc.png" alt="flume_achi" style="width: 100%; height: auto;">      
 
                 <ul>
-                    <li>编辑krb5.conf文件，完整内容如下</li>
+                    <li>接着编辑krb5.conf文件</li>
                 </ul>  
                 <pre><code>nano /etc/krb5.conf
 </code></pre>              
@@ -1034,7 +1030,7 @@ HADOOP.COM = {
 </code></pre>  
 
                 <ul>
-                    <li>其完整内容如下</li>
+                    <li>krb5.conf文件的完整内容如下</li>
                 </ul>
 <img src="static/assets/img/kerberos_sentry/kerberos_krb5.png" alt="flume_achi" style="width: 100%; height: auto;">  
 
@@ -1347,7 +1343,7 @@ kadmin.local -q "list_principals"
                 <p><strong>（2）测试sentry</strong></p>
 
                 <ul>
-                    <li>我们回到虚拟机的命令行，在三个虚拟机上均需创建角色并设置密码</li>
+                    <li>我们回到连接hadoop101的命令行，创建角色并设置密码</li>
                 </ul>     
                 <pre><code>useradd reader
 useradd writer
