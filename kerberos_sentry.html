@@ -167,102 +167,110 @@
                 <h1 id="flink"><strong>Kerberos和Sentry</strong></h1>
                 <div style="height: 32px;"></div>
                 <h2 id="1-7"><strong>1、CDH</strong></h2>
-                <p>ZooKeeper 是一个开放源码的分布式协调服务，主要为了解决分布式架构下数据一致性问题，它是集群的管理者，监视着集群中各个节点的状态，根据节点提交的反馈进行下一步合理操作。最终，将简单易用的接口和性能高效、功能稳定的系统提供给用户。</p>
-                <img src="static/assets/img/kafka_zookeeper/zookeeper_achi.png" alt="zookeeper_achi" style="width: 100%; height: auto;">
+                <p>CDH（Cloudera's Distribution Including Apache Hadoop）是Cloudera公司推出的一款企业级大数据平台发行版，它集成了Apache Hadoop生态系统中的核心组件及周边工具，旨在简化大数据集群的部署、管理和运维。</p>
+                <img src="static/assets/img/kerberos_sentry/cdh.png" alt="zookeeper_achi" style="width: 100%; height: auto;">
                 
-                <p><strong>（1）数据模型</strong></p>
+                <p><strong>（1）CDH的核心组件</strong></p>
                 <ul>
-                    <li>ZooKeeper 采用层次化的目录结构，类似于文件系统，每个数据单元称为 ZNode 。整个 ZooKeeper 存储的数据可以看作是一个树状结构，每个节点可以存储少量数据，并且可以有子节点。</li>
+                    <li>分布式存储：HDFS</li>
                 </ul>
-                <p><strong>（2）ZAB 协议（ZooKeeper Atomic Broadcast）</strong></p>
                 <ul>
-                    <li>ZooKeeper 采用 ZAB 协议 作为其核心一致性算法，确保分布式环境下的数据一致性，并能很好地支持崩溃恢复。</li>
+                    <li>资源管理：YARN</li>
                 </ul>
-                
                 <ul>
-                    <li>ZAB 的工作模式</li>
-                    <li style="padding-left: 20px; list-style-position: inside;">崩溃恢复模式：当 ZooKeeper 集群启动或 Leader 发生故障时，进入恢复模式，选举新的 Leader 并同步数据。</li>
-                    <li style="padding-left: 20px; list-style-position: inside;">广播模式：Leader 选举完成后，所有事务性请求（写操作）都由 Leader 处理，并通过 ZAB 进行复制到 Follower。</li>
+                    <li>计算框架：MapReduce（传统）、Spark（内存加速）、Hive（基于MapReduce/Tez）、Impala（MPP架构）、Spark Streaming、Flink、HBase（基于HDFS的分布式列存储）</li>
                 </ul>
-
+                <p><strong>（2）CDH的管理层</strong></p>
                 <ul>
-                    <li>ZAB 中三个主要的角色</li>
-                    <li style="padding-left: 20px; list-style-position: inside;">Leader ：集群中唯一的写请求处理者 ，能够发起投票（投票也是为了进行写请求）。</li>
-                    <li style="padding-left: 20px; list-style-position: inside;">Follower：能够接收客户端的请求，如果是读请求则可以自己处理，如果是写请求则要转发给 Leader 。在选举过程中会参与投票，有选举权和被选举权 。</li>
-                    <li style="padding-left: 20px; list-style-position: inside;">Observer ：没有选举权和被选举权的 Follower 。</li>
+                    <li>CDH的管理层由Cloudera Manager（CM）提供，Cloudera Manager是一个集中式管理工具，提供图形界面和API</li>
                 </ul>
                 
-                <p><strong>（3）Watcher 机制</strong></p>
                 <ul>
-                    <li>ZooKeeper 提供了一种 观察者（Watcher）机制，允许客户端监听 ZNode 变化，并在数据或节点发生变更时收到通知。</li>
-                    <li>Watcher 的触发条件</li>
-                    <li style="padding-left: 20px; list-style-position: inside;">节点数据变化（修改、删除）</li>
-                    <li style="padding-left: 20px; list-style-position: inside;">节点子节点列表变化（添加、删除子节点）</li>
-                    <li style="padding-left: 20px; list-style-position: inside;">节点创建或删除（适用于监听不存在的节点）</li>
-                    
-                </ul>
-                <p><strong>（4）会话管理</strong></p>
-                <p>窗口是流处理中用于分组和聚合事件的机制。Flink 支持多种窗口类型：</p>
-                <ul>
-                    <li>ZooKeeper 使用 会话（Session） 来管理客户端连接，每个客户端连接到 ZooKeeper 时都会创建一个会话。 客户端会定期向 ZooKeeper 发送心跳，防止会话超时，如果客户端在会话超时前重新连接 ZooKeeper，可以继续使用原会话 ID。如果客户端长时间不与 ZooKeeper 交互（超时），ZooKeeper 认为该客户端已经断开连接，并删除它的临时节点。</li>
+                    <li>CM的主要作用有：</li>
+                    <li style="padding-left: 20px; list-style-position: inside;">安装与部署：自动化安装CDH组件。</li>
+                    <li style="padding-left: 20px; list-style-position: inside;">配置管理：统一管理服务配置。</li>
+                    <li style="padding-left: 20px; list-style-position: inside;">监控与诊断：实时监控集群健康状态、性能指标。</li>
+                    <li style="padding-left: 20px; list-style-position: inside;">服务管理：启动、停止、重启服务。</li>
+                    <li style="padding-left: 20px; list-style-position: inside;">升级与维护：支持滚动升级。</li>
+                    <li>CM的核心组件有：</li>
+                    <li style="padding-left: 20px; list-style-position: inside;">Server：运行CM服务，协调管理任务。</li>
+                    <li style="padding-left: 20px; list-style-position: inside;">Agent：运行在每个节点上，执行CM Server的指令。</li>
+                    <li style="padding-left: 20px; list-style-position: inside;">Database：存储CM的元数据（如MySQL、PostgreSQL）。</li>
                 </ul>
                 
-                <h2 id="2flink"><strong>2、Kerberos（<a
-                    href="https://kafka.apache.org/" target="_blank">官网</a>）</strong></h2>
-                <p>Kafka 是一个分布式流处理平台，广泛应用于高吞吐量的消息传递和实时数据流处理。它能够处理大量的实时数据流，并且支持分布式、高可用和高可扩展的架构。</p>
-                <img src="static/assets/img/kafka_zookeeper/kafka_achi.png" alt="kafka_achi" style="width: 100%; height: auto;">
                 
-                <p><strong>（1）Producer（生产者）</strong></p>
-                <ul>
-                    <li>Producer 是消息的生产者，它负责将消息发送到 Kafka 中的指定 Topic。Producer 可以将消息发送到特定的分区，也可以让 Kafka 自动选择分区。Producer 是消息流入 Kafka 系统的源头。</li>
-                </ul>
-                <p><strong>（2）Consumer（消费者）</strong></p>
-                <ul>
-                    <li>Consumer 是从 Kafka 中消费消息的客户端。它可以从一个或多个 Topic 中获取消息并进行处理。消费者通常组成一个消费者组（Consumer Group），多个消费者并行处理消息。</li>
-                    <li>Consumer Group（消费者组）是 Kafka 中消费者的一个重要概念。一个消费者组中的多个消费者共同消费一个或多个 Topic 中的消息。Kafka 确保每个分区只会被消费者组中的一个消费者消费，这样就可以实现负载均衡。</li>
-                </ul>
-                <p><strong>（3）Topic（主题）</strong></p>
-                <ul>
-                    <li>Topic 是 Kafka 中消息的逻辑分类，生产者将消息发布到特定的 Topic，消费者则从指定的 Topic 中消费消息。</li>
-                </ul>
-
-                <p><strong>（4）Partition（分区）</strong></p>
-                <ul>
-                    <li>每个 Kafka Topic 都可以被划分为多个分区。每个分区是 Kafka 中的基本存储单位，消息会被分布到不同的分区中。分区使 Kafka 可以横向扩展，提升吞吐量。</li>
-                </ul>
-
-                <p><strong>（5）Broker（代理）</strong></p>
-                <ul>
-                    <li>Broker 是 Kafka 的核心服务器，负责存储消息并处理客户端的请求。一个 Kafka 集群由多个 Broker 组成，Kafka 集群的规模可以随着业务需求的增加进行横向扩展。</li>
-                </ul>
-
-                <p><strong>（6）Offset（偏移量）</strong></p>
-                <ul>
-                    <li>Kafka 使用偏移量来标识消息在分区中的位置。每个消息在分区内都有一个唯一的偏移量，消费者根据偏移量来消费消息。</li>
-                </ul>
-
-
-                <h2 id="2flink"><strong>3、Sentry（<a
-                    href="https://flume.apache.org/" target="_blank">官网</a>）</strong></h2>
-
-                <p>Flume是一个分布式的、可靠的、可用的服务，用于高效地收集、聚合和移动大量的日志数据。</p>
-                <img src="static/assets/img/hue_flume/flume_achi.png" alt="flume_achi" style="width: 100%; height: auto;">    
+                <h2 id="2flink"><strong>2、Kerberos</strong></h2>
+                <p>Kerberos 是一种 网络身份认证协议，用于在非安全网络环境中实现安全的身份验证，防止敏感信息（如密码）在传输中被窃取。它广泛应用于企业级系统（如Hadoop集群）中，确保用户和服务之间的双向认证与通信安全。</p>
+                <img src="static/assets/img/kerberos_sentry/kerberos.png" alt="kafka_achi" style="width: 100%; height: auto;">
                 
-                <p><strong>（1）一个flume agent（事务）可以分成三部分</strong></p>
+                <p><strong>（1）Kerberos的核心角色</strong></p>
                 <ul>
-                    <li>源（Source）：用于从外部系统（如日志文件、网络流、数据库等）获取数据，并通过将获取到的数据封装成 Event 发送到 Flume 的后续组件。</li>
-                    <li>通道（Channel）：用于临时存储从 Source 接收到的事件，直到它们被 Flume 的 Sink 组件处理。</li>
-                    <li>接收器（Sink）：用于将事件从 Channel 发送到外部系统（例如 HDFS、Kafka、数据库等）的组件。Sink 会从 Channel 中读取事件，并根据配置将其写入到目标系统中。</li>
+                    <li>客户端（Client）：请求访问服务的用户或应用程序。</li>
                 </ul>
 
-                <p><strong>（2）flume 的工作流程</strong></p>
                 <ul>
-                    <li>Source 从外部系统获取数据并将其转化为 Event。</li>
-                    <li>Channel 存储这些 Event，确保数据可靠传输。</li>
-                    <li>Sink 从 Channel 中读取 Event，并将其发送到外部存储或分析系统。</li>
+                    <li>服务端（Service Server）：提供具体服务的资源（如HDFS、HBase）。</li>
+                </ul>
+
+                <ul>
+                    <li>密钥分发中心（KDC, Key Distribution Center）</li>
+                    <li style="padding-left: 20px; list-style-position: inside;">认证服务器（AS, Authentication Server）：验证用户身份，发放临时票据（TGT）。</li>
+                    <li style="padding-left: 20px; list-style-position: inside;">票据授权服务器（TGS, Ticket Granting Server）：根据TGT发放服务访问票据。</li>
+                </ul>
+
+                <p><strong>（2）Kerberos的关键术语</strong></p>
+                <ul>
+                    <li>票据（Ticket）：加密的凭证，用于证明用户身份和权限。</li>
+                </ul>
+
+                <ul>
+                    <li>TGT（Ticket Granting Ticket）：用户首次登录后获得的临时票据，用于后续申请服务票据。</li>
+                </ul>
+
+                <ul>
+                    <li>会话密钥（Session Key）：临时生成的加密密钥，用于客户端与服务端之间的通信加密。
+
+                    </li>
+                </ul>
+
+                <ul>
+                    <li>领域（Realm）：Kerberos管理的安全域（如EXAMPLE.COM），所有实体（用户、服务）需在同一领域内注册。</li>
+                </ul>
+
+                <h2 id="2flink"><strong>3、Sentry</strong></h2>
+
+                <p>Sentry 是 Apache 开源的一个权限管理框架，专为 Hadoop 生态系统设计，用于控制用户或用户组对数据资源的访问权限（如 Hive 表、HDFS 目录、Impala 数据库等）。它通过统一的策略引擎实现 基于角色的访问控制（RBAC），是大数据平台（如 CDH）中实现数据安全的核心组件之一。</p>
+                <img src="static/assets/img/kerberos_sentry/sentry.png" alt="flume_achi" style="width: 100%; height: auto;">    
+                
+                <br><br>
+
+                <p><strong>（1）sentry的核心概念</strong></p>
+                <ul>
+                    <li>访问控制：Sentry 提供基于角色（Role-Based Access Control, RBAC）的权限管理，允许管理员为用户或组分配特定权限（如 SELECT、INSERT 等），控制对数据和资源的访问。</li>
+                </ul>
+                <ul>
+                    <li>与 Hadoop 生态集成：在 CDH 中，Sentry 与 Kerberos 结合，形成完整的安全体系：Kerberos 负责“认证”（Authentication），Sentry 负责“授权”（Authorization）。</li>
+                </ul>
+                <ul>
+                    <li>统一权限管理 ：Sentry 提供了一个集中式的权限管理模型，管理员可以通过 SQL 语句或界面管理权限，避免了分散在各个组件中的权限配置。</li>
+                </ul>
+
+                <p><strong>（2）sentry的工作原理（以Hive为例）</strong></p>
+                <ul>
+                    <li>用户已通过 Kerberos 认证，并通过 Beeline 或 Hue 提交 Hive 查询</li>
+                </ul>
+                <ul>  
+                    <li>HiveServer2 接收查询请求后，调用 Sentry 插件</li>
+                </ul>    
+                <ul>
+                    <li>sentry 插件将用户身份和查询语句发送到 Sentry Server，从而检查用户所属的角色对表的权限</li>
+                </ul>    
+                <ul>
+                    <li>如果权限通过，Hive 继续编译和执行查询；如果权限不足，Hive 返回错误给用户。</li>
                 </ul>
   
 
+                
                 <h2 id="3minikubeflink"><strong>4、部署CHD</strong></h2>
                 <p><strong>（1）准备虚拟机</strong></p>
 
@@ -270,18 +278,20 @@
                     <li>对于hadoop101，由于它需要安装cdh server，所以需要更大的内存，这里我们设置内存为4G，磁盘容量为40G</li>
                 </ul>
                 <img src="static/assets/img/kerberos_sentry/vm1.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <br><br>
                 <img src="static/assets/img/kerberos_sentry/vm2.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
                     <li>对于其它两台机器，按照如下的配置，即设置内存为2G，磁盘容量为30G</li>
                 </ul>
                 <img src="static/assets/img/kerberos_sentry/vm3.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <br><br>
                 <img src="static/assets/img/kerberos_sentry/vm4.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
-                    <li>准备虚拟机的其它步骤均与k8s集群部署中相同，这里不再重复</li>
+                    <li>准备虚拟机的其它步骤均与k8s集群部署中相同，这里不再重复，还有一点需要注意的是主机名配置，这里我的三台虚拟机的主机名设置为了hadoop101、hadoop102、hadoop103，主机名的配置位置在如下步骤</li>
                 </ul>
-                
+                <img src="static/assets/img/kerberos_sentry/host.png" alt="flume_achi" style="width: 100%; height: auto;">
                 <ul>
                     <li>接着我们依然和之前k8s部署的时候一样，使用MobaXterm连接每台虚拟机，对每台机器配置名称与ip的对应关系</li>
                 </ul>
@@ -296,7 +306,7 @@
 </code></pre>
 
                 <ul>
-                    <li>输入以下内容</li>
+                    <li>输入以下内容，将主机名与IP关联</li>
                 </ul>
                 <pre><code>192.168.10.101 hadoop101 hadoop101
 192.168.10.102 hadoop102 hadoop102
@@ -308,6 +318,7 @@
                 </ul>
 
                 <img src="static/assets/img/kerberos_sentry/hosts1.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <br><br>
                 <img src="static/assets/img/kerberos_sentry/hosts2.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
@@ -328,15 +339,17 @@ ssh-copy-id hadoop103
 </code></pre>
 
                 <img src="static/assets/img/kerberos_sentry/key1.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <br><br>
                 <img src="static/assets/img/kerberos_sentry/key2.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
-                    <li>上传所需脚本至hadoop101，在右侧文件夹栏的空白处右键鼠标，选择upload to current folder</li>
+                    <li>上传所需脚本bin-kerberos.zip至hadoop101，在右侧文件夹栏的空白处右键鼠标，选择upload to current folder</li>
                 </ul>
                 <ul>
                     <li>解压所上传的脚本，并授予脚本权限，接着进入脚本目录并测试是否可以使用</li>
                 </ul>
                 <pre><code>unzip bin-kerberos.zip
+cd bin-kerberos/
 chmod 77 bin/*
 cd bin
 xsync
@@ -366,7 +379,7 @@ mkdir software
                 <ul>
                     <li>接着进入所上传的文件目录下</li>
                 </ul>
-                <pre><code>cd 1.CDH6/
+                <pre><code>cd /opt/module/1.CDH6/
 </code></pre>
 
                 <ul>
@@ -393,7 +406,12 @@ mkdir software
 export CLASSPATH=.:$CLASSPATH:$JAVA_HOME/lib
 export PATH=$PATH:$JAVA_HOME/bin
 </code></pre>
+                
                 <img src="static/assets/img/kerberos_sentry/env.png" alt="flume_achi" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>输入完毕后使用ctrl+x，然后按y，接着再回车即可退出文件编辑</li>
+                </ul>
 
                 <ul>
                     <li>应用更改并检查是否生效，能看到java的版本就是生效了</li>
@@ -409,6 +427,7 @@ java -version
 xsync /etc/profile.d/my_env.sh
 </code></pre>
 <img src="static/assets/img/kerberos_sentry/xsync_jdk1.png" alt="flume_achi" style="width: 100%; height: auto;">
+<br><br>
 <img src="static/assets/img/kerberos_sentry/xsync_jdk2.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
@@ -466,7 +485,9 @@ sudo rpm -e --nodeps mariadb-libs
 sudo rpm -ivh MySQL-server-5.6.24-1.el6.x86_64.rpm
 </code></pre>
 <img src="static/assets/img/kerberos_sentry/mysql_unzip1.png" alt="flume_achi" style="width: 100%; height: auto;">
+<br><br>
 <img src="static/assets/img/kerberos_sentry/mysql_unzip2.png" alt="flume_achi" style="width: 100%; height: auto;">
+<br><br>
 <img src="static/assets/img/kerberos_sentry/mysql_unzip3.png" alt="flume_achi" style="width: 100%; height: auto;">
 
 
@@ -556,6 +577,7 @@ cp mysql-connector-java.jar /usr/share/java/
 xsync /usr/share/java/
 </code></pre>
 <img src="static/assets/img/kerberos_sentry/cm_mysql1.png" alt="flume_achi" style="width: 100%; height: auto;">
+<br><br>
 <img src="static/assets/img/kerberos_sentry/cm_mysql2.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
@@ -617,7 +639,7 @@ yum install bind-utils psmisc cyrus-sasl-plain cyrus-sasl-gssapi fuse portmap fu
 <img src="static/assets/img/kerberos_sentry/cm_agnet1.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
-                    <li>接着修改agent的配置文件，主要为了让所有节点都知道server是谁</li>
+                    <li>接着回到hadoop101，修改agent的配置文件，主要为了让所有节点都知道server是谁</li>
                 </ul>                
                 <pre><code>nano /etc/cloudera-scm-agent/config.ini
 </code></pre>
@@ -640,7 +662,7 @@ yum install bind-utils psmisc cyrus-sasl-plain cyrus-sasl-gssapi fuse portmap fu
 </code></pre>
 
                 <ul>
-                    <li>然后我们回到hadoop101上安装server</li>
+                    <li>然后我们继续在hadoop101上安装server</li>
                 </ul>                
                 <pre><code>rpm -ivh cloudera-manager-server-6.3.1-1466458.el7.x86_64.rpm 
 </code></pre>
@@ -683,7 +705,7 @@ com.cloudera.cmf.db.setupType=EXTERNAL
 <img src="static/assets/img/kerberos_sentry/cm_db.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
-                    <li>接着我们就可以导入数据了</li>
+                    <li>接着我们可以使用如下命令导入数据，要求输入密码，密码即为我们在之前文件中所配置的参数：scm</li>
                 </ul>                
                 <pre><code>/opt/cloudera/cm/schema/scm_prepare_database.sh mysql scm scm
 </code></pre>
@@ -838,39 +860,75 @@ echo never > /sys/kernel/mm/transparent_hugepage/enabled
                 <ul>
                     <li>接着我们安装Hive</li>
                 </ul>                
+                <ul>
+                    <li>我们在CDH的主界面点击添加服务</li>
+                </ul>
                 <img src="static/assets/img/kerberos_sentry/cdh_hive1.png" alt="flume_achi" style="width: 100%; height: auto;">
 
 
                 <ul>
-                    <li>我们在CDH的主界面点击添加服务</li>
-                </ul>                
+                    <li>选择Hive，再点击继续</li>
+                </ul> 
+                                
                 <img src="static/assets/img/kerberos_sentry/cdh_hive2.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
-                    <li>选择Hive，再点击继续</li>
-                </ul>                
+                    <li>主机角色分配如下</li>
+                </ul> 
+                               
                 <img src="static/assets/img/kerberos_sentry/cdh_hive3.png" alt="flume_achi" style="width: 100%; height: auto;">
 
+                          
                 <ul>
-                    <li>主机角色分配如下</li>
-                </ul>                
+                    <li>对数据库做如下的配置，并测试连接</li>
+                </ul>  
                 <img src="static/assets/img/kerberos_sentry/cdh_hive4.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
-                    <li>对数据库做如下的配置，并测试连接</li>
-                </ul>                
+                    <li>审核更改这里按默认配置就可以</li>
+                </ul>       
                 <img src="static/assets/img/kerberos_sentry/cdh_hive5.png" alt="flume_achi" style="width: 100%; height: auto;">
 
-                <ul>
-                    <li>审核更改这里按默认配置就可以</li>
-                </ul>                
-                <img src="static/assets/img/kerberos_sentry/cdh_hive6.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
                     <li>然后等待配置完成即可</li>
-                </ul>                
+                </ul>
+                <img src="static/assets/img/kerberos_sentry/cdh_hive6.png" alt="flume_achi" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>到这里就完成hive的配置了</li>
+                </ul>
                 <img src="static/assets/img/kerberos_sentry/cdh_hive7.png" alt="flume_achi" style="width: 100%; height: auto;">
 
+                <ul>
+                    <li>接下来我们配置sentry</li>
+                </ul>
+                <ul>
+                    <li>回到CDH的主界面，点击添加服务</li>
+                </ul>     
+                <img src="static/assets/img/kerberos_sentry/sentry1.png" alt="flume_achi" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>选择sentry</li>
+                </ul> 
+                <img src="static/assets/img/kerberos_sentry/sentry2.png" alt="flume_achi" style="width: 100%; height: auto;">    
+                   
+
+                <ul>
+                    <li>主机角色分配如下</li>
+                </ul>     
+                <img src="static/assets/img/kerberos_sentry/sentry3.png" alt="flume_achi" style="width: 100%; height: auto;">   
+
+
+                <ul>
+                    <li>数据库设置如下，配置完点击测试连接，再点击继续</li>
+                </ul>     
+                <img src="static/assets/img/kerberos_sentry/sentry4.png" alt="flume_achi" style="width: 100%; height: auto;">   
+
+                <ul>
+                    <li>等待配置完成</li>
+                </ul>     
+                <img src="static/assets/img/kerberos_sentry/sentry5.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>最后我们安装hue，在CDH的主界面点击添加服务</li>
@@ -912,35 +970,63 @@ echo never > /sys/kernel/mm/transparent_hugepage/enabled
                 </ul>
                 <pre><code>yum install -y krb5-server krb5-workstation krb5-libs
 </code></pre>                
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/kerberos_server.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
                     <li>安装kerberos的client，下面的指令均需要在hadoop102和hadoop103上执行</li>
                 </ul> 
                 <pre><code>yum install -y krb5-workstation krb5-libs
 </code></pre>                   
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/kerberos_work.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
-                    <li>而后回到编辑kdc.conf文件，完整内容如下</li>
+                    <li>而后回到hadoop101编辑kdc.conf文件，完整内容如下</li>
                 </ul>  
                 <pre><code>nano /var/kerberos/krb5kdc/kdc.conf
 </code></pre>            
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">      
+                <ul>
+                    <li>修改操作如下</li>
+                </ul>  
+                <pre><code># EXAMPLE.COM修改为HADOOP.COM 
+# 添加如下字段，用于配置生命周期
+max_life = 1d
+max_renewable_life = 7d
+# 去掉aes256-cts:normal，这个需要额外的jar包
+</code></pre>  
+                <ul>
+                    <li>而后回到hadoop101编辑kdc.conf文件，完整内容如下</li>
+                </ul>  
+<img src="static/assets/img/kerberos_sentry/kerberos_kdc.png" alt="flume_achi" style="width: 100%; height: auto;">      
 
                 <ul>
                     <li>编辑krb5.conf文件，完整内容如下</li>
                 </ul>  
                 <pre><code>nano /etc/krb5.conf
 </code></pre>              
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">  
+                <ul>
+                    <li>修改操作如下</li>
+                </ul>  
+                <pre><code># 放开注释掉的default_realm = EXAMPLE.COM，并修改EXAMPLE.COM为HADOOP.COM 
+# 注释掉这一行：default_ccache_name = KEYRING:persistent:%{uid}
+# 添加udp配置：udp_preference_limit = 1
+# 放开[realms]下的注释，并配置为：
+HADOOP.COM = {
+    kdc = hadoop101
+    admin_server = hadoop101
+  }
+</code></pre>  
+
+                <ul>
+                    <li>其完整内容如下</li>
+                </ul>
+<img src="static/assets/img/kerberos_sentry/kerberos_krb5.png" alt="flume_achi" style="width: 100%; height: auto;">  
 
                 <ul>
                     <li>分发krb5.conf文件</li>
                 </ul>       
                 <pre><code>xsync /etc/krb5.conf
 </code></pre>              
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/kerberos_xsync.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
                     <li>生成kerberos数据库</li>
@@ -950,13 +1036,13 @@ echo never > /sys/kernel/mm/transparent_hugepage/enabled
                 <ul>
                     <li>而后设置密码，可以也设为000000</li>
                 </ul>  
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/kerberos_db.png" alt="flume_achi" style="width: 100%; height: auto;">
                 <ul>
                     <li>赋予Kerberos管理员所有权限，编辑下面文件，将EXAMPLE更改为为HADOOP</li>
                 </ul>                
                 <pre><code>nano /var/kerberos/krb5kdc/kadm5.acl
 </code></pre>    
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/kerberos_acl.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
                     <li>启动kerberos服务</li>
@@ -976,7 +1062,7 @@ systemctl status kadmin
                 <pre><code>systemctl enable krb5kdc
 systemctl enable kadmin
 </code></pre>    
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/kerberos_status.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <p><strong>（2）Kerberos数据库操作</strong></p>
                 <ul>
@@ -1001,7 +1087,16 @@ systemctl enable kadmin
                 <pre><code>quit
 </code></pre> 
 
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/kerberos_database.png" alt="flume_achi" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>也可以采用-q参数的方式，而不进入kadmin.local命令行</li>
+                </ul>
+                <pre><code>kadmin.local -q "addprinc admin/admin"
+kadmin.local -q "list_principals"
+</code></pre> 
+
+<img src="static/assets/img/kerberos_sentry/kerberos_q.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <p><strong>（3）Kerberos主体认证</strong></p>
                 <ul>
@@ -1016,10 +1111,23 @@ systemctl enable kadmin
                 <pre><code>klist
 </code></pre> 
                 <ul>
-                    <li>进行认证，而后输入密码000000</li>
+                    <li>进行认证，而后输入密码000000，可以看到已经认证成功了</li>
                 </ul>                
                 <pre><code>kinit admin/admin
 </code></pre> 
+
+                <ul>
+                    <li>而后我们销毁认证以使用另一种认证方式</li>
+                </ul>                
+                <pre><code>kdestroy
+</code></pre> 
+
+                <ul>
+                    <li>再次查看，当前已经没有认证了</li>
+                </ul>                
+                <pre><code>klist
+</code></pre> 
+
                 <ul>
                     <li>第二种是keytab密钥文件认证</li>
                 </ul>   
@@ -1040,20 +1148,16 @@ systemctl enable kadmin
                 </ul>                
                 <pre><code>klist
 </code></pre> 
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/kerberos_two.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <p><strong>（4）CDH启用Kerberos安全认证</strong></p>
-                <ul>
-                    <li></li>
-                </ul>                
-                <pre><code>
-</code></pre> 
                 
                 <ul>
                     <li>先在hadoop101上，为CM创建管理员主体/实例，而后设置密码为：000000</li>
                 </ul>                
                 <pre><code>kadmin.local -q "addprinc cloudera-scm/admin"
 </code></pre> 
+<img src="static/assets/img/kerberos_sentry/kerberos_create_scm.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <p><strong>（4）CDH启用Kerberos安全认证</strong></p>
                 <ul>
@@ -1061,57 +1165,58 @@ systemctl enable kadmin
                 </ul>                
                 <pre><code>
 </code></pre> 
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/kerberos_cdh1.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 
                 <ul>
                     <li>全部勾选，再点击继续</li>
                 </ul>                
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/kerberos_cdh2.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 
                 <ul>
                     <li>kdc信息的具体配置如下</li>
                 </ul>                
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/kerberos_cdh3.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 
                 <ul>
                     <li>无需勾选，点击继续</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/kerberos_cdh4.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
-                    <li>这里输入我们刚刚创建的主体以及密码</li>
+                    <li>这里输入我们刚刚创建的主体：cloudera-scm/admin，以及密码：000000</li>
                 </ul>                
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">
-
-                <ul>
-                    <li>点击继续</li>
-                </ul>                
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/kerberos_cdh5.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
                     <li>点击继续</li>
                 </ul>                
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/kerberos_cdh6.png" alt="flume_achi" style="width: 100%; height: auto;">
+
+                <ul>
+                    <li>点击继续</li>
+                </ul>                
+<img src="static/assets/img/kerberos_sentry/kerberos_cdh7.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
                     <li>等待配置完成</li>
                 </ul>                
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/kerberos_cdh8.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
                     <li>这里就已经成功在cdh上启用kerberos了</li>
                 </ul>                
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/kerberos_cdh9.png" alt="flume_achi" style="width: 100%; height: auto;">
                 
 
                 <ul>
                     <li>我们可以点击管理-安全以查看生成的kerberos凭据</li>
                 </ul>                
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/kerberos_cdh10.png" alt="flume_achi" style="width: 100%; height: auto;">
+<br><br>
+<img src="static/assets/img/kerberos_sentry/kerberos_cdh11.png" alt="flume_achi" style="width: 100%; height: auto;">
                 
                 <p><strong>（5）测试Kerberos安全认证</strong></p>
                 <ul>
@@ -1155,98 +1260,69 @@ systemctl enable kadmin
                 </ul>     
                 <pre><code>hadoop fs -ls /
 </code></pre>        
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">
-
+<img src="static/assets/img/kerberos_sentry/kerberos_test.png" alt="flume_achi" style="width: 100%; height: auto;">
+<br><br>
 
 
                 <h2 id="3minikubeflink"><strong>6、配置Sentry</strong></h2>
-
-                <p><strong>（1）在CDH添加sentry服务</strong></p>
-                <ul>
-                    <li>回到CDH的主界面，点击添加服务</li>
-                </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">
-
-                <ul>
-                    <li>选择sentry</li>
-                </ul> 
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">    
-                   
-
-                <ul>
-                    <li>主机角色分配如下</li>
-                </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">   
-
-
-                <ul>
-                    <li>数据库设置如下，配置完点击测试连接，再点击继续</li>
-                </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;">   
-
-                <ul>
-                    <li>等待配置完成</li>
-                </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
-
                 
-                <p><strong>（2）修改相关配置</strong></p>
+                <p><strong>（1）修改相关配置</strong></p>
                 <ul>
                     <li>回到CDH的主界面，点击hive</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_hive1.png" alt="flume_achi" style="width: 100%; height: auto;"> 
                 
                 <ul>
                     <li>点击配置，并在搜索框输入：hiveserver2 启用模拟，而后取消勾选并保存更改</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_hive2.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>而后继续在搜索框搜索：启用数据库中的存储通知，勾选并保存更改</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_hive3.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>而后继续在搜索框搜索：sentry，勾选sentry并保存更改</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_hive4.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>然后我们回到CDH主界面并选择hdfs</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_hdfs1.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>点击配置，并在搜索框中输入：启用访问控制列表，勾选并保存更改</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_hdfs2.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>而后在搜索框中输入：启用 sentry 同步，勾选并保存更改</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_hdfs3.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>回到主界面，点击重启，应用更改项</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_restart1.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>点击重启过时服务</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_restart2.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>点击立即重启</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_restart3.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>等待重启完成</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_restart4.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
-                <p><strong>（3）测试sentry</strong></p>
+                <p><strong>（2）测试sentry</strong></p>
 
                 <ul>
                     <li>我们回到虚拟机的命令行，在三个虚拟机上均需创建角色并设置密码</li>
@@ -1256,49 +1332,60 @@ useradd writer
 passwd reader
 passwd writer
 </code></pre>        
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_user.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>而后我们回到CDH的主界面，点击hue</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_hue1.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>再进入hue的webui</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_hue2.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>使用hive作为用户名，000000作为初始密码登录hue</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_hue3.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>点击右上角的管理用户</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_hue4.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>添加reader组和writer组</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_group1.png" alt="flume_achi" style="width: 100%; height: auto;">
+<br><br> 
+<img src="static/assets/img/kerberos_sentry/sentry_group2.png" alt="flume_achi" style="width: 100%; height: auto;"> 
+<br><br>
+<img src="static/assets/img/kerberos_sentry/sentry_group3.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>添加reader用户和writer用户到对应的组里</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_user1.png" alt="flume_achi" style="width: 100%; height: auto;">
+<br><br>
+<img src="static/assets/img/kerberos_sentry/sentry_user2.png" alt="flume_achi" style="width: 100%; height: auto;">
+<br><br>
+<img src="static/assets/img/kerberos_sentry/sentry_user3.png" alt="flume_achi" style="width: 100%; height: auto;">
+<br><br>
+<img src="static/assets/img/kerberos_sentry/sentry_user4.png" alt="flume_achi" style="width: 100%; height: auto;">
+<br><br>
+<img src="static/assets/img/kerberos_sentry/sentry_user5.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>添加hive组，并将hive用户添加到组里</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_hive.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
-                    <li>我们回到命令行，使用hive作为用户获取凭证，而后进入hive，创建student表</li>
+                    <li>我们回到hadoop101的命令行，先为hive服务建立kerberos凭证，再使用hive作为用户获取凭证，而后进入hive，创建student表</li>
                 </ul>     
-                <pre><code>kinit hive/hive@HADOOP.COM
+                <pre><code>kadmin.local -q "addprinc hive/hive@HADOOP.COM"
+kinit hive/hive@HADOOP.COM
 hive
 
 create table student(
@@ -1308,61 +1395,74 @@ sex string comment '性别',
 age string comment '年龄'
 ) comment '学生表';
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_init.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>然后我们回到hue的webui，点击安全性</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_safe.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
-                    <li>点击“+”号，创建reader_role和writer_role，分别授予select和insert权限</li>
+                    <li>先点击Roles，再点击“+”号，创建reader_role和writer_role，分别授予select和insert权限</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_role1.png" alt="flume_achi" style="width: 100%; height: auto;"> 
+<br><br>
+<img src="static/assets/img/kerberos_sentry/sentry_role2.png" alt="flume_achi" style="width: 100%; height: auto;"> 
+<br><br>
+<img src="static/assets/img/kerberos_sentry/sentry_role3.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>接着我们点击右上角，注销当前的hive用户</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_quit1.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>使用reader用户登录，密码使用000000</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_reader1.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>进行查询，成功</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+                <pre><code>select * from student
+</code></pre>
+<img src="static/assets/img/kerberos_sentry/sentry_reader2.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>进行插入，失败，报错为权限不够</li>
-                </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+                </ul>   
+                <pre><code>insert into student values('1','孙悟空','男','100');
+</code></pre>  
+<img src="static/assets/img/kerberos_sentry/sentry_reader3.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>接着我们点击右上角，注销当前的reader用户</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_quit2.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>使用writer用户登录，密码使用000000</li>
                 </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+<img src="static/assets/img/kerberos_sentry/sentry_writer1.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>进行查询，失败，报错为权限不够</li>
-                </ul>     
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
+                </ul> 
+                <pre><code>select * from student
+</code></pre>    
+<img src="static/assets/img/kerberos_sentry/sentry_writer2.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>进行插入，成功</li>
                 </ul>
+                <pre><code>insert into student values('1','孙悟空','男','100');
+</code></pre>  
                 <ul>
-                    <li>由于资源限制，这里可能执行的很慢，或者任务一直处于未定状态，但是可以看到是提交了mapreduce任务的，只要能据此了解sentry的工作方式即可</li>
+                    <li>由于资源限制，这里AM请求的最小资源无法满足，因此YARN拒绝了该任务的启动请求，但是可以看到该命令已经转化为了mapreduce任务，没有出现权限报错，只要能据此了解sentry的工作方式即可</li>
                 </ul>         
-<img src="static/assets/img/kerberos_sentry/" alt="flume_achi" style="width: 100%; height: auto;"> 
-
+<img src="static/assets/img/kerberos_sentry/sentry_writer3.png" alt="flume_achi" style="width: 100%; height: auto;"> 
+<br><br>
+<img src="static/assets/img/kerberos_sentry/sentry_writer4.png" alt="flume_achi" style="width: 100%; height: auto;"> 
             </div>
 
         </div>
