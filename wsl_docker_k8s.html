@@ -50,16 +50,17 @@
             border-collapse: collapse;
             margin: 20px 0;
         }
-        th, td {
+
+        th,
+        td {
             padding: 8px 12px;
             text-align: left;
             border: 1px solid #ddd;
         }
+
         th {
             background-color: #f4f4f4;
         }
-
-
     </style>
 
     <!-- For Compatability -->
@@ -180,19 +181,29 @@
             <div style="height: 64px;"></div>
 
             <div class="main-body" id="awards-md">
-                <h1 id="wsl"><strong>一、WSL（<a
-                    href="https://learn.microsoft.com/zh-cn/windows/wsl/" target="_blank">官网</a>）</strong></h1>
+                <h1 id="wsl"><strong>快速索引</strong></h1>
+                <br>
+                <h2 id="awards-subtitle" style="font-size: 36px;"><a href="#wsl">1、安装WSL</a></a></h2>
+
+                <h2 id="awards-subtitle" style="font-size: 36px;"><a href="#3docker">2、安装Docker</a></h2>
+                <h2 id="awards-subtitle" style="font-size: 36px;"><a href="#3k8s">3、部署minikube</a></h2>
+                <h2 id="awards-subtitle" style="font-size: 36px;"><a href="#k8s">4、部署真实的k8s集群</a></h2>
+
+                <br><br>
+
+                <h1 id="wsl"><strong>一、WSL（<a href="https://learn.microsoft.com/zh-cn/windows/wsl/"
+                            target="_blank">官网</a>）</strong></h1>
                 <p>Windows Subsystem for Linux (WSL) 是一项功能，允许在 Windows 系统上运行 Linux 发行版。安装教程如下：</p>
-                <p><a
-                        href="https://learn.microsoft.com/zh-cn/windows/wsl/install" target="_blank">https://learn.microsoft.com/zh-cn/windows/wsl/install</a>
+                <p><a href="https://learn.microsoft.com/zh-cn/windows/wsl/install"
+                        target="_blank">https://learn.microsoft.com/zh-cn/windows/wsl/install</a>
                 </p>
                 <div style="height: 32px;"></div>
-                <h1 id="docker"><strong>二、Docker（<a
-                    href="https://www.docker.com/" target="_blank">官网</a>）</strong></h1>
+                <h1 id="docker"><strong>二、Docker（<a href="https://www.docker.com/" target="_blank">官网</a>）</strong></h1>
                 <div style="height: 32px;"></div>
                 <h2 id="1"><strong>1、简介</strong></h2>
                 <p>Docker是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可抑制的容器中，然后发布到任何流行的Linux机器上，也可以实现虚拟化。容器完全使用沙盒机制，相互之间不会存在任何接口。几乎没有性能开销，可以很容易的在机器和数据中心运行。最重要的是，他们不依赖于任何语言、框架或者包装系统。Docker和虚拟机类似，都是虚拟化技术。
-                <img src="static/assets/img/docker/docker_achi.png" alt="docker_achi" style="width: 100%; height: auto;"/>
+                    <img src="static/assets/img/docker/docker_achi.png" alt="docker_achi"
+                        style="width: 100%; height: auto;" />
                 <p>因此，借助Docker，我们可以很方便地部署各种环境</p>
                 <h2 id="2docker"><strong>2、Docker的核心概念</strong></h2>
                 <p><strong>（1）镜像（Image）</strong></p>
@@ -203,7 +214,7 @@
                 <p>Dockerfile 是一个文本文件，其中包含了构建 Docker 镜像的所有指令。它描述了如何从一个基础镜像开始，通过一系列步骤（例如安装软件、复制文件、设置环境变量等）构建出新的镜像。</p>
                 <h2 id="3docker"><strong>3、配置Docker环境</strong></h2>
 
-                
+
                 <p>（1）设置Docker的存储库</p>
                 <pre><code># Add Docker's official GPG key:
 sudo apt-get update
@@ -230,11 +241,11 @@ sudo apt-get update
 
 
                 <p><strong>具体的教程可以参见下面（任选一个就行）</strong></p>
-                <p><a
-                        href="https://docs.docker.com/engine/install/ubuntu/" target="_blank">https://docs.docker.com/engine/install/ubuntu/</a>
+                <p><a href="https://docs.docker.com/engine/install/ubuntu/"
+                        target="_blank">https://docs.docker.com/engine/install/ubuntu/</a>
                 </p>
-                <p><a
-                        href="https://cloud.tencent.com/document/product/213/46000#1H-kXbk9zoqvzYMVPVsBO" target="_blank">https://cloud.tencent.com/document/product/213/46000#1H-kXbk9zoqvzYMVPVsBO</a>
+                <p><a href="https://cloud.tencent.com/document/product/213/46000#1H-kXbk9zoqvzYMVPVsBO"
+                        target="_blank">https://cloud.tencent.com/document/product/213/46000#1H-kXbk9zoqvzYMVPVsBO</a>
                 </p>
 
                 <p>（4）配置镜像源文件</p>
@@ -267,11 +278,12 @@ sudo apt-get update
 </code></pre>
                 <ul>
                     <li>视频教程：<a
-                            href="https://www.bilibili.com/video/BV17J2RYrESD/?vd_source=fec4535066dbb8e54594440a6685ef56" target="_blank">docker无法拉取，docker拉取失败，成功好用的镜像源
+                            href="https://www.bilibili.com/video/BV17J2RYrESD/?vd_source=fec4535066dbb8e54594440a6685ef56"
+                            target="_blank">docker无法拉取，docker拉取失败，成功好用的镜像源
                             for linux<em>哔哩哔哩</em>bilibili</a></li>
                 </ul>
 
-                
+
                 <!-- <h2 id="4docker"><strong>4、将当前用户添加到docker的用户组里</strong></h2> -->
                 <ul>
                     <li>为了不让后续所有对docker的操作都加上sudo，我们将当前用户添加到docker组：</li>
@@ -288,8 +300,8 @@ sudo apt-get update
                 </ul>
                 <pre><code>docker ps
 </code></pre>
-<img src="static/assets/img/k8s/k8s_docker.png" alt="k8s_docker" style="width: 100%; height: auto;"/>
-<br><br>
+                <img src="static/assets/img/k8s/k8s_docker.png" alt="k8s_docker" style="width: 100%; height: auto;" />
+                <br><br>
 
                 <h2 id="4docker"><strong>4、Docker的常用命令</strong></h2>
                 <p><strong>（1）帮助命令</strong></p>
@@ -401,12 +413,12 @@ docker ps
                 <pre><code>docker logs 容器名
 </code></pre>
                 <div style="height: 32px;"></div>
-                <h1 id="kubernetes"><strong>三、Kubernetes（<a
-                    href="https://kubernetes.io/zh-cn/" target="_blank">官网</a>）</strong></h1>
+                <h1 id="kubernetes"><strong>三、Kubernetes（<a href="https://kubernetes.io/zh-cn/"
+                            target="_blank">官网</a>）</strong></h1>
                 <div style="height: 32px;"></div>
                 <h2 id="1-1"><strong>1、简介</strong></h2>
                 <p>Kubernetes（也称为 K8s）是一个开源系统，用于自动部署、扩展和管理容器化应用程序。</p>
-                <img src="static/assets/img/k8s/k8s_achi.png" alt="k8s_achi" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/k8s_achi.png" alt="k8s_achi" style="width: 100%; height: auto;" />
                 <p><strong>k8s和docker的关系：</strong></p>
                 <ul>
                     <li>Docker 提供了容器化技术的基础，专注于单机和单容器的构建与运行。</li>
@@ -472,10 +484,11 @@ docker ps
                 <h2 id="3k8s"><strong>3、部署k8s</strong></h2>
                 <p><strong>（1）安装kubectl</strong></p>
                 <p>Kubectl是Kubernetes 命令行工具，让用户可以对 Kubernetes 集群运行命令。用户可以使用 kubectl 来部署应用、监测和管理集群资源以及查看日志。</p>
-                
-                <p>参考文档：<a href="https://kubernetes.io/zh-cn/docs/setup" target="_blank"><strong>https://kubernetes.io/zh-cn/docs/setup</strong></a></p>
-                
-                
+
+                <p>参考文档：<a href="https://kubernetes.io/zh-cn/docs/setup"
+                        target="_blank"><strong>https://kubernetes.io/zh-cn/docs/setup</strong></a></p>
+
+
                 <ul>
                     <li>下载 Kubernetes 的 kubectl 二进制文件</li>
                 </ul>
@@ -494,7 +507,7 @@ docker ps
                 <ul>
                     <li>验证通过时，输出为：kubectl: OK</li>
                 </ul>
-                <img src="static/assets/img/k8s/k8s_ok.png" alt="k8s_ok" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/k8s_ok.png" alt="k8s_ok" style="width: 100%; height: auto;" />
                 <ul>
                     <li>安装 kubectl：</li>
                 </ul>
@@ -505,13 +518,14 @@ docker ps
                 </ul>
                 <pre><code>kubectl version --client
 </code></pre>
-<img src="static/assets/img/k8s/k8s_version.png" alt="k8s_version" style="width: 100%; height: auto;"/>
-<br><br>
+                <img src="static/assets/img/k8s/k8s_version.png" alt="k8s_version" style="width: 100%; height: auto;" />
+                <br><br>
                 <p><strong>（2）安装minikube</strong></p>
                 <p>Minikube 是一种轻量级的 Kubernetes 实现，可在本地计算机上创建 VM 并部署仅包含一个节点的简单集群。Minikube 可用于 Linux ， macOS 和 Windows
                     系统。Minikube CLI提供了用于引导集群工作的多种操作，包括启动、停止、查看状态和删除。</p>
                 <p>参考文档：<a
-                        href="https://minikube.sigs.k8s.io/docs/start/?arch=%2Flinux%2Fx86-64%2Fstable%2Fbinary+download" target="_blank">minikube
+                        href="https://minikube.sigs.k8s.io/docs/start/?arch=%2Flinux%2Fx86-64%2Fstable%2Fbinary+download"
+                        target="_blank">minikube
                         start | minikube (k8s.io)</a></p>
                 <ul>
                     <li>在 x86-64 Linux 上使用二进制下载安装最新的 minikube 稳定版本</li>
@@ -524,9 +538,10 @@ sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-a
                 </ul>
                 <pre><code>minikube version
 </code></pre>
-<img src="static/assets/img/k8s/mini_version.png" alt="mini_version" style="width: 100%; height: auto;"/>
-<br><br>
-                
+                <img src="static/assets/img/k8s/mini_version.png" alt="mini_version"
+                    style="width: 100%; height: auto;" />
+                <br><br>
+
                 <p><strong>（3）启动minikube</strong></p>
                 <ul>
                     <li>启动minikube</li>
@@ -556,10 +571,10 @@ sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-a
                 </ul>
                 <pre><code>kubectl get po -A
 </code></pre>
-<img src="static/assets/img/k8s/mini_get1.png" alt="mini_get1" style="width: 100%; height: auto;"/>
-<br><br>
-<img src="static/assets/img/k8s/mini_get2.png" alt="mini_get2" style="width: 100%; height: auto;"/>
-<br><br>
+                <img src="static/assets/img/k8s/mini_get1.png" alt="mini_get1" style="width: 100%; height: auto;" />
+                <br><br>
+                <img src="static/assets/img/k8s/mini_get2.png" alt="mini_get2" style="width: 100%; height: auto;" />
+                <br><br>
                 <p><strong>（4）minikube的dashboard</strong></p>
 
                 <ul>
@@ -570,12 +585,13 @@ sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-a
                     <li>minikube提供了dashboard功能，用以在web端进行操作</li>
                 </ul>
                 <pre><code>minikube dashboard</code></pre>
-                
-                <img src="static/assets/img/k8s/mini_dashboard_fail.png" alt="mini_load" style="width: 100%; height: auto;"/>
+
+                <img src="static/assets/img/k8s/mini_dashboard_fail.png" alt="mini_load"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>如果同样遇到了上图中一直卡住的问题，是由于国内镜像源的限制，在启动dashboard时会卡在拉取镜像的环节，因此我们同样指定它使用本地镜像来启动dashboard</li>
-                    
+
                 </ul>
 
                 <ul>
@@ -596,14 +612,14 @@ docker load -i metrics-scraper.tar
                 <pre><code>minikube image load kubernetesui/dashboard:v2.7.0
 minikube image load kubernetesui/metrics-scraper:v1.0.8
 </code></pre>
-<img src="static/assets/img/k8s/mini_load.png" alt="mini_load" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/mini_load.png" alt="mini_load" style="width: 100%; height: auto;" />
                 <ul>
                     <li>进入minikube查看是否成功导入</li>
                 </ul>
                 <pre><code>minikube ssh
 docker images
 </code></pre>
-<img src="static/assets/img/k8s/mini_ssh1.png" alt="mini_ssh" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/mini_ssh1.png" alt="mini_ssh" style="width: 100%; height: auto;" />
                 <ul>
                     <li>然后退出minikube</li>
                 </ul>
@@ -612,7 +628,7 @@ docker images
                 <ul>
                     <li>编辑用于部署dashboard的两个yaml文件 ，更改为本地的镜像名称，并且修改拉取镜像的策略为：从不从外部拉取，只使用本地</li>
                 </ul>
-                <img src="static/assets/img/k8s/mini_edit.png" alt="mini_edit" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/mini_edit.png" alt="mini_edit" style="width: 100%; height: auto;" />
                 <ul>
                     <li>修改第一个文件：</li>
                 </ul>
@@ -621,11 +637,13 @@ docker images
                 <ul>
                     <li>修改前如下所示，可以看到是因为带了哈希值导致找不到镜像，改为我们本地导入的镜像</li>
                 </ul>
-                <img src="static/assets/img/k8s/mini_edit11.png" alt="mini_edit11.png" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/mini_edit11.png" alt="mini_edit11.png"
+                    style="width: 100%; height: auto;" />
                 <ul>
                     <li>修改成下图的样子</li>
                 </ul>
-                <img src="static/assets/img/k8s/mini_edit12.png" alt="mini_edit12.png" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/mini_edit12.png" alt="mini_edit12.png"
+                    style="width: 100%; height: auto;" />
                 <ul>
                     <li>修改第二个文件：</li>
                 </ul>
@@ -634,11 +652,13 @@ docker images
                 <ul>
                     <li>修改前如下所示，可以看到是因为带了哈希值导致找不到镜像，改为我们本地导入的镜像</li>
                 </ul>
-                <img src="static/assets/img/k8s/mini_edit21.png" alt="mini_edit21.png" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/mini_edit21.png" alt="mini_edit21.png"
+                    style="width: 100%; height: auto;" />
                 <ul>
                     <li>修改成下图的样子</li>
                 </ul>
-                <img src="static/assets/img/k8s/mini_edit22.png" alt="mini_edit22.png" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/mini_edit22.png" alt="mini_edit22.png"
+                    style="width: 100%; height: auto;" />
                 <ul>
                     <li>删除 Pod 并让 Kubernetes 重建，再查看状态，就能发现在running状态了</li>
                 </ul>
@@ -646,14 +666,15 @@ docker images
 kubectl delete pod -n kubernetes-dashboard -l k8s-app=metrics-scraper   
 kubectl get pods -n kubernetes-dashboard
 </code></pre>
-<img src="static/assets/img/k8s/mini_delete.png" alt="mini_delete" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/mini_delete.png" alt="mini_delete" style="width: 100%; height: auto;" />
                 <p>启动dashboard，到浏览器访问这个url链接能看到minikube的webui了</p>
                 <pre><code>minikube dashboard
 </code></pre>
-<img src="static/assets/img/k8s/mini_dashboard.png" alt="mini_dashboard" style="width: 100%; height: auto;"/>
-<br><br>
-<img src="static/assets/img/k8s/mini_webui.png" alt="mini_webui" style="width: 100%; height: auto;"/>
-<br><br>
+                <img src="static/assets/img/k8s/mini_dashboard.png" alt="mini_dashboard"
+                    style="width: 100%; height: auto;" />
+                <br><br>
+                <img src="static/assets/img/k8s/mini_webui.png" alt="mini_webui" style="width: 100%; height: auto;" />
+                <br><br>
                 <h2 id="4minikube"><strong>4、minikube常用命令</strong></h2>
                 <ul>
                     <li>指定本地镜像启动minikube</li>
@@ -744,7 +765,7 @@ kubectl top pods
 </code></pre>
 
 
-                <h2 id="5kubectl"><strong>6、真实的k8s集群搭建</strong></h2>
+                <h2 id="k8s"><strong>6、真实的k8s集群搭建</strong></h2>
                 <p><strong>（1）部署方式</strong></p>
                 <ul>
                     <li>kubeadm：是一个 K8s 部署工具，提供 kubeadm init 和 kubeadm join，用于快速部署 Kubernetes 集群。</li>
@@ -759,38 +780,48 @@ kubectl top pods
                 <p><strong>（2）环境准备</strong></p>
                 <ul>
                     <li>安装vmware：<a
-                        href="https://support.broadcom.com/group/ecx/productfiles?subFamily=VMware Workstation Pro&displayGroup=VMware Workstation Pro 17.0 for Windows&release=17.6.2&os=&servicePk=526672&language=EN" target="_blank">https://support.broadcom.com/group/ecx/productfiles?subFamily=VMware Workstation Pro&displayGroup=VMware Workstation Pro 17.0 for Windows&release=17.6.2&os=&servicePk=526672&language=EN</a></li>
+                            href="https://support.broadcom.com/group/ecx/productfiles?subFamily=VMware Workstation Pro&displayGroup=VMware Workstation Pro 17.0 for Windows&release=17.6.2&os=&servicePk=526672&language=EN"
+                            target="_blank">https://support.broadcom.com/group/ecx/productfiles?subFamily=VMware
+                            Workstation Pro&displayGroup=VMware Workstation Pro 17.0 for
+                            Windows&release=17.6.2&os=&servicePk=526672&language=EN</a></li>
                 </ul>
-                <img src="static/assets/img/k8s/true_vmware1.png" alt="true_vmware1" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_vmware1.png" alt="true_vmware1"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>进入时需要输入账号，这里自行注册一个就可以</li>
                 </ul>
 
-                <img src="static/assets/img/k8s/true_vmware2.png" alt="true_vmware2" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_vmware2.png" alt="true_vmware2"
+                    style="width: 100%; height: auto;" />
                 <br><br>
-                <img src="static/assets/img/k8s/true_vmware3.png" alt="true_vmware3" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_vmware3.png" alt="true_vmware3"
+                    style="width: 100%; height: auto;" />
 
 
                 <ul>
-                    <li>下载centos的iso包，用于装配操作系统：<a
-                        href="https://vault.centos.org/7.7.1908/isos/x86_64/" target="_blank">https://vault.centos.org/7.7.1908/isos/x86_64/</a></li>
+                    <li>下载centos的iso包，用于装配操作系统：<a href="https://vault.centos.org/7.7.1908/isos/x86_64/"
+                            target="_blank">https://vault.centos.org/7.7.1908/isos/x86_64/</a></li>
                 </ul>
-                <img src="static/assets/img/k8s/true_centos.png" alt="true_centos" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_centos.png" alt="true_centos" style="width: 100%; height: auto;" />
 
                 <ul>
-                    <li>下载MobaXterm，用于统一对虚拟机进行操作：<a
-                        href="https://mobaxterm.mobatek.net/download-home-edition.html" target="_blank">https://mobaxterm.mobatek.net/download-home-edition.html</a></li>
+                    <li>下载MobaXterm，用于统一对虚拟机进行操作：<a href="https://mobaxterm.mobatek.net/download-home-edition.html"
+                            target="_blank">https://mobaxterm.mobatek.net/download-home-edition.html</a></li>
                 </ul>
-                <img src="static/assets/img/k8s/true_mobaxterm.png" alt="true_mobaxterm" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_mobaxterm.png" alt="true_mobaxterm"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>下载kube-flannel.yml：<a
-                        href="https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml" target="_blank">https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml</a></li>
+                            href="https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml"
+                            target="_blank">https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml</a>
+                    </li>
                 </ul>
 
                 <ul>
-                    <li>kube-flannel.yml 文件是用于安装 Flannel CNI 插件的核心配置文件。Flannel 是 Kubernetes 集群中实现容器间网络通信的关键组件，它的作用是为 Pod 提供跨节点的网络互通能力。</li>
+                    <li>kube-flannel.yml 文件是用于安装 Flannel CNI 插件的核心配置文件。Flannel 是 Kubernetes 集群中实现容器间网络通信的关键组件，它的作用是为 Pod
+                        提供跨节点的网络互通能力。</li>
                 </ul>
 
                 <!-- <img src="static/assets/img/k8s/true_flannel.png" alt="true_flannel" style="width: 100%; height: auto;"/> -->
@@ -798,8 +829,8 @@ kubectl top pods
                 <ul>
                     <li>所有文件均已备好，也可以直接使用</li>
                 </ul>
-                
-                
+
+
                 <p><strong>（3）配置虚拟机</strong></p>
                 <ul>
                     <li>我们需要准备三台虚拟机，一台作为master节点，两台作为node节点</li>
@@ -835,113 +866,140 @@ kubectl top pods
                 <ul>
                     <li>安装vmware后，先创建虚拟机master</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_virtual1.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual1.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
 
                 <ul>
                     <li>前四步使用如下配置，然后 点击下一步即可</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_virtual2.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual2.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
                 <br><br>
-                <img src="static/assets/img/k8s/true_virtual3.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual3.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
                 <br><br>
-                <img src="static/assets/img/k8s/true_virtual4.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual4.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
                 <br><br>
-                <img src="static/assets/img/k8s/true_virtual5.png" alt="true_flannel" style="width: 100%; height: auto;"/>
-                
+                <img src="static/assets/img/k8s/true_virtual5.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
+
                 <ul>
                     <li>定义当前虚拟机的名称为master，并设置存放它的位置</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_virtual6.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual6.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>每个处理器的内核数量设置为2个</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_virtual7.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual7.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>虚拟机的内存设置为2G</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_virtual8.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual8.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>接下来的四步使用如下配置，然后选择下一步即可</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_virtual9.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual9.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
                 <br><br>
-                <img src="static/assets/img/k8s/true_virtual10.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual10.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
                 <br><br>
-                <img src="static/assets/img/k8s/true_virtual11.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual11.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
                 <br><br>
-                <img src="static/assets/img/k8s/true_virtual12.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual12.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>指定磁盘容量为20G</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_virtual13.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual13.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>接着点击下一步，再点击完成，即可完成master虚拟机的创建</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_virtual14.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual14.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
                 <br><br>
-                <img src="static/assets/img/k8s/true_virtual15.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual15.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>然后我们编辑master虚拟机的设置，找到CD/DVD(IDE)选项，选择我们之前在准备工作中下载好的centos映像文件</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_virtual16.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual16.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>而后我们启动master，进入后回车，等待其初始化完成</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_virtual17.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual17.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>将滚动条拖动到最下面，选择中文</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_virtual18.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual18.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>选择软件为基础设施服务器，然后返回</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_virtual19.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual19.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
                 <br><br>
-                <img src="static/assets/img/k8s/true_virtual20.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual20.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>安装位置这里有个黄色感叹号，我们点进去再出来就可以消除了</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_virtual21.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual21.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
                 <br><br>
-                <img src="static/assets/img/k8s/true_virtual22.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual22.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>接下来是设置网络与主机名，进入后我们点击配置</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_virtual23.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual23.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
                 <br><br>
                 <!-- <img src="static/assets/img/k8s/true_virtual40.png" alt="true_flannel" style="width: 100%; height: auto;"/>
                 <br><br> -->
-                <img src="static/assets/img/k8s/true_virtual24.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual24.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>先点击常规栏，勾选“可用时自动链接这个网络”</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_virtual25.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual25.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>而后切换到IPv4设置一栏，将方法设置为手动，再点击Add添加地址</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_virtual26.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual26.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>这里所添加的部分需要在自己的vmware中找到默认的虚拟子网ip，点击vmware左上角的编辑，在下拉条中选择“虚拟网络编辑器”</li>
                 </ul>
-                
-                <img src="static/assets/img/k8s/true_virtual27.png" alt="true_flannel" style="width: 100%; height: auto;"/>
 
-                
+                <img src="static/assets/img/k8s/true_virtual27.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
+
+
                 <ul>
                     <li>选择VMnet8，下面的子网ip即为我们需要记住的部分，我们需要保留这个子网ip的前三位</li>
                 </ul>
@@ -952,16 +1010,18 @@ kubectl top pods
                 <ul>
                     <li>具体说来就是：192.168.10.100、192.168.10.101、192.168.10.102，这里需要根据自身的查看情况确定每个子网ip前三位的值</li>
                 </ul>
-                
+
                 <ul>
                     <li>VMnet8的NAT服务会将虚拟机的私有IP转换为宿主机的公网IP，使虚拟机可以访问外网，同时保护虚拟机不直接暴露在公网中</li>
                 </ul>
-                
-                <img src="static/assets/img/k8s/true_virtual28.png" alt="true_flannel" style="width: 100%; height: auto;"/>
 
-                
+                <img src="static/assets/img/k8s/true_virtual28.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
+
+
                 <ul>
-                    <li>于是我们回到刚刚虚拟机的IPv4设置部分，由于这里是master节点，因此我们使用192.168.10.100，对于另外两台node节点所在的虚拟机，我们在配置时就需要将它设为192.168.10.101和192.168.10.102</li>
+                    <li>于是我们回到刚刚虚拟机的IPv4设置部分，由于这里是master节点，因此我们使用192.168.10.100，对于另外两台node节点所在的虚拟机，我们在配置时就需要将它设为192.168.10.101和192.168.10.102
+                    </li>
                 </ul>
                 <ul>
                     <li>后面的子网掩码我们使用刚刚在虚拟网络编辑器中看到的255.255.255.0</li>
@@ -970,7 +1030,8 @@ kubectl top pods
                     <li>网关则同样需要保持前三位和虚拟网络编辑器中的子网ip一致，这里是192.168.10，最后一位可以统一取2</li>
                 </ul>
                 <ul>
-                    <li>子网掩码决定了子网的大小，网关则负责将虚拟机的私有IP转换为宿主机的公网IP，实现虚拟机访问外网。在VMware的NAT模式（如VMnet8）中，网关通常是VMware虚拟网络中的NAT设备地址（例如192.168.1.2）</li>
+                    <li>子网掩码决定了子网的大小，网关则负责将虚拟机的私有IP转换为宿主机的公网IP，实现虚拟机访问外网。在VMware的NAT模式（如VMnet8）中，网关通常是VMware虚拟网络中的NAT设备地址（例如192.168.1.2）
+                    </li>
                 </ul>
                 <ul>
                     <li>而DNS服务器我们统一使用阿里的：223.5.5.5</li>
@@ -981,33 +1042,40 @@ kubectl top pods
                 <ul>
                     <li>全部设置完毕后我们点击保存</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_virtual29.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual29.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>而后我们修改主机名为master，再点击应用，应用完毕后就可以点击左上角的“完成”以退出网络设置了</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_virtual30.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual30.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>接着我们就可以开始安装了</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_virtual31.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual31.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
                 <ul>
                     <li>安装过程中我们需要设置root密码，需要记住这里所设置的密码，后面需要用它进行连接，这里也可以和我一样直接把密码也设置为root方便记忆</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_virtual32.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual32.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
                 <br><br>
-                <img src="static/assets/img/k8s/true_virtual33.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual33.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>一直等待安装，而后点击右下角的“重启”</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_virtual34.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual34.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>等待重启过程，而后使用root同时作为用户名与密码（root是我所设置的密码，你刚刚设置的root密码是什么这里就输入什么）进行登录，出现下面的界面就是登录成功了</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_virtual35.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual35.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>到这里我们的第一台master虚拟机就已经配置完成了，接下来我们按照上面的方法，配置两个node节点所在的虚拟机</li>
@@ -1019,21 +1087,26 @@ kubectl top pods
                 <ul>
                     <li>一是在创建虚拟机时需要将虚拟机的名称与位置设置为node1和node2</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_virtual36.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual36.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
                 <br><br>
-                <img src="static/assets/img/k8s/true_virtual37.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual37.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
-                    <li>二是在进行网络配置时，将node1与node2的ip地址设置为192.168.10.101与192.168.10.102，并修改主机名字为node1和node2，子网掩码、网关以及DNS服务器均与master节点所在虚拟机中的配置一样</li>
+                    <li>二是在进行网络配置时，将node1与node2的ip地址设置为192.168.10.101与192.168.10.102，并修改主机名字为node1和node2，子网掩码、网关以及DNS服务器均与master节点所在虚拟机中的配置一样
+                    </li>
                 </ul>
-                <img src="static/assets/img/k8s/true_virtual38.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual38.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
                 <br><br>
-                <img src="static/assets/img/k8s/true_virtual39.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_virtual39.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
 
 
 
-                <p><strong>（3）使用MobaXterm连接三台虚拟机</strong></p>
+                <p><strong>（4）使用MobaXterm连接三台虚拟机</strong></p>
                 <ul>
                     <li>MobaXterm是一款功能强大的远程计算工具，核心功能有远程连接、终端模拟、文件传输等，主要服务于Windows用户来管理Linux/Unix服务器</li>
                 </ul>
@@ -1046,22 +1119,24 @@ kubectl top pods
                 <ul>
                     <li>进入界面后，我们点击左上角的“Session”，再点击这里的“SSH”，</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_moba1.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_moba1.png" alt="true_flannel" style="width: 100%; height: auto;" />
                 <br><br>
-                <img src="static/assets/img/k8s/true_moba2.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_moba2.png" alt="true_flannel" style="width: 100%; height: auto;" />
 
                 <ul>
-                    <li>这里的Remote host我们需要找到之前为三台虚拟机所各自配置的ip地址，在我这里是：192.168.10.100、192.168.10.101、192.168.10.102（这里的ip地址是之前根据自己的情况所配置的，请参考之前的配置过程，配置的是什么这里就用什么），一个Session对应一个ip地址，我们为三个虚拟机配置三个Session就可以了</li>
+                    <li>这里的Remote
+                        host我们需要找到之前为三台虚拟机所各自配置的ip地址，在我这里是：192.168.10.100、192.168.10.101、192.168.10.102（这里的ip地址是之前根据自己的情况所配置的，请参考之前的配置过程，配置的是什么这里就用什么），一个Session对应一个ip地址，我们为三个虚拟机配置三个Session就可以了
+                    </li>
                 </ul>
                 <ul>
                     <li>而后我们勾选后面的Specify username，这里我们统一使用root登录</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_moba3.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_moba3.png" alt="true_flannel" style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>然后我们点击下方的ok，会要求我们输入密码，这里就是我们之前为root用户设置的密码，我这里设置的密码也是root，看到下面的界面即已经成功连接了</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_moba4.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_moba4.png" alt="true_flannel" style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>我们需要像上面那样继续建立Session，一共需要建立三个Session，以连接到我们所配置的三个虚拟机</li>
@@ -1070,7 +1145,7 @@ kubectl top pods
                 <ul>
                     <li>我们点击工具栏中的Multiexec，这样我们就可以同时对三个虚拟机进行操作了</li>
                 </ul>
-                <img src="static/assets/img/k8s/true_moba5.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_moba5.png" alt="true_flannel" style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>在一个窗口运行清屏命令clear来试试同时操作的功能</li>
@@ -1078,8 +1153,8 @@ kubectl top pods
                 <pre><code>clear
 </code></pre>
 
-                <img src="static/assets/img/k8s/true_moba6.png" alt="true_flannel" style="width: 100%; height: auto;"/>
-                
+                <img src="static/assets/img/k8s/true_moba6.png" alt="true_flannel" style="width: 100%; height: auto;" />
+
 
                 <p><strong>（4）三个节点的统一基础环境配置</strong></p>
                 <ul>
@@ -1089,7 +1164,8 @@ kubectl top pods
                     <li>输入下面的指令以编辑/etc/hosts文件</li>
                 </ul>
                 <ul>
-                    <li>需要注意的是，当我们复制内容粘贴到刚刚的同时执行窗口时，如果只粘贴到一个窗口中，是不会在三个窗口都同步操作的，可以在复制命令后点击右上角的Multi-paste，这样就可以直接将剪贴板中的内容同时粘贴到三个终端窗口中了，后续粘贴内容的时候也是如此操作</li>
+                    <li>需要注意的是，当我们复制内容粘贴到刚刚的同时执行窗口时，如果只粘贴到一个窗口中，是不会在三个窗口都同步操作的，可以在复制命令后点击右上角的Multi-paste，这样就可以直接将剪贴板中的内容同时粘贴到三个终端窗口中了，后续粘贴内容的时候也是如此操作
+                    </li>
                 </ul>
                 <pre><code>nano /etc/hosts
 </code></pre>
@@ -1105,7 +1181,8 @@ kubectl top pods
 192.168.10.101 node1
 192.168.10.102 node2
 </code></pre>
-<img src="static/assets/img/k8s/true_together1.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_together1.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>配置后可以ping一下看看是否生效，可以看到是能ping通的</li>
@@ -1115,8 +1192,9 @@ kubectl top pods
 ping node1
 ping node2
 </code></pre>
-<img src="static/assets/img/k8s/true_together25.png" alt="true_flannel" style="width: 100%; height: auto;"/>
-                
+                <img src="static/assets/img/k8s/true_together25.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
+
                 <ul>
                     <li>kubernetes要求集群中的节点时间必须精确一致，因此这里使用chronyd服务从网络同步时间，启动并设置开机自启，最后date验证时间是否一致</li>
                 </ul>
@@ -1125,7 +1203,8 @@ ping node2
 systemctl enable chronyd
 date
 </code></pre>
-<img src="static/assets/img/k8s/true_together3.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_together3.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
 
                 <ul>
@@ -1140,7 +1219,8 @@ systemctl disable firewalld
 systemctl stop iptables
 systemctl disable iptables
 </code></pre>
-<img src="static/assets/img/k8s/true_together4.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_together4.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
 
 
@@ -1156,10 +1236,12 @@ SELINUX=disabled
 
 # 输入完毕后ctrl+x，然后按y，接着再回车即可退出文件编辑
 </code></pre>
-<img src="static/assets/img/k8s/true_together5.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_together5.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
-                    <li>swap分区指的是虚拟内存分区，它的作用是物理内存使用完，之后将磁盘空间虚拟成内存来使用，启用swap设备会对系统的性能产生非常负面的影响，因此kubernetes要求每个节点都要禁用swap设备</li>
+                    <li>swap分区指的是虚拟内存分区，它的作用是物理内存使用完，之后将磁盘空间虚拟成内存来使用，启用swap设备会对系统的性能产生非常负面的影响，因此kubernetes要求每个节点都要禁用swap设备
+                    </li>
                 </ul>
                 <ul>
                     <li>这里的修改也需要重启后才生效，后面会统一重启</li>
@@ -1172,7 +1254,8 @@ nano /etc/fstab
 
 # 输入完毕后ctrl+x，然后按y，接着再回车即可退出文件编辑
 </code></pre>
-<img src="static/assets/img/k8s/true_together6.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_together6.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
 
                 <ul>
@@ -1198,9 +1281,11 @@ modprobe br_netfilter
 # 查看网桥过滤模块是否加载成功，看到我们刚刚在配置中做的内容就是加载成功了
 lsmod | grep br_netfilter
 </code></pre>
-<img src="static/assets/img/k8s/true_together7.png" alt="true_flannel" style="width: 100%; height: auto;"/>
-<br><br>
-<img src="static/assets/img/k8s/true_together8.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_together7.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
+                <br><br>
+                <img src="static/assets/img/k8s/true_together8.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
                 <ul>
                     <li>ipvs是Kubernetes中Service的一种代理模型，我们需要手动载入ipvs模块</li>
@@ -1235,9 +1320,11 @@ chmod +x /etc/sysconfig/modules/ipvs.modules
 # 5.查看对应的模块是否加载成功
 lsmod | grep -e ip_vs -e nf_conntrack_ipv4
 </code></pre>
-<img src="static/assets/img/k8s/true_together9.png" alt="true_flannel" style="width: 100%; height: auto;"/>
-<br><br>
-<img src="static/assets/img/k8s/true_together10.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_together9.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
+                <br><br>
+                <img src="static/assets/img/k8s/true_together10.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
 
                 <ul>
@@ -1257,7 +1344,8 @@ getenforce
 # 查看swap分区是否关闭，下面的swap均为0即已关闭
 free -m
 </code></pre>
-<img src="static/assets/img/k8s/true_together11.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_together11.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
 
                 <ul>
@@ -1286,9 +1374,11 @@ EOF
 systemctl restart docker
 systemctl enable docker
 </code></pre>
-<img src="static/assets/img/k8s/true_together13.png" alt="true_flannel" style="width: 100%; height: auto;"/>
-<br><br>
-<img src="static/assets/img/k8s/true_together14.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_together13.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
+                <br><br>
+                <img src="static/assets/img/k8s/true_together14.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
 
                 <ul>
@@ -1326,11 +1416,14 @@ KUBE_PROXY_MODE="ipvs"
 # 5、设置kubelet开机自启
 systemctl enable kubelet
 </code></pre>
-<img src="static/assets/img/k8s/true_together15.png" alt="true_flannel" style="width: 100%; height: auto;"/>
-<br><br>
-<img src="static/assets/img/k8s/true_together16.png" alt="true_flannel" style="width: 100%; height: auto;"/>
-<br><br>
-<img src="static/assets/img/k8s/true_together17.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_together15.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
+                <br><br>
+                <img src="static/assets/img/k8s/true_together16.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
+                <br><br>
+                <img src="static/assets/img/k8s/true_together17.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
 
                 <ul>
@@ -1360,7 +1453,8 @@ done
 # 查看镜像的下载情况
 docker images
 </code></pre>
-<img src="static/assets/img/k8s/true_together18.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_together18.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
 
 
@@ -1379,14 +1473,16 @@ mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 </code></pre>
-<img src="static/assets/img/k8s/true_together19.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_together19.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
 
                 <ul>
                     <li>上图中启动可以看到已经成功初始化了，我们找到上图中方框中的指令，将它复制到两个node节点的Session中执行</li>
                 </ul>
 
-<img src="static/assets/img/k8s/true_together20.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_together20.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
 
                 <ul>
@@ -1395,7 +1491,8 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
                 <pre><code>kubectl get nodes
 </code></pre>
-<img src="static/assets/img/k8s/true_together21.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_together21.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
 
                 <ul>
@@ -1410,11 +1507,14 @@ kubectl apply -f calico.yaml
 kubectl apply -f kube-flannel.yml
 # 这里的kube-flannel.yml由于网络问题无法像calico.yaml文件一样使用curl下载，只能手动上传
 </code></pre>
-<img src="static/assets/img/k8s/true_together26.png" alt="true_flannel" style="width: 100%; height: auto;"/>
-<br><br>
-<img src="static/assets/img/k8s/true_together22.png" alt="true_flannel" style="width: 100%; height: auto;"/>
-<br><br>
-<img src="static/assets/img/k8s/true_together23.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_together26.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
+                <br><br>
+                <img src="static/assets/img/k8s/true_together22.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
+                <br><br>
+                <img src="static/assets/img/k8s/true_together23.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
 
                 <ul>
@@ -1423,7 +1523,8 @@ kubectl apply -f kube-flannel.yml
 
                 <pre><code>kubectl get nodes
 </code></pre>
-<img src="static/assets/img/k8s/true_together24.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_together24.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
 
                 <ul>
@@ -1445,7 +1546,8 @@ kubectl apply -f kube-flannel.yml
 # 查看node的状态
 kubectl get nodes
 </code></pre>
-<img src="static/assets/img/k8s/true_together27.png" alt="true_flannel" style="width: 100%; height: auto;"/>
+                <img src="static/assets/img/k8s/true_together27.png" alt="true_flannel"
+                    style="width: 100%; height: auto;" />
 
 
 

@@ -273,6 +273,9 @@
                 
                 <h2 id="3minikubeflink"><strong>4、部署CHD</strong></h2>
                 <p><strong>（1）准备虚拟机</strong></p>
+                <ul>
+                    <li>虚拟机准备的大致流程请参考k8s部署中的相关部分（<a href="wsl_docker_k8s.html#k8s" target="_blank" style="font-size: 24px;">k8s</a>），同时注意以下需要修改的地方</li>
+                </ul>
 
                 <ul>
                     <li>对于hadoop101，由于它需要安装cdh server，所以需要更大的内存，这里我们设置内存为4G，磁盘容量为40G</li>
@@ -293,7 +296,7 @@
                 </ul>
                 <img src="static/assets/img/kerberos_sentry/host.png" alt="flume_achi" style="width: 100%; height: auto;">
                 <ul>
-                    <li>接着我们依然和之前k8s部署的时候一样，使用MobaXterm连接每台虚拟机，对每台机器配置名称与ip的对应关系</li>
+                    <li>接着我们依然和之前k8s部署的时候一样（<a href="wsl_docker_k8s.html#k8s" target="_blank" style="font-size: 24px;">k8s</a>），使用MobaXterm连接每台虚拟机，对每台机器配置名称与ip的对应关系</li>
                 </ul>
                 <ul>
                     <li>先点击multi-execution，以同时对三台虚拟机进行相同的操作，复制完命令后可以通过右上角的multi-paste进行同步粘贴</li>
@@ -306,7 +309,7 @@
 </code></pre>
 
                 <ul>
-                    <li>输入以下内容，将主机名与IP关联</li>
+                    <li>输入以下内容，将主机名与IP关联，这里的ip为之前自己所设置的虚拟机ip，需要针对自己的情况做修改</li>
                 </ul>
                 <pre><code>192.168.10.101 hadoop101 hadoop101
 192.168.10.102 hadoop102 hadoop102
@@ -343,7 +346,7 @@ ssh-copy-id hadoop103
                 <img src="static/assets/img/kerberos_sentry/key2.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
-                    <li>上传所需脚本bin-kerberos.zip至hadoop101，在右侧文件夹栏的空白处右键鼠标，选择upload to current folder</li>
+                    <li>上传所需脚本bin-kerberos.zip至hadoop101，在左侧文件夹栏的空白处右键鼠标，选择upload to current folder</li>
                 </ul>
                 <ul>
                     <li>解压所上传的脚本，并授予脚本权限，接着进入脚本目录并测试是否可以使用</li>
@@ -352,12 +355,37 @@ ssh-copy-id hadoop103
 cd bin-kerberos/
 chmod 77 bin/*
 cd bin
+sudo cp xsync /bin
+sudo cp xcall.sh /bin
 xsync
 </code></pre>
                 <ul>
                     <li>xsync脚本用于同步文件或目录到其他主机，xcall.sh脚本用于在多台主机上批量执行相同命令</li>
                 </ul>
                 <img src="static/assets/img/kerberos_sentry/shell.png" alt="flume_achi" style="width: 100%; height: auto;">
+
+
+                <ul>
+                    <li>而后我们使用ntp同步三台虚拟机的时间</li>
+                </ul>
+                <ul>
+                    <li>先更换源以便下载，这里使用xcall.sh，给三台虚拟机换源</li>
+                </ul>                   
+                <pre><code>xcall.sh mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+xcall.sh curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+</code></pre>
+                <ul>
+                    <li>接着同步时间</li>
+                </ul>
+                <pre><code>xcall.sh yum install -y ntp
+xcall.sh ntpdate -u ntp.sjtu.edu.cn
+</code></pre>
+<img src="static/assets/img/kerberos_sentry/time1.png" alt="flume_achi" style="width: 100%; height: auto;">
+<br><br>
+<img src="static/assets/img/kerberos_sentry/time2.png" alt="flume_achi" style="width: 100%; height: auto;">
+<br><br>
+<img src="static/assets/img/kerberos_sentry/time3.png" alt="flume_achi" style="width: 100%; height: auto;">
+
 
                 <p><strong>（2）安装JDK</strong></p>
                 <ul>
@@ -371,7 +399,7 @@ mkdir module
 mkdir software
 </code></pre>
                 <ul>
-                    <li>而后在目录/opt/module下上传文件夹 1.CDH6，上传方式参考之前上传压缩包的方式，注意这里需要先进入目录/opt/module下再上传</li>
+                    <li>而后在目录/opt/module下上传文件夹 1.CDH6，上传方式为直接将该文件夹拖拽到MobaXterm左侧的文件栏中，注意这里需要先进入目录/opt/module下再上传</li>
                 </ul>
 
                 <img src="static/assets/img/kerberos_sentry/upload_pack.png" alt="flume_achi" style="width: 100%; height: auto;">
@@ -431,37 +459,27 @@ xsync /etc/profile.d/my_env.sh
 <img src="static/assets/img/kerberos_sentry/xsync_jdk2.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
-                    <li>进入每个节点的操作界面，均执行下面的命令以应用更改</li>
+                    <li>使用xcall.sh，以在每台虚拟机上应用更改</li>
                 </ul>                
-                <pre><code>source /etc/profile.d/my_env.sh
+                <pre><code>xcall.sh source /etc/profile.d/my_env.sh
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/source.png" alt="flume_achi" style="width: 100%; height: auto;">
-
-
                 <ul>
                     <li>使用脚本查看每个节点上的应用是否生效</li>
                 </ul>                
                 <pre><code>xcall.sh java -version
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/xcall.png" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/source.png" alt="flume_achi" style="width: 100%; height: auto;">
 
 
                 <p><strong>（3）配置mysql</strong></p>
                 <ul>
-                    <li>接下来在每个节点上配置mysql</li>
+                    <li>接下来我们配置mysql</li>
                 </ul>
-                <ul>
-                    <li>首先需要更换源以便下载</li>
-                </ul>                   
-                <pre><code>sudo mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
-sudo curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
-</code></pre>
 
                 <ul>
-                    <li>然后我们安装mysql所需的依赖</li>
+                    <li>我们首先安装mysql所需的依赖</li>
                 </ul>                
-                <pre><code>yum install libaio
-yum -y install autoconf
+                <pre><code>yum install -y autoconf libaio
 </code></pre>
 <img src="static/assets/img/kerberos_sentry/mysql_lib.png" alt="flume_achi" style="width: 100%; height: auto;">
 
@@ -481,12 +499,12 @@ rpm -ivh MySQL-shared-compat-5.6.24-1.el6.x86_64.rpm
                 <pre><code>cd /opt/module/1.CDH6
 unzip mysql-libs.zip
 cd mysql-libs/
-sudo rpm -e --nodeps mariadb-libs
-sudo rpm -ivh MySQL-server-5.6.24-1.el6.x86_64.rpm
+rpm -e --nodeps mariadb-libs
+rpm -ivh MySQL-server-5.6.24-1.el6.x86_64.rpm
 </code></pre>
 <img src="static/assets/img/kerberos_sentry/mysql_unzip1.png" alt="flume_achi" style="width: 100%; height: auto;">
 <br><br>
-<img src="static/assets/img/kerberos_sentry/mysql_unzip2.png" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/mysql_unzip4.png" alt="flume_achi" style="width: 100%; height: auto;">
 <br><br>
 <img src="static/assets/img/kerberos_sentry/mysql_unzip3.png" alt="flume_achi" style="width: 100%; height: auto;">
 
@@ -571,14 +589,13 @@ exit;
                 <pre><code>cd /opt/module/1.CDH6/mysql-libs
 tar -zxvf mysql-connector-java-5.1.27.tar.gz
 cd mysql-connector-java-5.1.27
-mv mysql-connector-java-5.1.27-bin.jar mysql-connector-java.jar
 mkdir /usr/share/java
-cp mysql-connector-java.jar /usr/share/java/
+cp mysql-connector-java-5.1.27-bin.jar /usr/share/java/mysql-connector-java.jar
 xsync /usr/share/java/
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/cm_mysql1.png" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/cm_mysql3.png" alt="flume_achi" style="width: 100%; height: auto;">
 <br><br>
-<img src="static/assets/img/kerberos_sentry/cm_mysql2.png" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/cm_mysql4.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
                     <li>我们再创建一个cloudera-manager目录,并将CDH安装文件移动到该目录下</li>
@@ -594,52 +611,53 @@ mv cloudera-manager-daemons-6.3.1-1466458.el7.x86_64.rpm /opt/cloudera-manager/
 <img src="static/assets/img/kerberos_sentry/cm_cm.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
-                    <li>安装CM，先在hadoop101上执行安装，而后再将安装包进行分发</li>
+                    <li>安装CM，先将安装包进行分发，而后再使用xcall.sh在三台虚拟机上进行安装</li>
                 </ul>                
                 <pre><code>cd /opt/cloudera-manager/
 xsync /opt/cloudera-manager/
-rpm -ivh cloudera-manager-daemons-6.3.1-1466458.el7.x86_64.rpm
+xcall.sh rpm -ivh /opt/cloudera-manager/cloudera-manager-daemons-6.3.1-1466458.el7.x86_64.rpm
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/cm_rpm1.png" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/cm_rpm.png" alt="flume_achi" style="width: 100%; height: auto;">
 
-                <ul>
+                <!-- <ul>
                     <li>在其它两个节点，即hadoop102和hadoop103上安装CM，这两个节点上都需要执行下面的命令</li>
                 </ul>                
-                <pre><code>cd /opt/cloudera-manager/
-rpm -ivh cloudera-manager-daemons-6.3.1-1466458.el7.x86_64.rpm
+                <pre><code>xcall.sh rpm -ivh /opt/cloudera-manager/cloudera-manager-daemons-6.3.1-1466458.el7.x86_64.rpm
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/cm_rpm2.png" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/cm_rpm2.png" alt="flume_achi" style="width: 100%; height: auto;"> -->
 
                 <ul>
-                    <li>接下来安装前置环境，首先在hadoop101上安装</li>
+                    <li>接下来安装前置环境，使用xcall.sh脚本在所有虚拟机上进行安装</li>
                 </ul>                
-                <pre><code>yum install bind-utils psmisc cyrus-sasl-plain cyrus-sasl-gssapi fuse portmap fuse-libs /lib/lsb/init-functions httpd mod_ssl openssl-devel python-psycopg2 MySQL-python libxslt
+                <pre><code>xcall.sh yum install bind-utils psmisc cyrus-sasl-plain cyrus-sasl-gssapi fuse portmap fuse-libs /lib/lsb/init-functions httpd mod_ssl openssl-devel python-psycopg2 MySQL-python libxslt
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/cm_before1.png" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/cm_before5.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
-                    <li>安装卡在下面的步骤时，输入y即可（表示yes）</li>
+                    <li>安装卡在下面的步骤时，输入y再回车即可（表示yes）</li>
                 </ul> 
-<img src="static/assets/img/kerberos_sentry/cm_before2.png" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/cm_before4.png" alt="flume_achi" style="width: 100%; height: auto;">
+<br><br>
+<img src="static/assets/img/kerberos_sentry/cm_before6.png" alt="flume_achi" style="width: 100%; height: auto;">
 
-                <ul>
+                <!-- <ul>
                     <li>在hadoop102和hadoop103上，需要将之前的换源操作执行一遍，再进行安装</li>
                 </ul>                
                 <pre><code>sudo mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 sudo curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
 yum install bind-utils psmisc cyrus-sasl-plain cyrus-sasl-gssapi fuse portmap fuse-libs /lib/lsb/init-functions httpd mod_ssl openssl-devel python-psycopg2 MySQL-python libxslt
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/cm_before3.png" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/cm_before3.png" alt="flume_achi" style="width: 100%; height: auto;"> -->
 
                 <ul>
-                    <li>而后安装cm agent，同样地，每台虚拟机都要执行</li>
+                    <li>而后安装cm agent，同样地，使用xcall.sh在每台虚拟机上执行安装</li>
                 </ul>                
-                <pre><code>rpm -ivh cloudera-manager-agent-6.3.1-1466458.el7.x86_64.rpm
+                <pre><code>xcall.sh rpm -ivh /opt/cloudera-manager/cloudera-manager-agent-6.3.1-1466458.el7.x86_64.rpm
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/cm_agnet1.png" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/cm_agnet3.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
-                    <li>接着回到hadoop101，修改agent的配置文件，主要为了让所有节点都知道server是谁</li>
+                    <li>接着修改agent的配置文件，主要为了让所有节点都知道server是谁</li>
                 </ul>                
                 <pre><code>nano /etc/cloudera-scm-agent/config.ini
 </code></pre>
@@ -664,7 +682,7 @@ yum install bind-utils psmisc cyrus-sasl-plain cyrus-sasl-gssapi fuse portmap fu
                 <ul>
                     <li>然后我们继续在hadoop101上安装server</li>
                 </ul>                
-                <pre><code>rpm -ivh cloudera-manager-server-6.3.1-1466458.el7.x86_64.rpm 
+                <pre><code>rpm -ivh /opt/cloudera-manager/cloudera-manager-server-6.3.1-1466458.el7.x86_64.rpm 
 </code></pre>
 <img src="static/assets/img/kerberos_sentry/cm_xsync.png" alt="flume_achi" style="width: 100%; height: auto;">
 
@@ -712,9 +730,9 @@ com.cloudera.cmf.db.setupType=EXTERNAL
 <img src="static/assets/img/kerberos_sentry/cm_scm.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
-                    <li>这里还需要将所有节点上的防火墙关闭，下面的命令需要在所有节点上执行一遍</li>
+                    <li>这里还需要将所有节点上的防火墙关闭，使用xcall.sh关闭每台虚拟机上的防火墙</li>
                 </ul>                
-                <pre><code>systemctl stop firewalld
+                <pre><code>xcall.sh systemctl stop firewalld
 </code></pre>
 
                 <ul>
@@ -722,14 +740,13 @@ com.cloudera.cmf.db.setupType=EXTERNAL
                 </ul>                
                 <pre><code>systemctl start cloudera-scm-server
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/cm_firewall1.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
-                    <li>并在所有节点启动agent，即在hadoop101、hadoop102以及hadoop103上均需执行下面的命令</li>
+                    <li>并使用xcall.sh在所有节点启动agent</li>
                 </ul>                
-                <pre><code>systemctl start cloudera-scm-agent
+                <pre><code>xcall.sh systemctl start cloudera-scm-agent
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/cm_firewall2.png" alt="flume_achi" style="width: 100%; height: auto;">
+<img src="static/assets/img/kerberos_sentry/cm_firewall.png" alt="flume_achi" style="width: 100%; height: auto;">
 
                 <ul>
                     <li>在浏览器访问下面的ip即可看到CDH的web界面，注意这里的ip地址需改为自身的hadoop101虚拟机所配置的ip地址，后面的端口号不用改变</li>
@@ -803,7 +820,7 @@ com.cloudera.cmf.db.setupType=EXTERNAL
                 <ul>
                     <li>回到虚拟机命令行，所有虚拟机均需要运行下面三条指令</li>
                 </ul>            
-                <pre><code>sudo sysctl vm.swappiness=10
+                <pre><code>sysctl vm.swappiness=10
 echo never > /sys/kernel/mm/transparent_hugepage/defrag  
 echo never > /sys/kernel/mm/transparent_hugepage/enabled
 </code></pre>    
@@ -1071,7 +1088,7 @@ systemctl enable kadmin
                 <pre><code>kadmin.local
 </code></pre> 
                 <ul>
-                    <li>创建kerberos主体</li>
+                    <li>创建kerberos主体，这里需要设置密码，可以继续使用：000000</li>
                 </ul>                
                 <pre><code>addprinc admin/admin
 </code></pre> 
@@ -1114,6 +1131,11 @@ kadmin.local -q "list_principals"
                     <li>进行认证，而后输入密码000000，可以看到已经认证成功了</li>
                 </ul>                
                 <pre><code>kinit admin/admin
+</code></pre> 
+                <ul>
+                    <li>再次查看凭据，可以看到已经有凭据了，表明认证成功</li>
+                </ul>                
+                <pre><code>klist
 </code></pre> 
 
                 <ul>
@@ -1343,6 +1365,20 @@ passwd writer
                     <li>再进入hue的webui</li>
                 </ul>     
 <img src="static/assets/img/kerberos_sentry/sentry_hue2.png" alt="flume_achi" style="width: 100%; height: auto;"> 
+
+                <ul>
+                    <li>这里可能会有进入hue的webui失败的问题，像下面这样，这里是因为我们没有在自己电脑的windows环境下配置hadoop101与其IP对应，因此无法识别，只需要将这里的hadoop101用它对应的IP替换就可以了</li>
+                </ul>     
+<img src="static/assets/img/kerberos_sentry/sentry_hue5.png" alt="flume_achi" style="width: 100%; height: auto;"> 
+
+                <ul>
+                    <li>当然也可以更改我们windows环境下的hosts文件，路径为：C:\Windows\System32\drivers\etc\hosts，添加如下内容并保存，注意这里的ip需要改成自己配置虚拟机时使用的ip</li>
+                </ul>     
+                <pre><code>192.168.10.101 hadoop101
+192.168.10.102 hadoop102
+192.168.10.103 hadoop103
+</code></pre>
+<img src="static/assets/img/kerberos_sentry/sentry_hue6.png" alt="flume_achi" style="width: 100%; height: auto;"> 
 
                 <ul>
                     <li>使用hive作为用户名，000000作为初始密码登录hue</li>
