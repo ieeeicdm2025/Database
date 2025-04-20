@@ -157,7 +157,8 @@
     <section class="bg-gradient-primary-to-secondary-light mt5 md5" id="awards">
         <div class="container px-5">
             <header>
-                <h2 id="awards-subtitle" style="font-size: 48px;"><i class="bi bi-award-fill"></i> 实验指南(十一)：Kerberos和Sentry</h2>
+                <h2 id="awards-subtitle" style="font-size: 48px;"><i class="bi bi-award-fill"></i>
+                    实验指南(十一)：Kerberos和Sentry</h2>
             </header>
 
             <div style="height: 64px;"></div>
@@ -166,10 +167,12 @@
 
                 <h1 id="flink"><strong>CDH</strong></h1>
                 <div style="height: 32px;"></div>
-                
-                <p>1、CDH（Cloudera's Distribution Including Apache Hadoop）是Cloudera公司推出的一款企业级大数据平台发行版，它集成了Apache Hadoop生态系统中的核心组件及周边工具，旨在简化大数据集群的部署、管理和运维。</p>
-                <img src="static/assets/img/kerberos_sentry/cdh.png" alt="zookeeper_achi" style="width: 100%; height: auto;">
-                
+
+                <p>1、CDH（Cloudera's Distribution Including Apache Hadoop）是Cloudera公司推出的一款企业级大数据平台发行版，它集成了Apache
+                    Hadoop生态系统中的核心组件及周边工具，旨在简化大数据集群的部署、管理和运维。</p>
+                <img src="static/assets/img/kerberos_sentry/cdh.png" alt="zookeeper_achi"
+                    style="width: 100%; height: auto;">
+
                 <p><strong>（1）CDH的核心组件</strong></p>
                 <ul>
                     <li>分布式存储：HDFS</li>
@@ -178,13 +181,14 @@
                     <li>资源管理：YARN</li>
                 </ul>
                 <ul>
-                    <li>计算框架：MapReduce（传统）、Spark（内存加速）、Hive（基于MapReduce/Tez）、Impala（MPP架构）、Spark Streaming、Flink、HBase（基于HDFS的分布式列存储）</li>
+                    <li>计算框架：MapReduce（传统）、Spark（内存加速）、Hive（基于MapReduce/Tez）、Impala（MPP架构）、Spark
+                        Streaming、Flink、HBase（基于HDFS的分布式列存储）</li>
                 </ul>
                 <p><strong>（2）CDH的管理层</strong></p>
                 <ul>
                     <li>CDH的管理层由Cloudera Manager（CM）提供，Cloudera Manager是一个集中式管理工具，提供图形界面和API</li>
                 </ul>
-                
+
                 <ul>
                     <li>CM的主要作用有：</li>
                     <li style="padding-left: 20px; list-style-position: inside;">安装与部署：自动化安装CDH组件。</li>
@@ -195,35 +199,44 @@
                     <li>CM的核心组件有：</li>
                     <li style="padding-left: 20px; list-style-position: inside;">Server：运行CM服务，协调管理任务。</li>
                     <li style="padding-left: 20px; list-style-position: inside;">Agent：运行在每个节点上，执行CM Server的指令。</li>
-                    <li style="padding-left: 20px; list-style-position: inside;">Database：存储CM的元数据（如MySQL、PostgreSQL）。</li>
+                    <li style="padding-left: 20px; list-style-position: inside;">Database：存储CM的元数据（如MySQL、PostgreSQL）。
+                    </li>
                 </ul>
-                
+
                 <h2 id="3minikubeflink"><strong>2、部署CDH</strong></h2>
                 <p><strong>（1）准备虚拟机</strong></p>
                 <ul>
-                    <li>虚拟机准备的大致流程请参考k8s部署中的相关部分（<a href="wsl_docker_k8s.html#k8s" target="_blank" style="font-size: 24px;">k8s</a>），同时注意以下需要修改的地方</li>
+                    <li>虚拟机准备的大致流程请参考k8s部署中的相关部分（<a href="wsl_docker_k8s.html#k8s" target="_blank"
+                            style="font-size: 24px;">k8s</a>），同时注意以下需要修改的地方</li>
                 </ul>
 
                 <ul>
                     <li>对于hadoop101，由于它需要安装cdh server，所以需要更大的内存，这里我们设置内存为4G，磁盘容量为40G</li>
                 </ul>
-                <img src="static/assets/img/kerberos_sentry/vm1.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/vm1.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
                 <br><br>
-                <img src="static/assets/img/kerberos_sentry/vm2.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/vm2.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>对于其它两台机器，按照如下的配置，即设置内存为2G，磁盘容量为30G</li>
                 </ul>
-                <img src="static/assets/img/kerberos_sentry/vm3.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/vm3.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
                 <br><br>
-                <img src="static/assets/img/kerberos_sentry/vm4.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/vm4.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
-                    <li>准备虚拟机的其它步骤均与k8s集群部署中相同，这里不再重复，还有一点需要注意的是主机名配置，这里我的三台虚拟机的主机名设置为了hadoop101、hadoop102、hadoop103，主机名的配置位置在如下步骤</li>
+                    <li>准备虚拟机的其它步骤均与k8s集群部署中相同，这里不再重复，还有一点需要注意的是主机名配置，这里我的三台虚拟机的主机名设置为了hadoop101、hadoop102、hadoop103，主机名的配置位置在如下步骤
+                    </li>
                 </ul>
-                <img src="static/assets/img/kerberos_sentry/host.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/host.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
                 <ul>
-                    <li>接着我们依然和之前k8s部署的时候一样（<a href="wsl_docker_k8s.html#k8s" target="_blank" style="font-size: 24px;">k8s</a>），使用MobaXterm连接每台虚拟机，对每台机器配置名称与ip的对应关系</li>
+                    <li>接着我们依然和之前k8s部署的时候一样（<a href="wsl_docker_k8s.html#k8s" target="_blank"
+                            style="font-size: 24px;">k8s</a>），使用MobaXterm连接每台虚拟机，对每台机器配置名称与ip的对应关系</li>
                 </ul>
                 <ul>
                     <li>先点击multi-execution，以同时对三台虚拟机进行相同的操作，复制完命令后可以通过右上角的multi-paste进行同步粘贴</li>
@@ -247,9 +260,11 @@
                     <li>输入完毕后使用ctrl+x，然后按y，接着再回车即可退出文件编辑</li>
                 </ul>
 
-                <img src="static/assets/img/kerberos_sentry/hosts1.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/hosts1.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
                 <br><br>
-                <img src="static/assets/img/kerberos_sentry/hosts2.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/hosts2.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>然后我们退出同步操作界面，回到hadoop101的连接界面，配置其对其它节点的免密登录</li>
@@ -268,32 +283,42 @@ ssh-copy-id hadoop102
 ssh-copy-id hadoop103
 </code></pre>
 
-                <img src="static/assets/img/kerberos_sentry/key1.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/key1.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
                 <br><br>
-                <img src="static/assets/img/kerberos_sentry/key2.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/key2.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
-                    <li>上传所需脚本bin-kerberos.zip至hadoop101，在左侧文件夹栏的空白处右键鼠标，选择upload to current folder</li>
+                    <li>上传所需脚本scripts至hadoop101，上传方式为直接将该文件夹拖拽到MobaXterm左侧的文件栏中</li>
+
                 </ul>
                 <ul>
-                    <li>解压所上传的脚本，并授予脚本权限，接着进入脚本目录并测试是否可以使用</li>
+                    <li>授予脚本权限，接着进入脚本目录并测试是否可以使用</li>
                 </ul>
-                <pre><code>unzip bin-kerberos.zip
-cd bin-kerberos/
-chmod 77 bin/*
-cd bin
+                <pre><code>chmod 77 2.scripts/*
+cd 2.scripts/
 sudo cp xsync /bin
 sudo cp xcall.sh /bin
 xsync
 </code></pre>
+                <img src="static/assets/img/kerberos_sentry/shell1.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
                 <ul>
-                    <li>xsync脚本用于同步文件或目录到其他主机，xcall.sh脚本用于在多台主机上批量执行相同命令</li>
+                    <li>xsync脚本用于同步文件或目录到其他主机，该脚本接收一个文件路径作为输入，提取文件名及其绝对路径，然后将文件复制到每个远程主机的相同目录下。</li>
                 </ul>
-                <img src="static/assets/img/kerberos_sentry/shell.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/shell2.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
+                <ul>
+                    <li>xcall.sh脚本用于在多台主机上批量执行相同命令，脚本通过for循环遍历主机列表，使用ssh命令以当前用户的身份登录到每个主机，并执行脚本传入的所有参数作为命令</li>
+                </ul>
+                <img src="static/assets/img/kerberos_sentry/shell3.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
+
 
                 <ul>
                     <li>我们先更换源以便后续的各种下载操作，这里使用xcall.sh，给三台虚拟机换源</li>
-                </ul>                   
+                </ul>
                 <pre><code>xcall.sh mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 xcall.sh curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
 </code></pre>
@@ -303,11 +328,14 @@ xcall.sh curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/rep
                 <pre><code>xcall.sh yum install -y ntp
 xcall.sh ntpdate -u ntp.sjtu.edu.cn
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/time1.png" alt="flume_achi" style="width: 100%; height: auto;">
-<br><br>
-<img src="static/assets/img/kerberos_sentry/time2.png" alt="flume_achi" style="width: 100%; height: auto;">
-<br><br>
-<img src="static/assets/img/kerberos_sentry/time3.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/time1.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
+                <br><br>
+                <img src="static/assets/img/kerberos_sentry/time2.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
+                <br><br>
+                <img src="static/assets/img/kerberos_sentry/time3.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
 
                 <p><strong>（2）安装JDK</strong></p>
@@ -325,8 +353,9 @@ mkdir software
                     <li>而后在目录/opt/module下上传文件夹 1.CDH6，上传方式为直接将该文件夹拖拽到MobaXterm左侧的文件栏中，注意这里需要先进入目录/opt/module下再上传</li>
                 </ul>
 
-                <img src="static/assets/img/kerberos_sentry/upload_pack.png" alt="flume_achi" style="width: 100%; height: auto;">
-                
+                <img src="static/assets/img/kerberos_sentry/upload_pack.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
+
                 <ul>
                     <li>接着进入所上传的文件目录下</li>
                 </ul>
@@ -339,7 +368,8 @@ mkdir software
                 <pre><code>rpm -ivh oracle-j2sdk1.8-1.8.0+update181-1.x86_64.rpm
 </code></pre>
 
-                <img src="static/assets/img/kerberos_sentry/install_jdk.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/install_jdk.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>接着编辑环境变量</li>
@@ -352,13 +382,14 @@ mkdir software
 
                 <ul>
                     <li>添加如下内容</li>
-                </ul>                
+                </ul>
                 <pre><code>export JAVA_HOME=/usr/java/jdk1.8.0_181-cloudera
 export CLASSPATH=.:$CLASSPATH:$JAVA_HOME/lib
 export PATH=$PATH:$JAVA_HOME/bin
 </code></pre>
-                
-                <img src="static/assets/img/kerberos_sentry/env.png" alt="flume_achi" style="width: 100%; height: auto;">
+
+                <img src="static/assets/img/kerberos_sentry/env.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>输入完毕后使用ctrl+x，然后按y，接着再回车即可退出文件编辑</li>
@@ -366,32 +397,35 @@ export PATH=$PATH:$JAVA_HOME/bin
 
                 <ul>
                     <li>应用更改并检查是否生效，能看到java的版本就是生效了</li>
-                </ul>                
+                </ul>
                 <pre><code>source /etc/profile.d/my_env.sh
 java -version
 </code></pre>
 
                 <ul>
                     <li>分发环境</li>
-                </ul>                
+                </ul>
                 <pre><code>xsync /usr/java/
 xsync /etc/profile.d/my_env.sh
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/xsync_jdk1.png" alt="flume_achi" style="width: 100%; height: auto;">
-<br><br>
-<img src="static/assets/img/kerberos_sentry/xsync_jdk2.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/xsync_jdk1.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
+                <br><br>
+                <img src="static/assets/img/kerberos_sentry/xsync_jdk2.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>使用xcall.sh，以在每台虚拟机上应用更改</li>
-                </ul>                
+                </ul>
                 <pre><code>xcall.sh source /etc/profile.d/my_env.sh
 </code></pre>
                 <ul>
                     <li>使用脚本查看每个节点上的应用是否生效</li>
-                </ul>                
+                </ul>
                 <pre><code>xcall.sh java -version
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/source.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/source.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
 
                 <p><strong>（3）配置mysql</strong></p>
@@ -401,70 +435,77 @@ xsync /etc/profile.d/my_env.sh
 
                 <ul>
                     <li>我们首先安装mysql所需的依赖</li>
-                </ul>                
+                </ul>
                 <pre><code>yum install -y autoconf libaio
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/mysql_lib.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/mysql_lib.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>接着下载mysql的安装包并安装</li>
-                </ul>                
+                </ul>
                 <pre><code>wget https://downloads.mysql.com/archives/get/p/23/file/MySQL-shared-compat-5.6.24-1.el6.x86_64.rpm
 wget https://downloads.mysql.com/archives/get/p/23/file/MySQL-shared-5.6.24-1.el6.x86_64.rpm
 rpm -ivh MySQL-shared-5.6.24-1.el6.x86_64.rpm
 rpm -ivh MySQL-shared-compat-5.6.24-1.el6.x86_64.rpm
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/mysql_wget.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/mysql_wget.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>安装MySQL服务端</li>
-                </ul>                
+                </ul>
                 <pre><code>cd /opt/module/1.CDH6
 unzip mysql-libs.zip
 cd mysql-libs/
 rpm -e --nodeps mariadb-libs
 rpm -ivh MySQL-server-5.6.24-1.el6.x86_64.rpm
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/mysql_unzip1.png" alt="flume_achi" style="width: 100%; height: auto;">
-<br><br>
-<img src="static/assets/img/kerberos_sentry/mysql_unzip4.png" alt="flume_achi" style="width: 100%; height: auto;">
-<br><br>
-<img src="static/assets/img/kerberos_sentry/mysql_unzip3.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/mysql_unzip1.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
+                <br><br>
+                <img src="static/assets/img/kerberos_sentry/mysql_unzip4.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
+                <br><br>
+                <img src="static/assets/img/kerberos_sentry/mysql_unzip3.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
 
                 <ul>
                     <li>查看初始的随机密码，用于后续登录</li>
-                </ul>                
+                </ul>
                 <pre><code>cat /root/.mysql_secret
 </code></pre>
 
                 <ul>
                     <li>查看mysql状态并启动</li>
-                </ul>                
+                </ul>
                 <pre><code>service mysql status
 service mysql start
 service mysql status
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/mysql_cat.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/mysql_cat.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>接着安装mysql的客户端</li>
-                </ul>                
+                </ul>
                 <pre><code>rpm -ivh MySQL-client-5.6.24-1.el6.x86_64.rpm
 </code></pre>
 
                 <ul>
                     <li>登录mysql并修改密码，这里mysql的用户名是root，密码即刚刚查看的密码，也就是这里的vlEM7tomcvfOJMGR，需要替换为自己查看到所生成的随机密码</li>
-                </ul>                
+                </ul>
                 <pre><code>mysql -uroot -pvlEM7tomcvfOJMGR
 SET PASSWORD=PASSWORD('000000');
 exit
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/mysql_client.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/mysql_client.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>使用修改后的密码进行登录，可以进行一些基本的mysql操作，注意，语句use mysql;是必须执行的，后续操作需要用到，而其它的查询语句可以不执行，只是为了验证mysql的基本功能</li>
-                </ul>                
+                </ul>
                 <pre><code>mysql -uroot -p000000
 show databases;
 use mysql;
@@ -475,7 +516,7 @@ select User, Host, Password from user;
 
                 <ul>
                     <li>而后配置只要是root用户+密码，在任何主机上都能登录MySQL数据库</li>
-                </ul>                
+                </ul>
                 <pre><code>update user set host='%' where host='localhost';
 delete from user where host!='%';
 flush privileges;
@@ -483,16 +524,17 @@ exit;
 </code></pre>
 
 
-<img src="static/assets/img/kerberos_sentry/mysql_change.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/mysql_change.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
 
                 <p><strong>（4）安装CM</strong></p>
                 <ul>
                     <li>接下来我们安装CM</li>
-                </ul> 
+                </ul>
                 <ul>
                     <li>首先进入mysql，并创建各组件需要的数据库，而后退出</li>
-                </ul>                 
+                </ul>
                 <pre><code>mysql -uroot -p000000
 
 GRANT ALL ON scm.* TO 'scm'@'%' IDENTIFIED BY 'scm';
@@ -504,11 +546,12 @@ CREATE DATABASE sentry DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_c
 
 exit;
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/cm_create.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/cm_create.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>接着解压mysql的依赖包，并将mysql-connector-java-5.1.27-bin.jar拷贝到/usr/share/java路径下，而后重命名</li>
-                </ul>                
+                </ul>
                 <pre><code>cd /opt/module/1.CDH6/mysql-libs
 tar -zxvf mysql-connector-java-5.1.27.tar.gz
 cd mysql-connector-java-5.1.27
@@ -516,13 +559,15 @@ mkdir /usr/share/java
 cp mysql-connector-java-5.1.27-bin.jar /usr/share/java/mysql-connector-java.jar
 xsync /usr/share/java/
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/cm_mysql3.png" alt="flume_achi" style="width: 100%; height: auto;">
-<br><br>
-<img src="static/assets/img/kerberos_sentry/cm_mysql4.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/cm_mysql3.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
+                <br><br>
+                <img src="static/assets/img/kerberos_sentry/cm_mysql4.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>我们再创建一个cloudera-manager目录,并将CDH安装文件移动到该目录下</li>
-                </ul>                
+                </ul>
                 <pre><code>mkdir /opt/cloudera-manager
 cd /opt/module/1.CDH6
 tar -zxvf cm6.3.1-redhat7.tar.gz
@@ -531,16 +576,18 @@ mv cloudera-manager-agent-6.3.1-1466458.el7.x86_64.rpm /opt/cloudera-manager/
 mv cloudera-manager-server-6.3.1-1466458.el7.x86_64.rpm /opt/cloudera-manager/
 mv cloudera-manager-daemons-6.3.1-1466458.el7.x86_64.rpm /opt/cloudera-manager/
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/cm_cm.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/cm_cm.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>安装CM，先将安装包进行分发，而后再使用xcall.sh在三台虚拟机上进行安装</li>
-                </ul>                
+                </ul>
                 <pre><code>cd /opt/cloudera-manager/
 xsync /opt/cloudera-manager/
 xcall.sh rpm -ivh /opt/cloudera-manager/cloudera-manager-daemons-6.3.1-1466458.el7.x86_64.rpm
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/cm_rpm.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/cm_rpm.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <!-- <ul>
                     <li>在其它两个节点，即hadoop102和hadoop103上安装CM，这两个节点上都需要执行下面的命令</li>
@@ -551,17 +598,20 @@ xcall.sh rpm -ivh /opt/cloudera-manager/cloudera-manager-daemons-6.3.1-1466458.e
 
                 <ul>
                     <li>接下来安装前置环境，使用xcall.sh脚本在所有虚拟机上进行安装</li>
-                </ul>                
+                </ul>
                 <pre><code>xcall.sh yum install bind-utils psmisc cyrus-sasl-plain cyrus-sasl-gssapi fuse portmap fuse-libs /lib/lsb/init-functions httpd mod_ssl openssl-devel python-psycopg2 MySQL-python libxslt
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/cm_before5.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/cm_before5.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>安装卡在下面的步骤时，输入y再回车即可（表示yes）</li>
-                </ul> 
-<img src="static/assets/img/kerberos_sentry/cm_before4.png" alt="flume_achi" style="width: 100%; height: auto;">
-<br><br>
-<img src="static/assets/img/kerberos_sentry/cm_before6.png" alt="flume_achi" style="width: 100%; height: auto;">
+                </ul>
+                <img src="static/assets/img/kerberos_sentry/cm_before4.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
+                <br><br>
+                <img src="static/assets/img/kerberos_sentry/cm_before6.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <!-- <ul>
                     <li>在hadoop102和hadoop103上，需要将之前的换源操作执行一遍，再进行安装</li>
@@ -574,61 +624,65 @@ yum install bind-utils psmisc cyrus-sasl-plain cyrus-sasl-gssapi fuse portmap fu
 
                 <ul>
                     <li>而后安装cm agent，同样地，使用xcall.sh在每台虚拟机上执行安装</li>
-                </ul>                
+                </ul>
                 <pre><code>xcall.sh rpm -ivh /opt/cloudera-manager/cloudera-manager-agent-6.3.1-1466458.el7.x86_64.rpm
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/cm_agnet3.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/cm_agnet3.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>接着修改agent的配置文件，主要为了让所有节点都知道server是谁</li>
-                </ul>                
+                </ul>
                 <pre><code>nano /etc/cloudera-scm-agent/config.ini
 </code></pre>
 
 
                 <ul>
                     <li>修改下面的部分的值为hadoop101</li>
-                </ul>                
+                </ul>
                 <pre>server_host=hadoop101<code>
 </code></pre>
                 <ul>
                     <li>输入完毕后使用ctrl+x，然后按y，接着再回车即可退出文件编辑</li>
-                </ul> 
-<img src="static/assets/img/kerberos_sentry/cm_agnet2.png" alt="flume_achi" style="width: 100%; height: auto;">
+                </ul>
+                <img src="static/assets/img/kerberos_sentry/cm_agnet2.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>然后使用脚本分发该配置文件到所有节点</li>
-                </ul>                
+                </ul>
                 <pre><code>xsync /etc/cloudera-scm-agent/config.ini
 </code></pre>
 
                 <ul>
                     <li>然后我们继续在hadoop101上安装server</li>
-                </ul>                
+                </ul>
                 <pre><code>rpm -ivh /opt/cloudera-manager/cloudera-manager-server-6.3.1-1466458.el7.x86_64.rpm 
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/cm_xsync.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/cm_xsync.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>接下来我们上传CDH包到parcel-repo，parcel-repo就相当于CDH的本地仓库</li>
-                </ul>                
+                </ul>
                 <pre><code>cd /opt/module/1.CDH6
 mv CDH-6.3.2-1.cdh6.3.2.p0.1605554-el7.parcel* /opt/cloudera/parcel-repo
 mv manifest.json /opt/cloudera/parcel-repo
 cd /opt/cloudera/parcel-repo
 mv CDH-6.3.2-1.cdh6.3.2.p0.1605554-el7.parcel.sha1 CDH-6.3.2-1.cdh6.3.2.p0.1605554-el7.parcel.sha
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/cm_repo.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/cm_repo.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>然后我们修改CDH的数据库文件，让它指向mysql</li>
-                </ul>                
+                </ul>
                 <pre><code>nano /etc/cloudera-scm-server/db.properties
 </code></pre>
 
                 <ul>
                     <li>在com.cloudera.cmf.db.type=mysql这一行下添加如下内容</li>
-                </ul>                
+                </ul>
                 <pre><code>com.cloudera.cmf.db.host=hadoop101:3306
 com.cloudera.cmf.db.name=scm
 com.cloudera.cmf.db.user=scm
@@ -638,167 +692,192 @@ com.cloudera.cmf.db.setupType=EXTERNAL
 
                 <ul>
                     <li>注释掉最后一行：com.cloudera.cmf.db.setupType=INIT</li>
-                </ul>    
-                
+                </ul>
+
                 <ul>
                     <li>输入完毕后使用ctrl+x，然后按y，接着再回车即可退出文件编辑</li>
-                </ul> 
-<img src="static/assets/img/kerberos_sentry/cm_db.png" alt="flume_achi" style="width: 100%; height: auto;">
+                </ul>
+                <img src="static/assets/img/kerberos_sentry/cm_db.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>接着我们可以使用如下命令导入数据，要求输入密码，密码即为我们在之前文件中所配置的参数：scm</li>
-                </ul>                
+                </ul>
                 <pre><code>/opt/cloudera/cm/schema/scm_prepare_database.sh mysql scm scm
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/cm_scm.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/cm_scm.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>这里还需要将所有节点上的防火墙关闭，使用xcall.sh关闭每台虚拟机上的防火墙</li>
-                </ul>                
+                </ul>
                 <pre><code>xcall.sh systemctl stop firewalld
 </code></pre>
 
                 <ul>
                     <li>最后，我们在主节点启动server，即在hadoop101上执行下面的命令</li>
-                </ul>                
+                </ul>
                 <pre><code>systemctl start cloudera-scm-server
 </code></pre>
 
                 <ul>
                     <li>并使用xcall.sh在所有节点启动agent</li>
-                </ul>                
+                </ul>
                 <pre><code>xcall.sh systemctl start cloudera-scm-agent
 </code></pre>
-<img src="static/assets/img/kerberos_sentry/cm_firewall.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/cm_firewall.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>在浏览器访问下面的ip即可看到CDH的web界面，注意这里的ip地址需改为自身的hadoop101虚拟机所配置的ip地址，后面的端口号不用改变</li>
-                </ul>                
+                </ul>
                 <a href="http://192.168.10.101:7180/" target="_blank">http://192.168.10.101:7180/</a>
-<img src="static/assets/img/kerberos_sentry/cm_website.png" alt="flume_achi" style="width: 100%; height: auto;">
+                <img src="static/assets/img/kerberos_sentry/cm_website.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
 
                 <p><strong>（5）CDH集群部署</strong></p>
                 <ul>
                     <li>使用admin作为用户名和密码进行登录</li>
-                </ul>                
-                <img src="static/assets/img/kerberos_sentry/cdh_login.png" alt="flume_achi" style="width: 100%; height: auto;">
+                </ul>
+                <img src="static/assets/img/kerberos_sentry/cdh_login.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>点击继续</li>
-                </ul>                
-                <img src="static/assets/img/kerberos_sentry/cdh_continue1.png" alt="flume_achi" style="width: 100%; height: auto;">
+                </ul>
+                <img src="static/assets/img/kerberos_sentry/cdh_continue1.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>勾选“接受”，点击继续</li>
-                </ul>                
-                <img src="static/assets/img/kerberos_sentry/cdh_continue2.png" alt="flume_achi" style="width: 100%; height: auto;">
+                </ul>
+                <img src="static/assets/img/kerberos_sentry/cdh_continue2.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>选择免费版，点击继续</li>
-                </ul>                
-                <img src="static/assets/img/kerberos_sentry/cdh_continue3.png" alt="flume_achi" style="width: 100%; height: auto;">
+                </ul>
+                <img src="static/assets/img/kerberos_sentry/cdh_continue3.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>点击继续</li>
-                </ul>                
-                <img src="static/assets/img/kerberos_sentry/cdh_continue4.png" alt="flume_achi" style="width: 100%; height: auto;">
-                
+                </ul>
+                <img src="static/assets/img/kerberos_sentry/cdh_continue4.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
+
                 <ul>
                     <li>集群名称使用默认的Cluster 1，再点击继续</li>
-                </ul>                
-                <img src="static/assets/img/kerberos_sentry/cdh_continue5.png" alt="flume_achi" style="width: 100%; height: auto;">
+                </ul>
+                <img src="static/assets/img/kerberos_sentry/cdh_continue5.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
 
                 <ul>
                     <li>选择当前管理的主机，并勾选全部的虚拟机，再点击继续</li>
-                </ul>                
-                <img src="static/assets/img/kerberos_sentry/cdh_specify1.png" alt="flume_achi" style="width: 100%; height: auto;">
+                </ul>
+                <img src="static/assets/img/kerberos_sentry/cdh_specify1.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>点击继续</li>
-                </ul>                
-                <img src="static/assets/img/kerberos_sentry/cdh_specify2.png" alt="flume_achi" style="width: 100%; height: auto;">
+                </ul>
+                <img src="static/assets/img/kerberos_sentry/cdh_specify2.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>等候安装完毕</li>
-                </ul>                
-                <img src="static/assets/img/kerberos_sentry/cdh_specify3.png" alt="flume_achi" style="width: 100%; height: auto;">
+                </ul>
+                <img src="static/assets/img/kerberos_sentry/cdh_specify3.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>接下来需要对网络环境以及主机性能进行检测，分别点击这两个按钮</li>
-                </ul>                
-                <img src="static/assets/img/kerberos_sentry/cdh_inspect1.png" alt="flume_achi" style="width: 100%; height: auto;">
+                </ul>
+                <img src="static/assets/img/kerberos_sentry/cdh_inspect1.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>经过检查后如果出现下面的警告，我们需要进行修复，我们点击“显示检查器结果”</li>
-                </ul>                
-                <img src="static/assets/img/kerberos_sentry/cdh_inspect2.png" alt="flume_achi" style="width: 100%; height: auto;">
+                </ul>
+                <img src="static/assets/img/kerberos_sentry/cdh_inspect2.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>可以看到警告的出现是由于下面的问题，直接按照它所给出的提示进行操作就可以了，这里均采用临时修改的方式</li>
-                </ul>                
-                <img src="static/assets/img/kerberos_sentry/cdh_inspect3.png" alt="flume_achi" style="width: 100%; height: auto;">
+                </ul>
+                <img src="static/assets/img/kerberos_sentry/cdh_inspect3.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>回到连接hadoop101的命令行，使用xcall.sh在所有虚拟机上修改所需配置</li>
-                </ul>            
+                </ul>
                 <pre><code>xcall.sh sysctl vm.swappiness=10
 xcall.sh "echo never > /sys/kernel/mm/transparent_hugepage/defrag"
 xcall.sh "echo never > /sys/kernel/mm/transparent_hugepage/enabled" 
-</code></pre>    
-                <img src="static/assets/img/kerberos_sentry/cdh_inspect6.png" alt="flume_achi" style="width: 100%; height: auto;">
+</code></pre>
+                <img src="static/assets/img/kerberos_sentry/cdh_inspect6.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>而后返回cdh的web页面，点击“重新运行”，便可以看到主机性能的检查也通过了，接着我们点击继续</li>
-                </ul>                
-                <img src="static/assets/img/kerberos_sentry/cdh_inspect5.png" alt="flume_achi" style="width: 100%; height: auto;">
+                </ul>
+                <img src="static/assets/img/kerberos_sentry/cdh_inspect5.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
 
                 <ul>
                     <li>接下来就可以安装各种组件了，我们先以安装基础hadoop所需的组件为例，选择“自定义服务”并勾选HDFS、YARN、Zookeeper</li>
-                </ul>                
-                <img src="static/assets/img/kerberos_sentry/cdh_hdfs1.png" alt="flume_achi" style="width: 100%; height: auto;">
+                </ul>
+                <img src="static/assets/img/kerberos_sentry/cdh_hdfs1.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
 
                 <ul>
                     <li>每台虚拟机的角色分配如下</li>
-                </ul>                
-                <img src="static/assets/img/kerberos_sentry/cdh_hdfs2.png" alt="flume_achi" style="width: 100%; height: auto;">
+                </ul>
+                <img src="static/assets/img/kerberos_sentry/cdh_hdfs2.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
 
                 <ul>
                     <li>审核更改中的配置均使用默认配置，点击继续</li>
-                </ul>                
-                <img src="static/assets/img/kerberos_sentry/cdh_hdfs3.png" alt="flume_achi" style="width: 100%; height: auto;">
+                </ul>
+                <img src="static/assets/img/kerberos_sentry/cdh_hdfs3.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
 
                 <ul>
                     <li>接着等待安装完毕即可</li>
-                </ul>                
-                <img src="static/assets/img/kerberos_sentry/cdh_hdfs4.png" alt="flume_achi" style="width: 100%; height: auto;">
+                </ul>
+                <img src="static/assets/img/kerberos_sentry/cdh_hdfs4.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
 
                 <ul>
                     <li>安装完成</li>
-                </ul>                
-                <img src="static/assets/img/kerberos_sentry/cdh_hdfs5.png" alt="flume_achi" style="width: 100%; height: auto;">
+                </ul>
+                <img src="static/assets/img/kerberos_sentry/cdh_hdfs5.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
 
                 <ul>
                     <li>然后我们就可以进入到cdh的界面了</li>
-                </ul>                
-                <img src="static/assets/img/kerberos_sentry/cdh_main.png" alt="flume_achi" style="width: 100%; height: auto;">
+                </ul>
+                <img src="static/assets/img/kerberos_sentry/cdh_main.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
 
                 <ul>
                     <li>这里所存在的警告大多是因为当前集群的规模过小了，点击配置可以看到具体问题，由于是实验环境，所以可以暂时忽略</li>
-                </ul>                
-                <img src="static/assets/img/kerberos_sentry/cdh_question.png" alt="flume_achi" style="width: 100%; height: auto;">
+                </ul>
+                <img src="static/assets/img/kerberos_sentry/cdh_question.png" alt="flume_achi"
+                    style="width: 100%; height: auto;">
 
                 <ul>
                     <li>这里我们就完成了CDH的配置，后续可以在CDH的web页面上继续添加大数据的各种组件</li>
-                </ul>    
+                </ul>
 
             </div>
 
