@@ -162,7 +162,9 @@
             </header>
 
             <br>
-            <li style="font-size: 20px;">本实验所用到的文件如下：CDH-6.3.2-1.cdh6.3.2.p0.1605554-el7.parcel、CDH-6.3.2-1.cdh6.3.2.p0.1605554-el7.parcel.sha1、cm6.3.1-redhat7.tar.gz、manifest.json、mysql-libs.zip、oracle-j2sdk1.8-1.8.0+update181-1.x86_64.rpm、xcall.sh、xsync</li>
+            <li style="font-size: 20px;">
+                本实验所用到的文件在山大云盘的存放位置为：.\实验材料\实验文件\exp11-CDH，所用到的文件如下：CDH-6.3.2-1.cdh6.3.2.p0.1605554-el7.parcel、CDH-6.3.2-1.cdh6.3.2.p0.1605554-el7.parcel.sha1、cm6.3.1-redhat7.tar.gz、manifest.json、mysql-libs.zip、oracle-j2sdk1.8-1.8.0+update181-1.x86_64.rpm、xcall.sh、xsync
+            </li>
 
             <div style="height: 64px;"></div>
 
@@ -370,6 +372,13 @@ mkdir software
                 <ul>
                     <li>安装JDK</li>
                 </ul>
+
+                <ul>
+                    <li>对于JDK所需的rpm包，也可以从官网下载：<a
+                            href="https://www.oracle.com/java/technologies/javase/javase8-archive-downloads.html"
+                            target="_blank">https://www.oracle.com/java/technologies/javase/javase8-archive-downloads.html</a></li>
+                </ul>
+
                 <pre><code>rpm -ivh oracle-j2sdk1.8-1.8.0+update181-1.x86_64.rpm
 </code></pre>
 
@@ -460,6 +469,21 @@ rpm -ivh MySQL-shared-compat-5.6.24-1.el6.x86_64.rpm
                 <ul>
                     <li>安装MySQL服务端</li>
                 </ul>
+
+                <ul>
+                    <li>对于这里的 mysql-libs.zip
+                        压缩包，共包含了三个文件：mysql-client、mysql-server以及mysql-connector，其中，前两个文件可以在这里选择指定版本下载：<a
+                            href="https://downloads.mysql.com/archives/community/"
+                            target="_blank">https://downloads.mysql.com/archives/community/</a>，第三个文件可以在这里选择指定版本下载：<a
+                            href="https://downloads.mysql.com/archives/c-j/"
+                            target="_blank">https://downloads.mysql.com/archives/c-j/</a>
+                    </li>
+                </ul>
+
+
+
+
+
                 <pre><code>cd /opt/module/1.CDH6
 unzip mysql-libs.zip
 cd mysql-libs/
@@ -573,6 +597,13 @@ xsync /usr/share/java/
                 <ul>
                     <li>我们再创建一个cloudera-manager目录,并将CDH安装文件移动到该目录下</li>
                 </ul>
+
+                <ul>
+                    <li>对于 Cloudera Manager 安装包，由于Cloudera 已下架 CM6 的公共下载，仅保留 API 文档等非核心文件，故而这里无法从官方的归档站中下载我们所需的文件：<a
+                            href="https://archive.cloudera.com/cm6/6.3.1/"
+                            target="_blank">https://archive.cloudera.com/cm6/6.3.1/</a> 。因此，这里使用我们所提供的文件即可</li>
+                </ul>
+
                 <pre><code>mkdir /opt/cloudera-manager
 cd /opt/module/1.CDH6
 tar -zxvf cm6.3.1-redhat7.tar.gz
