@@ -264,10 +264,11 @@ docker load -i kibana.tar
 minikube image load elasticsearch:8.17.0
 </code></pre>
                 <ul>
-                    <li>进入minikube查看是否导入</li>
+                    <li>进入minikube查看是否导入，并在查看后输入exit退出minikube</li>
                 </ul>
                 <pre><code>minikube ssh
 docker images
+exit
 </code></pre>
 <img src="static/assets/img/elasticsearch_kibana/elk_images.png" alt="elk_images" style="width: 100%; height: auto;">
 <br><br>

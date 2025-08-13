@@ -222,10 +222,11 @@
                 </ul>
                 <pre><code>minikube image load spark-hadoop-numpy:latest</code></pre>
                 <ul>
-                    <li>进入minikube查看是否导入</li>
+                    <li>进入minikube查看是否导入，并在查看后输入exit退出minikube</li>
                 </ul>
                 <pre><code>minikube ssh
-docker images</code></pre>
+docker images
+exit</code></pre>
                 <img src="static/assets/img/hadoop_spark/hadoop_image.png" alt="hadoop_image" style="width: 100%; height: auto;"/>
                 <br><br>
                 <p><strong>（2）使用hadoop-cluster.yaml文件部署Hadoop，并查看pod状态验证其是否正常运行</strong></p>

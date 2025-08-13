@@ -300,10 +300,11 @@ docker load -i zookeeper.tar
 minikube image load zookeeper:latest
 </code></pre>
                 <ul>
-                    <li>进入minikube查看是否导入</li>
+                    <li>进入minikube查看是否导入，并在查看后输入exit退出minikube</li>
                 </ul>
                 <pre><code>minikube ssh
 docker images
+exit
 </code></pre>
 <img src="static/assets/img/kafka_zookeeper/kafka_images.png" alt="kafka_image" style="width: 100%; height: auto;">
 <br><br>
@@ -450,10 +451,11 @@ Hello Zookeeper
                 <pre><code>minikube image load flume:latest
 </code></pre>
                 <ul>
-                    <li>进入minikube查看是否导入</li>
+                    <li>进入minikube查看是否导入，并在查看后输入exit退出minikube</li>
                 </ul>
                 <pre><code>minikube ssh
 docker images
+exit
 </code></pre>
 <img src="static/assets/img/hue_flume/flume_load.png" alt="load" style="width: 100%; height: auto;">
 

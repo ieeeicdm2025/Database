@@ -175,12 +175,15 @@
     <section class="bg-gradient-primary-to-secondary-light mt5 md5" id="awards">
         <div class="container px-5">
             <header>
-                <h2 id="awards-subtitle" style="font-size: 48px;"><i class="bi bi-award-fill"></i> 实验指南(一)：WSL、Docker和K8S</h2>
+                <h2 id="awards-subtitle" style="font-size: 48px;"><i class="bi bi-award-fill"></i>
+                    实验指南(一)：WSL、Docker和K8S</h2>
             </header>
 
             <br>
 
-            <li style="font-size: 20px;">本实验所用到的文件在山大云盘的存放位置为：.\实验材料\实验文件\exp1-k8s，所用到的文件如下：CentOS-7-x86_64-DVD-1908.iso、dashboard.tar、kube-flannel.yml、metrics-scraper.tar、MobaXterm_Portable_v25.0.zip、VMware-workstation-full-17.6.2-24409262.exe</li>
+            <li style="font-size: 20px;">
+                本实验所用到的文件在山大云盘的存放位置为：.\实验材料\实验文件\exp1-k8s，所用到的文件如下：CentOS-7-x86_64-DVD-1908.iso、kube-flannel.yml、metrics-scraper.tar、MobaXterm_Portable_v25.0.zip、VMware-workstation-full-17.6.2-24409262.exe
+            </li>
 
             <div style="height: 64px;"></div>
 
@@ -197,10 +200,92 @@
 
                 <h1 id="wsl"><strong>一、WSL（<a href="https://learn.microsoft.com/zh-cn/windows/wsl/"
                             target="_blank">官网</a>）</strong></h1>
-                <p>Windows Subsystem for Linux (WSL) 是一项功能，允许在 Windows 系统上运行 Linux 发行版。安装教程如下：</p>
-                <p><a href="https://learn.microsoft.com/zh-cn/windows/wsl/install"
-                        target="_blank">https://learn.microsoft.com/zh-cn/windows/wsl/install</a>
-                </p>
+
+                <br>
+
+                <h2 id="1"><strong>1、安装WSL</strong></h2>
+
+                <ul>
+                    <li>Windows Subsystem for Linux (WSL) 是一项功能，允许在 Windows 系统上运行 Linux 发行版。安装教程如下：</li>
+                </ul>
+                <ul><a href="https://learn.microsoft.com/zh-cn/windows/wsl/install"
+                        target="_blank">https://learn.microsoft.com/zh-cn/windows/wsl/install</a></ul>
+
+
+
+                <h2 id="1"><strong>2、下载MobaXterm</strong></h2>
+
+                <ul>
+                    <li>MobaXterm是一款功能强大的远程计算工具，核心功能有远程连接、终端模拟、文件传输等，主要服务于Windows用户来管理Linux/Unix服务器</li>
+                </ul>
+
+                <ul>
+                    <li>下载MobaXterm，用于统一对 WSL 以及虚拟机进行操作：<a
+                            href="https://mobaxterm.mobatek.net/download-home-edition.html"
+                            target="_blank">https://mobaxterm.mobatek.net/download-home-edition.html</a></li>
+                </ul>
+
+
+                <img src="static/assets/img/k8s/true_mobaxterm.png" alt="true_mobaxterm"
+                    style="width: 100%; height: auto;" />
+
+                <br><br>
+                <h2 id="1"><strong>3、使用MobaXterm连接WSL</strong></h2>
+
+                <ul>
+                    <li>我们将下载的MobaXterm压缩包解压，然后打开其中的.exe文件，就可以直接运行了</li>
+                </ul>
+
+                <ul>
+                    <li>点击左上角的Session按钮</li>
+                </ul>
+
+                <img src="static/assets/img/k8s/mobaxterm_wsl1.png" alt="mobaxterm_wsl1"
+                    style="width: 100%; height: auto;" />
+
+
+                <ul>
+                    <li>选择最右侧的WSL按钮，MobaXterm 会自动检测当前电脑的 WSL 发行版，而后我们直接点击下方的OK即可</li>
+                </ul>
+
+                <img src="static/assets/img/k8s/mobaxterm_wsl2.png" alt="mobaxterm_wsl2"
+                    style="width: 100%; height: auto;" />
+
+                <br><br>
+                <h2 id="1"><strong>4、将 Windows 文件夹链接到 WSL 内部</strong></h2>
+
+                <ul>
+                    <li>为了方便在WSL中访问windows上的文件（如我们的实验文件），我们可以将 Windows 文件夹链接到 WSL 内部</li>
+                </ul>
+
+
+                <ul>
+                    <li>由于 WSL 会自动挂载 indows 
+                        驱动器在目录 /mnt 下，因此，当我们使用MobaXterm连接到 WS L后，可以进入 /mnt 目录，然后查看该目录下的文件夹，便能看到c、d、e等等的字样，它们就对应了 Windows
+                        中的各个盘</li>
+                </ul>
+
+                <img src="static/assets/img/k8s/wsl_link1.png" alt="wsl_link1"
+                    style="width: 100%; height: auto;" />
+
+                <ul>
+                    <li>例如，我现在想将 Windows 上的文件夹 D:\hadoop 链接到 WSL 中的文件夹 /home/zhxu/workdir ，只需执行下面的指令即可，第一个为 Windows
+                        上的路径，第二个为 WSL 中的路径，执行后我们查看 WSL 上的目录下是否有 Windows 对应目录下的文件（这里请根据自身需要来指定路径，这里的路径只作演示，无需相同）</li>
+                </ul>
+
+                <pre><code>ln -s "/mnt/d/hadoop" /home/zhxu/workdir
+cd /home/zhxu/workdir
+ls
+</code></pre>
+
+                <img src="static/assets/img/k8s/wsl_link2.png" alt="wsl_link2"
+                    style="width: 100%; height: auto;" />
+
+                <ul>
+                    <li>这里可以看到，WSL 的目录下已经包含了对应的 Windows 目录下的文件，表明链接成功了</li>
+                </ul>
+
+
                 <div style="height: 32px;"></div>
                 <h1 id="docker"><strong>二、Docker（<a href="https://www.docker.com/" target="_blank">官网</a>）</strong></h1>
                 <div style="height: 32px;"></div>
@@ -579,7 +664,10 @@ sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-a
                 <br><br>
                 <img src="static/assets/img/k8s/mini_get2.png" alt="mini_get2" style="width: 100%; height: auto;" />
                 <br><br>
-                <p><strong>（4）minikube的dashboard</strong></p>
+
+
+
+                <!-- <p><strong>（4）minikube的dashboard</strong></p>
 
                 <ul>
                     <li>minikube的dashboard为可选配置项，后续步骤用到的不多</li>
@@ -678,7 +766,10 @@ kubectl get pods -n kubernetes-dashboard
                     style="width: 100%; height: auto;" />
                 <br><br>
                 <img src="static/assets/img/k8s/mini_webui.png" alt="mini_webui" style="width: 100%; height: auto;" />
-                <br><br>
+                <br><br> -->
+
+
+
                 <h2 id="4minikube"><strong>4、minikube常用命令</strong></h2>
                 <ul>
                     <li>指定本地镜像启动minikube</li>
@@ -809,12 +900,7 @@ kubectl top pods
                 </ul>
                 <img src="static/assets/img/k8s/true_centos.png" alt="true_centos" style="width: 100%; height: auto;" />
 
-                <ul>
-                    <li>下载MobaXterm，用于统一对虚拟机进行操作：<a href="https://mobaxterm.mobatek.net/download-home-edition.html"
-                            target="_blank">https://mobaxterm.mobatek.net/download-home-edition.html</a></li>
-                </ul>
-                <img src="static/assets/img/k8s/true_mobaxterm.png" alt="true_mobaxterm"
-                    style="width: 100%; height: auto;" />
+
 
                 <ul>
                     <li>下载kube-flannel.yml：<a
@@ -1111,9 +1197,7 @@ kubectl top pods
 
 
                 <p><strong>（4）使用MobaXterm连接三台虚拟机</strong></p>
-                <ul>
-                    <li>MobaXterm是一款功能强大的远程计算工具，核心功能有远程连接、终端模拟、文件传输等，主要服务于Windows用户来管理Linux/Unix服务器</li>
-                </ul>
+
                 <ul>
                     <li>将下载的MobaXterm压缩包解压，然后打开其中的.exe文件，就可以直接运行了</li>
                 </ul>
